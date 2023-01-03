@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, View } from "react-native";
+import { Appbar } from "react-native-paper";
 
 type IProps = {};
 type IState = {};
@@ -9,7 +10,14 @@ export default class Account extends PureComponent<IProps, IState> {
         super(props);
     }
     render(): React.ReactNode {
-        return(<View style={styles.content}></View>);
+        return(<View style={styles.content}>
+            <Appbar.Header>
+                <Appbar.Content title={'Mi cuenta'} />
+            </Appbar.Header>
+            <View style={styles.content}>
+
+            </View>
+        </View>);
     }
 }
 
