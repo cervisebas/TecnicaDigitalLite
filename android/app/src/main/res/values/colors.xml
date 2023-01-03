@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="status_bar_color">#FF3232</color>
+    <color name="primary_dark">#980000</color>
+
+    <color name="colorPrimary">#FF3232</color>
+    <color name="colorPrimaryDark">#FF3232</color>
+    <color name="colorAccent">#3DC2FF</color>
+
+    <color name="notification_color">#FF3232</color>
+    <color name="light_blue_50">#FFE1F5FE</color>
+    <color name="light_blue_200">#FF81D4FA</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+
+    <color name="background">#FFFFFF</color>
+    <color name="foreground">#000000</color>
+    <color name="highlight">#FF3232</color>
+    <color name="scroll">#B3FF3232</color>
+
+    <!-- Dark Colors -->
+
+    <color name="status_bar_color_dark">#1D1D1D</color>
+
+    <color name="colorPrimary_dark">#1D1D1D</color>
+    <color name="colorPrimaryDark_dark">#1D1D1D</color>
+
+    <color name="background_dark">#000000</color>
+    <color name="foreground_dark">#FFFFFF</color>
+    
+    <color name="splash_background">#FFFFFF</color>
+    <color name="splash_background_dark">#000000</color>
+
+    <!-- Picker -->
+    <color name="picker_text">#000000</color>
+    <color name="picker_background">#FFFFFF</color>
+    <color name="picker_text_dark">#FFFFFF</color>
+    <color name="picker_background_dark">#000000</color>
+</resources>
