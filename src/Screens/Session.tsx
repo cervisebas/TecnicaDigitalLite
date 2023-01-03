@@ -9,13 +9,15 @@ import { Text, MD2Colors, TextInput, Button } from "react-native-paper";
 type IProps = {};
 type IState = {
     visible: boolean;
+    formDNI: string;
 };
 
 export default class Session extends PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            visible: true
+            visible: true,
+            formDNI: ''
         };
     }
     private particleSize = PixelRatio.getPixelSizeForLayoutSize(8);
@@ -38,6 +40,7 @@ export default class Session extends PureComponent<IProps, IState> {
                             <CustomTitle />
                             <TextInput
                                 label={'D.N.I'}
+                                value={this.state.formDNI}
                                 style={styles.textinput}
                             />
                             <Button
