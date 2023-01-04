@@ -5,6 +5,8 @@ import { Theme } from "../Scripts/Theme";
 import { LinearGradient } from "../Components/LinearGradient";
 import ParticleBackground from "../Components/ParticleBackground";
 import { Text, MD2Colors, TextInput, Button } from "react-native-paper";
+import { RenderProps } from "react-native-paper/lib/typescript/components/TextInput/types";
+import TextInputMask from "react-native-text-input-mask";
 
 type IProps = {};
 type IState = {
@@ -19,9 +21,16 @@ export default class Session extends PureComponent<IProps, IState> {
             visible: true,
             formDNI: ''
         };
+        this._onChangeText = this._onChangeText.bind(this);
     }
     private particleSize = PixelRatio.getPixelSizeForLayoutSize(8);
     private particleNumber = Math.floor(Dimensions.get('window').width / this.particleSize);
+    _onChangeText(text: string) {
+        this.setState({ formDNI: text });
+    }
+    _renderTextInput(props: RenderProps) {
+        return(<TextInputMask {...props as any} mask={"[00000000]"} />);
+    }
     render(): React.ReactNode {
         return(<CustomModal visible={this.state.visible}>
             <TouchableWithoutFeedback style={{ flex: 1 }} onPress={Keyboard.dismiss}>
@@ -42,6 +51,9 @@ export default class Session extends PureComponent<IProps, IState> {
                                 label={'D.N.I'}
                                 value={this.state.formDNI}
                                 style={styles.textinput}
+                                onChangeText={this._onChangeText}
+                                keyboardType={'number-pad'}
+                                render={this._renderTextInput}
                             />
                             <Button
                                 mode={'contained'}

@@ -6121,6 +6121,11 @@ react-native-system-navigation-bar@^2.1.0:
   resolved "https://registry.yarnpkg.com/react-native-system-navigation-bar/-/react-native-system-navigation-bar-2.1.0.tgz#dc054e5107cda400935eb8d376afe6cc5d215089"
   integrity sha512-n/0wKeryPDVnxopyjuF4ine9ZWAr1jJFv5KL+PhK09AvHdqVirNQV6RXZKbkJeXNpRsCQCI6sPV2SiqlfU4QBg==
 
+react-native-text-input-mask@^3.1.4:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/react-native-text-input-mask/-/react-native-text-input-mask-3.1.4.tgz#9b09d97a910ce8c24024d6187256b07c73e173ac"
+  integrity sha512-XhTPL1/Pv0kyuH8TMJGaxfnq5su9e+4G2PLngiismZ4xbP8+W/1ZEH4KQJQV+QkE2I5Oi+lPJXB2E47s60/OBA==
+
 react-native-vector-icons@^9.2.0:
   version "9.2.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-9.2.0.tgz#3c0c82e95defd274d56363cbe8fead8d53167ebd"
