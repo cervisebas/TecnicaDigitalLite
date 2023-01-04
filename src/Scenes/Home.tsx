@@ -1,9 +1,11 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, View } from "react-native";
-import { Appbar } from "react-native-paper";
+import { Appbar, Button } from "react-native-paper";
 import ViewShot from "react-native-view-shot";
 
-type IProps = {};
+type IProps = {
+    openSession: ()=>any;
+};
 type IState = {};
 
 export default class Home extends PureComponent<IProps, IState> {
@@ -19,6 +21,7 @@ export default class Home extends PureComponent<IProps, IState> {
                 <ViewShot style={{ width: 200, height: 200, backgroundColor: 'red' }}>
                     
                 </ViewShot>
+                <Button children={'Open Session'} onPress={this.props.openSession} />
             </View>
         </View>);
     }

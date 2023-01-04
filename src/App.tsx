@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, createRef } from "react";
 import { Route, StatusBar, StyleSheet, View } from "react-native";
 import { BottomNavigation, Provider as PaperProvider, Text } from "react-native-paper";
 import SplashScreen from "react-native-splash-screen";
@@ -27,6 +27,7 @@ export default class App extends PureComponent<IProps, IState> {
         { key: 'home', title: 'Inicio', focusedIcon: 'home', unfocusedIcon: 'home-outline' },
         { key: 'details', title: 'Mi cuenta', focusedIcon: 'account', unfocusedIcon: 'account-outline' }
     ];
+    private refSession = createRef<Session>();
 
     componentDidMount(): void {
         SplashScreen.hide();
@@ -41,7 +42,7 @@ export default class App extends PureComponent<IProps, IState> {
     _renderScene(props: { route: Route; jumpTo: (key: string) => void; }) {
         switch (props.route.key) {
             case 'home':
-                return <Home />;
+                return <Home openSession={()=>this.refSession.current?.open()} />;
             case 'details':
                 return <Account />;
         }
@@ -69,7 +70,7 @@ export default class App extends PureComponent<IProps, IState> {
                     renderScene={this._renderScene}
                     renderLabel={this._renderLabel}
                 />
-                <Session />
+                <Session ref={this.refSession} />
             </PaperProvider>
         </View>);
     }

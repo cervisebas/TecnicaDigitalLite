@@ -1,12 +1,11 @@
 import React, { PureComponent } from "react";
 import CustomModal from "../Components/CustomModal";
-import { Dimensions, Keyboard, PixelRatio, StyleProp, StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
+import { Dimensions, Keyboard, PixelRatio, StatusBar, StyleProp, StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
 import { Theme } from "../Scripts/Theme";
 import { LinearGradient } from "../Components/LinearGradient";
 import ParticleBackground from "../Components/ParticleBackground";
 import { Text, MD2Colors, TextInput, Button } from "react-native-paper";
-import { RenderProps } from "react-native-paper/lib/typescript/components/TextInput/types";
-import TextInputMask from "react-native-text-input-mask";
+import SystemNavigationBar from "react-native-system-navigation-bar";
 
 type IProps = {};
 type IState = {
@@ -14,28 +13,60 @@ type IState = {
     formDNI: string;
 };
 
+const onlyNumber = /^[0-9]+$/;
+
 export default class Session extends PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            visible: true,
+            visible: false,
             formDNI: ''
         };
         this._onChangeText = this._onChangeText.bind(this);
+        this.close = this.close.bind(this);
     }
     private particleSize = PixelRatio.getPixelSizeForLayoutSize(8);
     private particleNumber = Math.floor(Dimensions.get('window').width / this.particleSize);
+    private isColored = false;
     _onChangeText(text: string) {
-        this.setState({ formDNI: text });
+        if (text.length == 0) return this.setState({ formDNI: text });
+        if (onlyNumber.test(text)) this.setState({ formDNI: text });
     }
-    _renderTextInput(props: RenderProps) {
-        return(<TextInputMask {...props as any} mask={"[00000000]"} />);
+
+
+    componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any): void {
+        if (prevState.visible !== this.state.visible) {
+            if (this.state.visible) {
+                if (!this.isColored) {
+                    SystemNavigationBar.setNavigationColor("rgba(0, 163, 255, 1)", 'dark');
+                    StatusBar.setBackgroundColor('rgba(0, 163, 255, 0.1)');
+                    StatusBar.setBarStyle('dark-content');
+                    this.isColored = true;
+                    console.log('Show');
+                }
+            } else if (this.isColored) {
+                SystemNavigationBar.setNavigationColor(Theme.colors.elevation.level2, 'dark');
+                StatusBar.setBackgroundColor('#FFFFFF');
+                StatusBar.setBarStyle('dark-content');
+                this.isColored = false;
+                console.log('Hide');
+            }
+        }
     }
+
+    // Controller
+    open() {
+        this.setState({ visible: true });
+    }
+    close() {
+        this.setState({ visible: false });
+    }
+
     render(): React.ReactNode {
-        return(<CustomModal visible={this.state.visible}>
+        return(<CustomModal visible={this.state.visible} removeAnimationIn animationOut={'fadeOut'} animationOutTiming={600}>
             <TouchableWithoutFeedback style={{ flex: 1 }} onPress={Keyboard.dismiss}>
                 <View style={styles.content}>
-                    {(!this.state.visible)&&<ParticleBackground
+                    {(/*!this.state.visible*/ false !== false)&&<ParticleBackground
                         containerStyle={styles.backgroundParticles}
                         particleNumber={this.particleNumber}
                         particleSize={this.particleSize}
@@ -51,14 +82,15 @@ export default class Session extends PureComponent<IProps, IState> {
                                 label={'D.N.I'}
                                 value={this.state.formDNI}
                                 style={styles.textinput}
+                                maxLength={8}
                                 onChangeText={this._onChangeText}
+                                returnKeyType={'send'}
                                 keyboardType={'number-pad'}
-                                render={this._renderTextInput}
                             />
                             <Button
                                 mode={'contained'}
                                 style={styles.button}
-                                onPress={()=>console.log('Hello word!!!')}
+                                onPress={this.close}
                             >Iniciar Sesión</Button>
                         </View>
                     </View>
