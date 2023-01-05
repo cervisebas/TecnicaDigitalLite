@@ -39,17 +39,15 @@ export default class Session extends PureComponent<IProps, IState> {
             if (this.state.visible) {
                 if (!this.isColored) {
                     SystemNavigationBar.setNavigationColor("rgba(0, 163, 255, 1)", 'dark');
-                    StatusBar.setBackgroundColor('rgba(0, 163, 255, 0.1)');
+                    StatusBar.setBackgroundColor('rgba(0, 163, 255, 0.001)');
                     StatusBar.setBarStyle('dark-content');
                     this.isColored = true;
-                    console.log('Show');
                 }
             } else if (this.isColored) {
                 SystemNavigationBar.setNavigationColor(Theme.colors.elevation.level2, 'dark');
                 StatusBar.setBackgroundColor('#FFFFFF');
                 StatusBar.setBarStyle('dark-content');
                 this.isColored = false;
-                console.log('Hide');
             }
         }
     }
@@ -64,7 +62,7 @@ export default class Session extends PureComponent<IProps, IState> {
 
     render(): React.ReactNode {
         return(<CustomModal visible={this.state.visible} removeAnimationIn animationOut={'fadeOut'} animationOutTiming={600}>
-            <TouchableWithoutFeedback style={{ flex: 1 }} onPress={Keyboard.dismiss}>
+            <TouchableWithoutFeedback style={styles.content} onPress={Keyboard.dismiss}>
                 <View style={styles.content}>
                     {(/*!this.state.visible*/ false !== false)&&<ParticleBackground
                         containerStyle={styles.backgroundParticles}
@@ -143,7 +141,8 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         backgroundColor: Theme.colors.background,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        position: 'relative'
     },
     content0: {
         position: 'absolute',

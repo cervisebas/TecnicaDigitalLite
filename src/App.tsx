@@ -8,6 +8,7 @@ import Account from "./Scenes/Account";
 import { Theme } from "./Scripts/Theme";
 import SystemNavigationBar from "react-native-system-navigation-bar";
 import Session from "./Screens/Session";
+import ScreenLoading from "./Screens/ScreenLoading";
 
 type IProps = {};
 type IState = {
@@ -71,6 +72,7 @@ export default class App extends PureComponent<IProps, IState> {
                     renderLabel={this._renderLabel}
                 />
                 <Session ref={this.refSession} />
+                <ScreenLoading />
             </PaperProvider>
         </View>);
     }
