@@ -4,7 +4,9 @@ import { Card, Text, Title } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Theme } from "../../Scripts/Theme";
 
-type IProps = {};
+type IProps = {
+    namestudent: string;
+};
 type IState = {};
 
 export default class WelcomeCard extends PureComponent<IProps, IState> {
@@ -16,7 +18,7 @@ export default class WelcomeCard extends PureComponent<IProps, IState> {
             <Card.Content style={styles.contentCard}>
                 <Title style={styles.title}>Bienvenido/a:</Title>
                 <Icon name={'account'} size={28} color={Theme.colors.secondary} style={styles.icon} />
-                <Text style={styles.name}>Nombre del estudiante</Text>
+                <Text style={styles.name}>{this.props.namestudent}</Text>
             </Card.Content>
         </Card>);
     }

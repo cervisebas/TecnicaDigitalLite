@@ -18,7 +18,9 @@ export default class Home extends PureComponent<IProps, IState> {
                 <Appbar.Content title={'TecnicaDigital'} />
             </Appbar.Header>
             <View style={styles.content}>
-                <WelcomeCard />
+                <WelcomeCard
+                    namestudent={'Nombre del estudiante'}
+                />
                 <AssistCard
                     isLoading={false}
                     isError={false}
