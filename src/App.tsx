@@ -8,7 +8,7 @@ import Account from "./Scenes/Account";
 import { Theme } from "./Scripts/Theme";
 import SystemNavigationBar from "react-native-system-navigation-bar";
 import Session from "./Screens/Session";
-import ScreenLoading from "./Screens/ScreenLoading";
+import ScreenLoading, { ScreenLoadingRef } from "./Screens/ScreenLoading";
 
 type IProps = {};
 type IState = {
@@ -29,6 +29,7 @@ export default class App extends PureComponent<IProps, IState> {
         { key: 'details', title: 'Mi cuenta', focusedIcon: 'account', unfocusedIcon: 'account-outline' }
     ];
     private refSession = createRef<Session>();
+    private refScreenLoading = createRef<ScreenLoadingRef>();
 
     componentDidMount(): void {
         SplashScreen.hide();
@@ -43,7 +44,7 @@ export default class App extends PureComponent<IProps, IState> {
     _renderScene(props: { route: Route; jumpTo: (key: string) => void; }) {
         switch (props.route.key) {
             case 'home':
-                return <Home openSession={()=>this.refSession.current?.open()} />;
+                return <Home />;
             case 'details':
                 return <Account />;
         }
@@ -72,7 +73,7 @@ export default class App extends PureComponent<IProps, IState> {
                     renderLabel={this._renderLabel}
                 />
                 <Session ref={this.refSession} />
-                <ScreenLoading />
+                <ScreenLoading ref={this.refScreenLoading} />
             </PaperProvider>
         </View>);
     }

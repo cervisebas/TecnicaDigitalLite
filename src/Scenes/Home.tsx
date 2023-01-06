@@ -1,11 +1,11 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { Appbar, Button } from "react-native-paper";
 import ViewShot from "react-native-view-shot";
+import WelcomeCard from "./Home/WelcomeCard";
+import AssistCard from "./Home/AssistCard";
 
-type IProps = {
-    openSession: ()=>any;
-};
+type IProps = {};
 type IState = {};
 
 export default class Home extends PureComponent<IProps, IState> {
@@ -18,10 +18,18 @@ export default class Home extends PureComponent<IProps, IState> {
                 <Appbar.Content title={'TecnicaDigital'} />
             </Appbar.Header>
             <View style={styles.content}>
-                <ViewShot style={{ width: 200, height: 200, backgroundColor: 'red' }}>
-                    
-                </ViewShot>
-                <Button children={'Open Session'} onPress={this.props.openSession} />
+                <WelcomeCard />
+                <AssistCard
+                    isLoading={false}
+                    isError={false}
+                    isDisableDetailAssist={true}
+                    messageError={"Ocurrio un error..."}
+                    assist={"1"}
+                    notAssist={"2"}
+                    total={"6"}
+                    reloadAssist={()=>undefined}
+                    openDetailsAssit={()=>undefined}
+                />
             </View>
         </View>);
     }
@@ -29,6 +37,7 @@ export default class Home extends PureComponent<IProps, IState> {
 
 const styles = StyleSheet.create({
     content: {
-        flex: 1
+        flex: 1,
+        flexDirection: 'column'
     }
 });
