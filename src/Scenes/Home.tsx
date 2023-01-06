@@ -24,7 +24,7 @@ export default class Home extends PureComponent<IProps, IState> {
                 <AssistCard
                     isLoading={false}
                     isError={false}
-                    isDisableDetailAssist={true}
+                    isDisableDetailAssist={false}
                     messageError={"Ocurrio un error..."}
                     assist={"1"}
                     notAssist={"2"}

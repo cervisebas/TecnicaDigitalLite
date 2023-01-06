@@ -38,7 +38,7 @@ export default class AssistCard extends PureComponent<IProps, IState> {
                         {...props}
                         icon={'reload'}
                         //disabled={this.props.isLoading}
-                        onPress={(this.props.isLoading)? this.props.reloadAssist: undefined}
+                        onPress={(!this.props.isLoading)? this.props.reloadAssist: undefined}
                         iconColor={(this.props.isLoading)? Color(Theme.colors.tertiary).alpha(0.5).rgb().string(): Theme.colors.secondary}
                     />}
                 />
@@ -51,7 +51,7 @@ export default class AssistCard extends PureComponent<IProps, IState> {
                     <Button
                         icon={'account-details'}
                         //disabled={this.props.isLoading || this.props.isDisableDetailAssist}
-                        onPress={(this.props.isLoading || this.props.isDisableDetailAssist)? this.props.openDetailsAssit: undefined}
+                        onPress={(this.props.isLoading || this.props.isDisableDetailAssist)? undefined: this.props.openDetailsAssit}
                         mode={'text'}
                         //buttonColor={(this.props.isLoading)? Color(Theme.colors.tertiary).alpha(0.5).rgb().string(): undefined}
                         textColor={(this.props.isLoading || this.props.isDisableDetailAssist)? Color(Theme.colors.tertiary).alpha(0.5).rgb().string(): undefined}
