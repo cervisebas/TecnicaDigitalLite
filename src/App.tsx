@@ -1,7 +1,7 @@
 import React, { PureComponent, createRef } from "react";
 import { Route, StatusBar, StyleSheet, View } from "react-native";
 import { BottomNavigation, Provider as PaperProvider, Text } from "react-native-paper";
-import SplashScreen from "react-native-splash-screen";
+import RNSplashScreen from "react-native-splash-screen";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Home from "./Scenes/Home";
 import Account from "./Scenes/Account";
@@ -9,6 +9,7 @@ import { Theme } from "./Scripts/Theme";
 import SystemNavigationBar from "react-native-system-navigation-bar";
 import Session from "./Screens/Session";
 import ScreenLoading, { ScreenLoadingRef } from "./Screens/ScreenLoading";
+import SplashScreen from "./Screens/SplashScreen";
 
 type IProps = {};
 type IState = {
@@ -32,7 +33,7 @@ export default class App extends PureComponent<IProps, IState> {
     private refScreenLoading = createRef<ScreenLoadingRef>();
 
     componentDidMount(): void {
-        SplashScreen.hide();
+        RNSplashScreen.hide();
         SystemNavigationBar.setNavigationColor(Theme.colors.elevation.level2, 'dark');
         StatusBar.setBackgroundColor('#FFFFFF');
         StatusBar.setBarStyle('dark-content');
@@ -74,6 +75,7 @@ export default class App extends PureComponent<IProps, IState> {
                 />
                 <Session ref={this.refSession} />
                 <ScreenLoading ref={this.refScreenLoading} />
+                <SplashScreen />
             </PaperProvider>
         </View>);
     }

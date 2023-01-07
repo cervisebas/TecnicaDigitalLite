@@ -18,7 +18,6 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
     const [visible, setVisible] = useState<boolean>(false);
     const [viewTex, setViewTex] = useState<boolean>(false);
     const [message, setMessage] = useState<string>('Cargando...');
-    let isColored = false;
 
     const open = ()=>setVisible(true);
     function close() {
@@ -38,17 +37,13 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
 
     useEffect(()=>{
         if (visible) {
-            if (!isColored) {
-                SystemNavigationBar.setNavigationColor("rgba(0, 163, 255, 1)", 'dark');
-                StatusBar.setBackgroundColor('rgba(0, 163, 255, 0.001)');
-                StatusBar.setBarStyle('dark-content');
-                isColored = true;
-            }
-        } else if (isColored) {
+            SystemNavigationBar.setNavigationColor("rgba(0, 163, 255, 1)", 'dark');
+            StatusBar.setBackgroundColor('rgba(0, 163, 255, 0.001)');
+            StatusBar.setBarStyle('dark-content');
+        } else {
             SystemNavigationBar.setNavigationColor(Theme.colors.elevation.level2, 'dark');
             StatusBar.setBackgroundColor('#FFFFFF');
             StatusBar.setBarStyle('dark-content');
-            isColored = false;
         }
     }, [visible]);
 
