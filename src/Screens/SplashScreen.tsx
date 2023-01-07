@@ -36,7 +36,7 @@ export default React.memo(function SplashScreen(props: IProps) {
         await waitTo(500);
         Animated.spring(imageTY, { toValue: -50, useNativeDriver: true }).start();
         await waitTo(500);
-        Animated.timing(imageTY, { toValue: 0, duration: 100, useNativeDriver: true }).start();
+        Animated.timing(imageTY, { toValue: 20, duration: 100, useNativeDriver: true }).start();
         await waitTo(80);
         Animated.timing(imageSC, { toValue: 10, duration: 256, useNativeDriver: true }).start();
         Animated.timing(imageOP, { toValue: 0, duration: 256, useNativeDriver: true }).start();
