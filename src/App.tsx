@@ -33,10 +33,10 @@ export default class App extends PureComponent<IProps, IState> {
     private refScreenLoading = createRef<ScreenLoadingRef>();
 
     componentDidMount(): void {
-        RNSplashScreen.hide();
+        /*RNSplashScreen.hide();
         SystemNavigationBar.setNavigationColor(Theme.colors.elevation.level2, 'dark');
         StatusBar.setBackgroundColor('#FFFFFF');
-        StatusBar.setBarStyle('dark-content');
+        StatusBar.setBarStyle('dark-content');*/
     }
     
     _onIndexChange(index: number) {
