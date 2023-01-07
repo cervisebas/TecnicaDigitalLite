@@ -25,6 +25,10 @@
 -keep class com.th3rdwave.safeareacontext.** { *; }
 -dontwarn com.th3rdwave.safeareacontext.**
 
+# react-native-screens
+-keep class com.swmansion.rnscreens.** { *; }
+-dontwarn com.swmansion.rnscreens.**
+
 # react-native-svg
 -keep class com.horcrux.svg.** { *; }
 

@@ -1,12 +1,9 @@
 import React, { PureComponent, createRef } from "react";
-import { Route, StatusBar, StyleSheet, View } from "react-native";
+import { Route, StyleSheet, View } from "react-native";
 import { BottomNavigation, Provider as PaperProvider, Text } from "react-native-paper";
-import RNSplashScreen from "react-native-splash-screen";
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Home from "./Scenes/Home";
 import Account from "./Scenes/Account";
 import { Theme } from "./Scripts/Theme";
-import SystemNavigationBar from "react-native-system-navigation-bar";
 import Session from "./Screens/Session";
 import ScreenLoading, { ScreenLoadingRef } from "./Screens/ScreenLoading";
 import SplashScreen from "./Screens/SplashScreen";
@@ -38,7 +35,12 @@ export default class App extends PureComponent<IProps, IState> {
         StatusBar.setBackgroundColor('#FFFFFF');
         StatusBar.setBarStyle('dark-content');*/
     }
+    init() {
+        this.refSession.current?.open();
+        
+    }
     
+    // Navigation
     _onIndexChange(index: number) {
         this.setState({ index });
     }

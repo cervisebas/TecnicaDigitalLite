@@ -46,7 +46,7 @@ export default class CustomModal extends Component<IProps, IState> {
         this._isMount = false;
     }
     resize({ window }: { window: ScaledSize; screen: ScaledSize; }) {
-        this.setState(window);
+        if (this._isMount) this.setState(window);
     }
     onShow() {
         if (this.props.onShow && this._isMount) this.props.onShow();
