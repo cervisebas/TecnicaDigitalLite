@@ -1,12 +1,23 @@
 import React, { PureComponent } from "react";
-import { Image, StyleSheet, View } from "react-native";
-import { Appbar, Button } from "react-native-paper";
-import ViewShot from "react-native-view-shot";
+import { StyleSheet, View } from "react-native";
+import { Appbar } from "react-native-paper";
 import WelcomeCard from "./Home/WelcomeCard";
 import AssistCard from "./Home/AssistCard";
+import { StudentsData } from "../Scripts/ApiTecnica/types";
+import { decode } from "base-64";
 
-type IProps = {};
+type IProps = {
+    datas: StudentsData;
+};
 type IState = {};
+
+const safeDecode = (str: string)=>{
+    try {
+        return decode(str);
+    } catch  {
+        return str;
+    }
+}
 
 export default class Home extends PureComponent<IProps, IState> {
     constructor(props: IProps) {
@@ -18,18 +29,9 @@ export default class Home extends PureComponent<IProps, IState> {
                 <Appbar.Content title={'TecnicaDigital'} />
             </Appbar.Header>
             <View style={styles.content}>
-                <WelcomeCard
-                    namestudent={'Nombre del estudiante'}
-                />
+                <WelcomeCard namestudent={safeDecode(this.props.datas.name)} />
                 <AssistCard
-                    isLoading={false}
-                    isError={false}
-                    isDisableDetailAssist={false}
-                    messageError={"Ocurrio un error..."}
-                    assist={"1"}
-                    notAssist={"2"}
-                    total={"6"}
-                    reloadAssist={()=>undefined}
+                    id={this.props.datas.id}
                     openDetailsAssit={()=>undefined}
                 />
             </View>

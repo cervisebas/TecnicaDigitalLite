@@ -78,7 +78,7 @@ export default class App extends PureComponent<IProps, IState> {
     _renderScene(props: { route: Route; jumpTo: (key: string) => void; }) {
         switch (props.route.key) {
             case 'home':
-                return <Home />;
+                return <Home datas={this.state.datas} />;
             case 'details':
                 return <Account />;
         }
