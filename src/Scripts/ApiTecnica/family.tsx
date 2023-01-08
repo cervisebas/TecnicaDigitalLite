@@ -34,7 +34,7 @@ export default class FamilySystem {
                 }).catch(()=>reject({ ok: false, cause: 'Error de conexión.' }));
         });
     }
-    getDataLocal(): Promise<{ id: string; dni: string; name?: string; picture?: string; }> {
+    getDataLocal(): Promise<{ id: string; dni: string; name: string; picture: string; }> {
         return new Promise((resolve, reject)=>{
             AsyncStorage.getItem('FamilySession').then((value)=>{
                 try {

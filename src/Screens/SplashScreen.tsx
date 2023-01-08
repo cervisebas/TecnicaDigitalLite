@@ -9,7 +9,9 @@ import GlitchText from "../Components/GlitchText";
 import TextAnimationShake from "../Components/TextAnimationShake";
 import RNSplashScreen from "react-native-splash-screen";
 
-type IProps = {};
+type IProps = {
+    initNow: ()=>void;
+};
 
 export default React.memo(function SplashScreen(props: IProps) {
     const [visible, setVisible] = useState(true);
@@ -69,6 +71,7 @@ export default React.memo(function SplashScreen(props: IProps) {
                 Animated.timing(brandOP, { toValue: 1, duration: 512, useNativeDriver: true }).start(async function () {
                     await waitTo(1500);
                     setVisible(false);
+                    props.initNow();
                 });
             });
         });

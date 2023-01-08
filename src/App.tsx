@@ -8,20 +8,25 @@ import Session from "./Screens/Session";
 import ScreenLoading, { ScreenLoadingRef } from "./Screens/ScreenLoading";
 import SplashScreen from "./Screens/SplashScreen";
 import { Family } from "./Scripts/ApiTecnica";
+import { StudentsData } from "./Scripts/ApiTecnica/types";
+import { waitTo } from "./Scripts/Utils";
 
 type IProps = {};
 type IState = {
     index: number;
+    datas: StudentsData | undefined;
 };
 
 export default class App extends PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            index: 0
+            index: 0,
+            datas: undefined
         };
         this._onIndexChange = this._onIndexChange.bind(this);
         this._renderScene = this._renderScene.bind(this);
+        this.init = this.init.bind(this);
     }
     private routes = [
         { key: 'home', title: 'Inicio', focusedIcon: 'home', unfocusedIcon: 'home-outline' },
@@ -36,12 +41,30 @@ export default class App extends PureComponent<IProps, IState> {
         StatusBar.setBackgroundColor('#FFFFFF');
         StatusBar.setBarStyle('dark-content');*/
     }
-    init() {
+    async init() {
+        this.setState({ datas: undefined });
         this.refScreenLoading.current?.open();
         this.refScreenLoading.current?.setText(true, 'Iniciando sesión...');
-        Family.verify().then(()=>{
-            
-        });
+        try {
+            await Family.verify();
+            this.refScreenLoading.current?.setText(true, 'Obteniendo datos locales...');
+            const getLocalData = await Family.getDataLocal();
+            this.refScreenLoading.current?.setInformation(getLocalData.name, getLocalData.picture);
+            this.refScreenLoading.current?.setEndHere(true);
+            this.refScreenLoading.current?.startAnimation();
+            await waitTo(1024);
+            this.refScreenLoading.current?.setText(true, 'Obteniendo información...');
+            const studentData = await Family.getDataStudent();
+            console.log(studentData);
+        } catch (error: any) {
+            if (error.relogin) {
+                await waitTo(1024);
+                this.refScreenLoading.current?.close();
+                return this.refSession.current?.open();
+            }
+            this.refScreenLoading.current?.setShowLoading(false);
+            this.refScreenLoading.current?.setText(true, error.cause);
+        }
     }
     
     // Navigation
@@ -81,7 +104,7 @@ export default class App extends PureComponent<IProps, IState> {
                 />
                 <Session ref={this.refSession} />
                 <ScreenLoading ref={this.refScreenLoading} />
-                <SplashScreen />
+                <SplashScreen initNow={this.init} />
             </PaperProvider>
         </View>);
     }
