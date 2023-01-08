@@ -1,9 +1,8 @@
-import { decode, encode } from "base-64";
-import axios from "axios";
 import qs from "qs";
-import { ApiHeader, DataSchedule, FamilyDataAssist, TypicalRes } from "./types";
-import { StudentsData } from "./types";
+import axios from "axios";
+import { decode, encode } from "base-64";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ApiHeader, DataSchedule, FamilyDataAssist, StudentsData, TypicalRes } from "./types";
 
 export default class FamilySystem {
     private urlBase: string = '';
@@ -47,11 +46,11 @@ export default class FamilySystem {
             }).catch(()=>reject({ ok: false, cause: 'Error al acceder a los datos almacenados' }));
         });
     }
-    verify(): Promise<boolean> {
+    verify(): Promise<void> {
         return new Promise((resolve, reject)=>{
             this.getDataLocal().then((local)=>
                 this.open(decode(local.dni))
-                    .then(()=>resolve(true))
+                    .then(()=>resolve())
                     .catch((e)=>reject({ ok: false, relogin: e.relogin, cause: e.cause }))
             ).catch((error)=>reject({ ok: false, relogin: true, cause: error.cause }));
         });

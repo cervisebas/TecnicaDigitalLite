@@ -28,13 +28,13 @@ export default React.memo(function SplashScreen(props: IProps) {
             SystemNavigationBar.setNavigationColor('#FF3232', 'light');
             StatusBar.setBackgroundColor('#FF3232');
             StatusBar.setBarStyle('light-content');
-        } else {
+        } /*else {
             setTimeout(() => {
                 SystemNavigationBar.setNavigationColor(Theme.colors.elevation.level2, 'dark');
                 StatusBar.setBackgroundColor('#FFFFFF');
                 StatusBar.setBarStyle('dark-content');
             }, 500);
-        }
+        }*/
     }, [visible]);
 
     async function startAnimation() {
@@ -58,7 +58,8 @@ export default React.memo(function SplashScreen(props: IProps) {
             Animated.timing(imageSC, { toValue: 10, duration: 256, delay: 478, useNativeDriver: true }),
             Animated.timing(imageOP, { toValue: 0, duration: 350, delay: 528, useNativeDriver: true }),
             Animated.timing(glitchOP, { toValue: 1, duration: 256, delay: 528, useNativeDriver: true })
-        ]).start(function () {
+        ]).start(async function () {
+            await waitTo(1500);
             Animated.parallel([
                 Animated.timing(viewSizeY, { toValue: 1, duration: 500, useNativeDriver: true }),
                 Animated.timing(glitchOP, { toValue: 0, duration: 256, delay: 128, useNativeDriver: true })
@@ -66,7 +67,7 @@ export default React.memo(function SplashScreen(props: IProps) {
             ]).start(function () {
                 refTextAnimationShake.current?.start();
                 Animated.timing(brandOP, { toValue: 1, duration: 512, useNativeDriver: true }).start(async function () {
-                    await waitTo(1000);
+                    await waitTo(1500);
                     setVisible(false);
                 });
             });

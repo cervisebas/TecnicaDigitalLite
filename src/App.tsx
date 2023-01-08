@@ -7,6 +7,7 @@ import { Theme } from "./Scripts/Theme";
 import Session from "./Screens/Session";
 import ScreenLoading, { ScreenLoadingRef } from "./Screens/ScreenLoading";
 import SplashScreen from "./Screens/SplashScreen";
+import { Family } from "./Scripts/ApiTecnica";
 
 type IProps = {};
 type IState = {
@@ -36,8 +37,11 @@ export default class App extends PureComponent<IProps, IState> {
         StatusBar.setBarStyle('dark-content');*/
     }
     init() {
-        this.refSession.current?.open();
-        
+        this.refScreenLoading.current?.open();
+        this.refScreenLoading.current?.setText(true, 'Iniciando sesión...');
+        Family.verify().then(()=>{
+            
+        });
     }
     
     // Navigation
