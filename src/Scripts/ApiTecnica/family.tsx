@@ -11,7 +11,7 @@ export default class FamilySystem {
         this.urlBase = setUrl;
         this.header_access = setHeaderAccess;
     }
-    open(dni: string) : Promise<boolean> {
+    open(dni: string) : Promise<void> {
         return new Promise((resolve, reject)=>{
             var dataPost = qs.stringify({ family_login: true, dni: encode(dni) });
             axios.post(`${this.urlBase}/index.php`, dataPost, this.header_access)
@@ -25,7 +25,7 @@ export default class FamilySystem {
                                 name: res.datas.name,
                                 picture: res.datas.picture
                             })));
-                            return resolve(true);
+                            return resolve();
                         }
                         return reject({ ok: false, cause: (res.cause)? res.cause: 'Ocurrio un error inesperado.' });
                     } catch {
