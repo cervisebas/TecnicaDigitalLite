@@ -77,6 +77,10 @@ export default class CustomModal extends Component<IProps, IState> {
             deviceHeight={this.state.height}
             hasBackdrop={this.props.useBackdrop}
             coverScreen={false}
+
+            useNativeDriver={true}
+            hideModalContentWhileAnimating={true}
+
             //backdropColor={(isDark)? 'gray': 'black'}
             style={[this.props.style, styles.modal]}>
             {this.props.children}

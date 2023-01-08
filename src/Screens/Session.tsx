@@ -4,12 +4,14 @@ import { Dimensions, Keyboard, PixelRatio, StatusBar, StyleProp, StyleSheet, Tou
 import { Theme } from "../Scripts/Theme";
 import { LinearGradient } from "../Components/LinearGradient";
 import ParticleBackground from "../Components/ParticleBackground";
-import { Text, MD2Colors, TextInput, Button, Provider, HelperText } from "react-native-paper";
+import { Text, MD2Colors, TextInput, Button, Provider, HelperText, Portal } from "react-native-paper";
 import SystemNavigationBar from "react-native-system-navigation-bar";
-import CustomSnackbar from "../Components/CustomSnackbar";
 import { Family } from "../Scripts/ApiTecnica";
+import AlertComponent from "../Components/AlertComponent";
 
-type IProps = {};
+type IProps = {
+    initNow: ()=>void;
+};
 type IState = {
     visible: boolean;
     formDNI: string;
@@ -24,7 +26,7 @@ export default class Session extends PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            visible: true,
+            visible: false,
             formDNI: '',
             errorFormDNI: false,
             errorStringFormDNI: '',
@@ -37,6 +39,7 @@ export default class Session extends PureComponent<IProps, IState> {
     private particleSize = PixelRatio.getPixelSizeForLayoutSize(8);
     private particleNumber = Math.floor(Dimensions.get('window').width / this.particleSize);
     private isColored = false;
+    private refAlertComponent = createRef<AlertComponent>();
 
     _onChangeText(text: string) {
         const isError = (this.state.errorFormDNI)? { errorFormDNI: false, errorStringFormDNI: '' }: {};
@@ -45,21 +48,11 @@ export default class Session extends PureComponent<IProps, IState> {
     }
 
 
-    componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any): void {
-        if (prevState.visible !== this.state.visible) {
-            if (this.state.visible) {
-                if (!this.isColored) {
-                    SystemNavigationBar.setNavigationColor("rgba(0, 163, 255, 1)", 'dark');
-                    StatusBar.setBackgroundColor('rgba(0, 163, 255, 0.001)');
-                    StatusBar.setBarStyle('dark-content');
-                    this.isColored = true;
-                }
-            } else if (this.isColored) {
-                SystemNavigationBar.setNavigationColor(Theme.colors.elevation.level2, 'dark');
-                StatusBar.setBackgroundColor('#FFFFFF');
-                StatusBar.setBarStyle('dark-content');
-                this.isColored = false;
-            }
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any) {
+        if (prevState.visible !== this.state.visible) if (this.state.visible) {
+            SystemNavigationBar.setNavigationColor("rgba(0, 163, 255, 1)", 'dark');
+            StatusBar.setBackgroundColor('rgba(0, 163, 255, 0.001)');
+            StatusBar.setBarStyle('dark-content');
         }
     }
 
@@ -75,10 +68,19 @@ export default class Session extends PureComponent<IProps, IState> {
     initSession() {
         // Test Input
         if (this.testInput()) return;
-        this.setState({ isLoading: true }, ()=>{
-            Family.open(this.state.formDNI).then(()=>{
-                
-            })
+        this.setState({ isLoading: true }, async()=>{
+            try {
+                await Family.open(this.state.formDNI);
+                this.props.initNow();
+                this.setState({
+                    isLoading: false,
+                    visible: false,
+                    formDNI: ''
+                });
+            } catch (error: any) {
+                this.setState({ isLoading: false });
+                this.refAlertComponent.current?.open('Alerta!!!', error.cause);
+            }
         });
     }
 
@@ -133,6 +135,9 @@ export default class Session extends PureComponent<IProps, IState> {
                         </View>
                     </View>
                 </TouchableWithoutFeedback>
+                <Portal>
+                    <AlertComponent ref={this.refAlertComponent} />
+                </Portal>
             </Provider>
         </CustomModal>);
     }

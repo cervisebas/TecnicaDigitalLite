@@ -6,4 +6,4 @@ const urlBase: string = 'https://tecnicadigital.com.ar';
 
 const Family = new FamilySystem(urlBase, SecurityHeaderFamily);
 
-export { Family };
+export { Family, urlBase };

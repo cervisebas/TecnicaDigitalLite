@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import CustomModal from "../Components/CustomModal";
-import { Image, StyleSheet, View, Animated, StatusBar, Easing } from "react-native";
+import { StyleSheet, View, Animated, StatusBar, Easing } from "react-native";
 import { LinearGradient } from "../Components/LinearGradient";
 import { Theme } from "../Scripts/Theme";
 import Logo from "../Assets/logo.webp";
@@ -8,6 +8,7 @@ import { ActivityIndicator, ProgressBar, Text } from "react-native-paper";
 import SystemNavigationBar from "react-native-system-navigation-bar";
 import CogImage from "../Assets/Cog.webp";
 import ImageLazyLoad from "../Components/ImageLazyLoad";
+import { waitTo } from "../Scripts/Utils";
 
 type IProps = {};
 export type ScreenLoadingRef = {
@@ -22,15 +23,15 @@ export type ScreenLoadingRef = {
 };
 
 export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref: React.Ref<ScreenLoadingRef>) {
-    const [visible, setVisible] = useState<boolean>(true);
+    const [visible, setVisible] = useState<boolean>(false);
     const [viewLoading, setViewLoading] = useState<boolean>(true);
-    const [viewTex, setViewTex] = useState<boolean>(false);
+    const [viewText, setViewTex] = useState<boolean>(false);
     const [message, setMessage] = useState<string>('Cargando...');
+    const [endHere, setEndHere2] = useState(false);
     // StudentData
     const [image, setImage] = useState<string>('none');
     const [name, setName] = useState<string>('Nombre del estudiante');
     // ###########
-    let endHere = false;
     let isAnimating = false;
     const duration: number = 300;
     // Animations Cogs
@@ -48,8 +49,9 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
 
     const open = ()=>setVisible(true);
     const setShowLoading = (visible: boolean)=>setViewLoading(visible);
-    function close() {
+    async function close() {
         setVisible(false);
+        await waitTo(300);
         setViewTex(false);
         setViewLoading(true);
         setMessage('');
@@ -57,16 +59,16 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
     }
     function setText(visible2: boolean, message: string) {
         if (visible2) {
-            if (viewTex) setViewTex(visible2);
+            if (!viewText) setViewTex(visible2);
             return setMessage(message);
         }
         setViewTex(false);
         setMessage('');
     }
     function setEndHere(value: boolean) {
-        return endHere = value;
+        return setEndHere2(value);
     }
-    function setInformation(image: string, name: string) {
+    function setInformation(name: string, image: string) {
         setImage(image);
         setName(name);
     }
@@ -112,7 +114,8 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
             Animated.timing(cog2Y, { toValue: 0, duration, useNativeDriver: true, easing: Easing.linear }),
             Animated.timing(cog3X, { toValue: 0, duration, useNativeDriver: true, easing: Easing.linear }),
             Animated.timing(cog3Y, { toValue: 0, duration, useNativeDriver: true, easing: Easing.linear })
-        ]).start(()=>animationCogs.start());
+        ]).start();
+        setTimeout(animationCogs.start, duration);
     }
     function setStateLoading(show: boolean) {
         Animated.parallel([
@@ -139,10 +142,12 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
             StatusBar.setBackgroundColor('rgba(0, 163, 255, 0.001)');
             StatusBar.setBarStyle('dark-content');
         } else if (endHere) {
-            SystemNavigationBar.setNavigationColor(Theme.colors.elevation.level2, 'dark');
-            StatusBar.setBackgroundColor('#FFFFFF');
-            StatusBar.setBarStyle('dark-content');
-            endHere = false;
+            setTimeout(() => {
+                SystemNavigationBar.setNavigationColor(Theme.colors.elevation.level2, 'dark');
+                StatusBar.setBackgroundColor('#FFFFFF');
+                StatusBar.setBarStyle('dark-content');
+            }, 300);
+            setEndHere2(false);
         }
     }, [visible]);
 
@@ -196,13 +201,13 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
                     animating={true}
                     size={'large'}
                 />}
-                {(viewTex)&&<Text style={styles.loadingText} numberOfLines={1}>{message}</Text>}
+                {(viewText)&&<Text style={styles.loadingText} numberOfLines={1}>{message}</Text>}
             </Animated.View>
             <Animated.View style={[styles.loadingContent, { opacity: loadView2Op, transform: [{ translateY: loadView2Ty }] }]}>
-                {(viewLoading)&&<View style={{ width: '70%' }}>
+                {(viewLoading)&&<View style={{ width: '80%' }}>
                     <ProgressBar indeterminate={true} />
                 </View>}
-                {(viewTex)&&<Text style={styles.loadingText} numberOfLines={1}>{message}</Text>}
+                {(viewText)&&<Text style={styles.loadingText} numberOfLines={1}>{message}</Text>}
             </Animated.View>
         </View>
     </CustomModal>);
