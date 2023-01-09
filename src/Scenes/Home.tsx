@@ -1,28 +1,27 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, createRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { Appbar } from "react-native-paper";
 import WelcomeCard from "./Home/WelcomeCard";
 import AssistCard from "./Home/AssistCard";
 import { StudentsData } from "../Scripts/ApiTecnica/types";
-import { decode } from "base-64";
+import { safeDecode } from "../Scripts/Utils";
+import CardComponent, { CardComponentRef } from "../Components/CardComponent";
 
 type IProps = {
     datas: StudentsData;
 };
 type IState = {};
 
-const safeDecode = (str: string)=>{
-    try {
-        return decode(str);
-    } catch  {
-        return str;
-    }
-}
-
 export default class Home extends PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
     }
+    private refCardComponent = createRef<CardComponentRef>();
+
+    componentDidMount(): void {
+        this.refCardComponent.current?.setScale(0.32);
+    }
+
     render(): React.ReactNode {
         return(<View style={styles.content}>
             <Appbar.Header>
@@ -33,6 +32,13 @@ export default class Home extends PureComponent<IProps, IState> {
                 <AssistCard
                     id={this.props.datas.id}
                     openDetailsAssit={()=>undefined}
+                />
+                <CardComponent
+                    ref={this.refCardComponent}
+                    dni={this.props.datas.dni}
+                    name={this.props.datas.name}
+                    image={this.props.datas.picture}
+                    designID={0}
                 />
             </View>
         </View>);
