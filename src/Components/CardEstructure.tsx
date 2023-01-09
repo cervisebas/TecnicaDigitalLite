@@ -1,5 +1,5 @@
-import React from "react";
-import { Image, StyleSheet, Text } from "react-native";
+import React, { useState } from "react";
+import { Image, NativeSyntheticEvent, StyleSheet, Text, TextLayoutEventData } from "react-native";
 import { DesingsCardsType } from "../Scripts/DesingsCardsType";
 import { urlBase } from "../Scripts/ApiTecnica";
 import { getForScale, safeDecode } from "../Scripts/Utils";
@@ -14,6 +14,17 @@ type IProps = {
 };
 
 export default React.memo(function CardEstructure(props: IProps) {
+    const [numberLines, setNumberLines] = useState(0);
+    function onTextLayout(event: NativeSyntheticEvent<TextLayoutEventData>) {
+        let lines = event.nativeEvent.lines.length;
+        setNumberLines(lines - 1);
+    }
+    function getTopMoreLines(): number {
+        let top = props.designEstructure.name.y;
+        let fontSize = props.designEstructure.name.fontSize;
+        let calcPer = Math.fround((40 * fontSize)/100);
+        return Math.fround(top - (calcPer * numberLines));
+    }
     return(<>
         <Image
             source={props.designEstructure.background}
@@ -39,7 +50,7 @@ export default React.memo(function CardEstructure(props: IProps) {
         <Text
             style={{
                 position: 'absolute',
-                top: getForScale(props.scale, props.designEstructure.name.y),
+                top: (props.designEstructure.name.maxNumberLines as number > 1)? getForScale(props.scale, getTopMoreLines()): getForScale(props.scale, props.designEstructure.name.y),
                 left: getForScale(props.scale, props.designEstructure.name.x),
                 width: getForScale(props.scale, props.designEstructure.name.width),
                 height: (props.designEstructure.name.height)? getForScale(props.scale, props.designEstructure.name.height): undefined,
@@ -49,10 +60,14 @@ export default React.memo(function CardEstructure(props: IProps) {
                 fontWeight: props.designEstructure.name.fontWeight,
                 textAlign: props.designEstructure.name.textAlign,
                 textShadowColor: props.designEstructure.name.textShadowColor,
-                textShadowOffset: props.designEstructure.name.textShadowOffset,
-                textShadowRadius: props.designEstructure.name.textShadowRadius
+                textShadowOffset: (props.designEstructure.name.textShadowOffset !== undefined)? {
+                    width: getForScale(props.scale, props.designEstructure.name.textShadowOffset.width),
+                    height: getForScale(props.scale, props.designEstructure.name.textShadowOffset.height)
+                }: undefined,
+                textShadowRadius: (props.designEstructure.name.textShadowRadius)? getForScale(props.scale, props.designEstructure.name.textShadowRadius): undefined
             }}
             numberOfLines={props.designEstructure.name.maxNumberLines}
+            onTextLayout={onTextLayout}
         >{safeDecode(props.name)}</Text>
         <Barcode
             value={`eest${safeDecode(props.dni)}`}

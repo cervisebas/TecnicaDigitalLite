@@ -1,6 +1,18 @@
 import { DesingsCardsType } from "./DesingsCardsType";
 // Backgrounds
 import Card0 from "../Assets/Desings/default.webp";
+import Card1 from "../Assets/Desings/card1.webp";
+import Card2 from "../Assets/Desings/card2.webp";
+import Card3 from "../Assets/Desings/card3.webp";
+import Card4 from "../Assets/Desings/card4.webp";
+import Card5 from "../Assets/Desings/card5.webp";
+import Card6 from "../Assets/Desings/card8.webp";
+import Card7 from "../Assets/Desings/card9.webp";
+import Card8 from "../Assets/Desings/card10.webp";
+import Card9 from "../Assets/Desings/card11.webp";
+import Card10 from "../Assets/Desings/card12.webp";
+import Card11 from "../Assets/Desings/card13.webp";
+import Card12 from "../Assets/Desings/card14.webp";
 
 
 const DesingsCards: DesingsCardsType[] = [{
@@ -17,7 +29,7 @@ const DesingsCards: DesingsCardsType[] = [{
         height: 300,
         x: 60,
         y: 80,
-        borderRadius: 10,
+        borderRadius: 16,
         borderWidth: 10,
         borderColor: '#0038FF'
     },
@@ -27,6 +39,311 @@ const DesingsCards: DesingsCardsType[] = [{
         x: 420,
         color: '#000000',
         fontSize: 64,
+        maxNumberLines: 2
+    }
+}, {
+    id: 1,
+    background: Card1,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 480
+    },
+    image: {
+        width: 300,
+        height: 300,
+        x: 60,
+        y: 80,
+        borderRadius: 16,
+        borderWidth: 10,
+        borderColor: '#FF1E2E'
+    },
+    name: {
+        width: 780,
+        y: 122,
+        x: 420,
+        color: '#FFFFFF',
+        fontSize: 64,
+        textShadowColor: "rgba(0, 0, 0, 0.75)",
+        textShadowOffset: { width: 3, height: 3 },
+        textShadowRadius: 2,
+        maxNumberLines: 1
+    }
+}, {
+    id: 2,
+    background: Card2,
+    barcode: {
+        width: 526.32,
+        height: 130,
+        x: 570,
+        y: 420.6
+    },
+    image: {
+        width: 316,
+        height: 316,
+        x: 143,
+        y: 232,
+        borderRadius: 300,
+        borderWidth: 8,
+        borderColor: '#00A3FF'
+    },
+    name: {
+        width: 531,
+        y: 270,
+        x: 565,
+        color: '#000000',
+        fontSize: 48,
+        maxNumberLines: 1
+    }
+}, {
+    id: 3,
+    background: Card3,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 480
+    },
+    image: {
+        width: 300,
+        height: 300,
+        x: 60,
+        y: 80,
+        borderRadius: 16,
+        borderWidth: 10,
+        borderColor: '#FF2E2E'
+    },
+    name: {
+        width: 780,
+        y: 122,
+        x: 420,
+        color: '#000000',
+        fontSize: 64,
+        textShadowColor: "rgba(255, 255, 255, 0.75)",
+        textShadowOffset: { width: 3, height: 3 },
+        textShadowRadius: 2,
+        maxNumberLines: 1
+    }
+}, {
+    id: 4,
+    background: Card4,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 480
+    },
+    image: {
+        width: 300,
+        height: 300,
+        x: 60,
+        y: 80,
+        borderRadius: 16,
+        borderWidth: 10,
+        borderColor: '#FF2E2E'
+    },
+    name: {
+        width: 780,
+        y: 122,
+        x: 420,
+        color: '#000000',
+        fontSize: 64,
+        maxNumberLines: 1
+    }
+}, {
+    id: 5,
+    background: Card5,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 480
+    },
+    image: {
+        width: 300,
+        height: 300,
+        x: 60,
+        y: 80,
+        borderRadius: 16
+    },
+    name: {
+        width: 780,
+        y: 192,
+        x: 420,
+        color: '#FFFFFF',
+        fontSize: 64,
+        fontWeight: '700',
+        textShadowColor: '#FFFFFF',
+        textShadowOffset: {
+            width: 2,
+            height: 2
+        },
+        textShadowRadius: 2,
+        maxNumberLines: 2
+    }
+}, {
+    id: 6,
+    background: Card6,
+    barcode: {
+        width: 686.27,
+        height: 169.51,
+        x: 61,
+        y: 400
+    },
+    name: {
+        width: 700,
+        y: 229,
+        x: 54,
+        color: '#000000',
+        fontSize: 48,
+        fontWeight: '600',
+        textAlign: 'center',
+        maxNumberLines: 2
+    }
+}, {
+    id: 7,
+    background: Card7,
+    barcode: {
+        width: 607.84,
+        height: 150.14,
+        x: 506,
+        y: 523
+    },
+    name: {
+        width: 674,
+        y: 281,
+        x: 486,
+        color: '#FFFFFF',
+        fontSize: 64,
+        fontWeight: '400',
+        textAlign: 'center',
+        maxNumberLines: 2,
+        textShadowColor: 'rgba(0, 0, 0, 1)',
+        textShadowOffset: {
+            width: 3,
+            height: 3
+        },
+        textShadowRadius: 3
+    }
+}, {
+    id: 8,
+    background: Card8,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 480.5
+    },
+    image: {
+        width: 300,
+        height: 300,
+        x: 60,
+        y: 80,
+        borderRadius: 16,
+        borderWidth: 10,
+        borderColor: '#FFCC00'
+    },
+    name: {
+        width: 780,
+        y: 192,
+        x: 420,
+        color: '#000000',
+        fontSize: 64,
+        fontWeight: '600',
+        textShadowColor: '#FFFFFF',
+        textShadowOffset: {
+            width: 2,
+            height: 2
+        },
+        textShadowRadius: 2,
+        maxNumberLines: 2
+    }
+}, {
+    id: 9,
+    background: Card9,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 480.5
+    },
+    image: {
+        width: 300,
+        height: 300,
+        x: 60,
+        y: 80,
+        borderRadius: 16
+    },
+    name: {
+        width: 780,
+        y: 192,
+        x: 420,
+        color: '#000000',
+        fontSize: 64,
+        fontWeight: '700',
+        textShadowColor: '#000000',
+        textShadowOffset: {
+            width: 2,
+            height: 2
+        },
+        textShadowRadius: 4,
+        maxNumberLines: 2
+    }
+}, {
+    id: 10,
+    background: Card10,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 480.5
+    },
+    image: {
+        width: 300,
+        height: 300,
+        x: 60,
+        y: 80,
+        borderRadius: 16
+    },
+    name: {
+        width: 780,
+        y: 192,
+        x: 420,
+        color: '#000000',
+        fontSize: 64,
+        fontWeight: '700',
+        textShadowColor: '#000000',
+        textShadowOffset: {
+            width: 2,
+            height: 2
+        },
+        textShadowRadius: 4,
+        maxNumberLines: 2
+    }
+}, {
+    id: 11,
+    background: Card11,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 480.5
+    },
+    name: {
+        width: 549,
+        y: 199,
+        x: 80,
+        color: '#000000',
+        fontSize: 58,
+        fontWeight: '700',
+        textShadowColor: '#000000',
+        textShadowOffset: {
+            width: 2,
+            height: 2
+        },
+        textShadowRadius: 4,
+        textAlign: 'center',
         maxNumberLines: 2
     }
 }];

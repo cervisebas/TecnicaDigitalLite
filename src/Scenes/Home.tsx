@@ -36,9 +36,10 @@ export default class Home extends PureComponent<IProps, IState> {
                 <CardComponent
                     ref={this.refCardComponent}
                     dni={this.props.datas.dni}
-                    name={this.props.datas.name}
+                    //name={this.props.datas.name}
+                    name={'TGF1dGFybyBTZWLhc3RpYW4gQ2VydmnxbyBHYXJj7WE='}
                     image={this.props.datas.picture}
-                    designID={0}
+                    designID={12}
                 />
             </View>
         </View>);
