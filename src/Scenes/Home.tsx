@@ -6,6 +6,7 @@ import AssistCard from "./Home/AssistCard";
 import { StudentsData } from "../Scripts/ApiTecnica/types";
 import { safeDecode } from "../Scripts/Utils";
 import CardComponent, { CardComponentRef } from "../Components/CardComponent";
+import CardCredential from "./Home/CardCredential";
 
 type IProps = {
     datas: StudentsData;
@@ -33,13 +34,15 @@ export default class Home extends PureComponent<IProps, IState> {
                     id={this.props.datas.id}
                     openDetailsAssit={()=>undefined}
                 />
-                <CardComponent
+                {/*<CardComponent
                     ref={this.refCardComponent}
-                    dni={this.props.datas.dni}
-                    //name={this.props.datas.name}
                     name={'TGF1dGFybyBTZWLhc3RpYW4gQ2VydmnxbyBHYXJj7WE='}
-                    image={this.props.datas.picture}
                     designID={-1}
+                />*/}
+                <CardCredential
+                    dni={this.props.datas.dni}
+                    name={this.props.datas.name}
+                    image={this.props.datas.picture}
                 />
             </View>
         </View>);
