@@ -1,5 +1,6 @@
 import { DesingsCardsType } from "./DesingsCardsType";
 // Backgrounds
+import Card_1 from "../Assets/Desings/teacher.webp";
 import Card0 from "../Assets/Desings/default.webp";
 import Card1 from "../Assets/Desings/card1.webp";
 import Card2 from "../Assets/Desings/card2.webp";
@@ -13,9 +14,50 @@ import Card9 from "../Assets/Desings/card11.webp";
 import Card10 from "../Assets/Desings/card12.webp";
 import Card11 from "../Assets/Desings/card13.webp";
 import Card12 from "../Assets/Desings/card14.webp";
+import Card13 from "../Assets/Desings/card15.webp";
+import Card14 from "../Assets/Desings/card16.webp";
+import Card15 from "../Assets/Desings/card17.webp";
+import Card16 from "../Assets/Desings/card18.webp";
+import Card17 from "../Assets/Desings/card19.webp";
+import Card18 from "../Assets/Desings/card20.webp";
+import Card19 from "../Assets/Desings/card21.webp";
+import Card20 from "../Assets/Desings/card22.webp";
+import Card21 from "../Assets/Desings/card23.webp";
+import Card22 from "../Assets/Desings/card25.webp";
 
 
 const DesingsCards: DesingsCardsType[] = [{
+    id: -1,
+    background: Card_1,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 481
+    },
+    image: {
+        width: 300,
+        height: 300,
+        x: 60,
+        y: 80,
+        borderRadius: 16
+    },
+    name: {
+        width: 770,
+        y: 192,
+        x: 420,
+        color: '#000000',
+        fontSize: 64,
+        fontWeight: 'bold',
+        textShadowColor: '#000000',
+        textShadowOffset: {
+            width: 2,
+            height: 2
+        },
+        textShadowRadius: 2,
+        maxNumberLines: 2
+    }
+}, {
     id: 0,
     background: Card0,
     barcode: {
@@ -344,6 +386,329 @@ const DesingsCards: DesingsCardsType[] = [{
         },
         textShadowRadius: 4,
         textAlign: 'center',
+        maxNumberLines: 2
+    }
+}, {
+    id: 12,
+    background: Card12,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 481
+    },
+    image: {
+        width: 300,
+        height: 300,
+        x: 60,
+        y: 80,
+        borderRadius: 16
+    },
+    name: {
+        width: 770,
+        y: 192,
+        x: 420,
+        color: '#FFE677',
+        fontSize: 64,
+        fontWeight: '700',
+        textShadowColor: '#FFFFFF',
+        textShadowOffset: {
+            width: 2,
+            height: 2
+        },
+        textShadowRadius: 2,
+        maxNumberLines: 2
+    }
+}, {
+    id: 13,
+    background: Card13,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 481
+    },
+    image: {
+        width: 300,
+        height: 300,
+        x: 60,
+        y: 80,
+        borderRadius: 16
+    },
+    name: {
+        width: 770,
+        y: 192,
+        x: 420,
+        color: '#FFFFFF',
+        fontSize: 64,
+        fontWeight: '500',
+        textShadowColor: '#FFFFFF',
+        textShadowOffset: {
+            width: 2,
+            height: 2
+        },
+        textShadowRadius: 2,
+        maxNumberLines: 2
+    }
+}, {
+    id: 14,
+    background: Card14,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 481
+    },
+    image: {
+        width: 300,
+        height: 300,
+        x: 60,
+        y: 80,
+        borderRadius: 16,
+        borderWidth: 10,
+        borderColor: '#E86F72'
+    },
+    name: {
+        width: 770,
+        y: 192,
+        x: 420,
+        color: '#FFFFFF',
+        fontSize: 64,
+        fontWeight: '500',
+        textShadowColor: '#FFFFFF',
+        textShadowOffset: {
+            width: 2,
+            height: 2
+        },
+        textShadowRadius: 2,
+        maxNumberLines: 2
+    }
+}, {
+    id: 15,
+    background: Card15,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 481
+    },
+    image: {
+        width: 300,
+        height: 300,
+        x: 60,
+        y: 80,
+        borderRadius: 16
+    },
+    name: {
+        width: 770,
+        y: 192,
+        x: 420,
+        color: '#FFFFFF',
+        fontSize: 64,
+        fontWeight: '500',
+        textShadowColor: '#000000',
+        textShadowOffset: {
+            width: 2,
+            height: 2
+        },
+        textShadowRadius: 2,
+        maxNumberLines: 2
+    }
+}, {
+    id: 16,
+    background: Card16,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 481
+    },
+    image: {
+        width: 340,
+        height: 400,
+        x: 0,
+        y: 0,
+        borderRadius: 0
+    },
+    name: {
+        width: 799,
+        y: 163,
+        x: 420,
+        color: '#000000',
+        fontSize: 64,
+        fontWeight: '500',
+        textShadowColor: '#FFFFFF',
+        textShadowOffset: {
+            width: 2,
+            height: 2
+        },
+        textShadowRadius: 2,
+        maxNumberLines: 2
+    }
+}, {
+    id: 17,
+    background: Card17,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 481
+    },
+    name: {
+        width: 770,
+        y: 192,
+        x: 420,
+        color: '#FFFFFF',
+        fontSize: 64,
+        fontWeight: '500',
+        textShadowColor: '#FFFFFF',
+        textShadowOffset: {
+            width: 2,
+            height: 2
+        },
+        textShadowRadius: 2,
+        maxNumberLines: 2
+    }
+}, {
+    id: 18,
+    background: Card18,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 481
+    },
+    name: {
+        width: 490,
+        y: 35,
+        x: 36,
+        color: '#000000',
+        fontSize: 48,
+        fontWeight: '500',
+        maxNumberLines: 1
+    }
+}, {
+    id: 19,
+    background: Card19,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 481
+    },
+    image: {
+        width: 300,
+        height: 300,
+        x: 60,
+        y: 80,
+        borderRadius: 16
+    },
+    name: {
+        width: 770,
+        y: 192,
+        x: 420,
+        color: '#FFFFFF',
+        fontSize: 64,
+        fontWeight: '500',
+        textShadowColor: '#000000',
+        textShadowOffset: {
+            width: 2,
+            height: 2
+        },
+        textShadowRadius: 2,
+        maxNumberLines: 2
+    }
+}, {
+    id: 20,
+    background: Card20,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 481
+    },
+    image: {
+        width: 300,
+        height: 300,
+        x: 60,
+        y: 80,
+        borderRadius: 16
+    },
+    name: {
+        width: 770,
+        y: 192,
+        x: 420,
+        color: '#FFFFFF',
+        fontSize: 64,
+        fontWeight: '600',
+        textShadowColor: '#000000',
+        textShadowOffset: {
+            width: 2,
+            height: 2
+        },
+        textShadowRadius: 2,
+        maxNumberLines: 2
+    }
+}, {
+    id: 21,
+    background: Card21,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 481
+    },
+    image: {
+        width: 300,
+        height: 300,
+        x: 60,
+        y: 80,
+        borderRadius: 16
+    },
+    name: {
+        width: 770,
+        y: 192,
+        x: 420,
+        color: '#000000',
+        fontSize: 64,
+        fontWeight: 'bold',
+        textShadowColor: '#FFFFFF',
+        textShadowOffset: {
+            width: 2,
+            height: 2
+        },
+        textShadowRadius: 2,
+        maxNumberLines: 2
+    }
+}, {
+    id: 22,
+    background: Card22,
+    barcode: {
+        width: 1000,
+        height: 247,
+        x: 100,
+        y: 481
+    },
+    image: {
+        width: 300,
+        height: 300,
+        x: 60,
+        y: 80,
+        borderRadius: 16
+    },
+    name: {
+        width: 770,
+        y: 192,
+        x: 420,
+        color: '#000000',
+        fontSize: 64,
+        fontWeight: '600',
+        textShadowColor: '#000000',
+        textShadowOffset: {
+            width: 2,
+            height: 2
+        },
+        textShadowRadius: 2,
         maxNumberLines: 2
     }
 }];

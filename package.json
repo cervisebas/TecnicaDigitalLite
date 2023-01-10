@@ -9,7 +9,9 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "clean": "cd android && ./gradlew clean && cd ..",
     "sync": "node sync-git.js",
-    "upsync": "git pull origin main"
+    "upsync": "git pull origin main",
+    "buildRelease": "cd android && ./gradlew bundleRelease && cd ..",
+    "openapp": "adb shell am start -n com.tecnicadigitallite/com.tecnicadigitallite.MainActivity"
   },
   "dependencies": {
     "@kichiyaki/react-native-barcode-generator": "^0.6.7",

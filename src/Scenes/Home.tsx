@@ -39,7 +39,7 @@ export default class Home extends PureComponent<IProps, IState> {
                     //name={this.props.datas.name}
                     name={'TGF1dGFybyBTZWLhc3RpYW4gQ2VydmnxbyBHYXJj7WE='}
                     image={this.props.datas.picture}
-                    designID={12}
+                    designID={-1}
                 />
             </View>
         </View>);
