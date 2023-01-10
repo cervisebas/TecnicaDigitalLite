@@ -11,6 +11,7 @@ type IProps = {
     name: string;
     curse: string;
     image: string;
+    openChangeDesign: ()=>void;
 };
 
 export default React.memo(function CardCredential(props: IProps) {
@@ -31,9 +32,6 @@ export default React.memo(function CardCredential(props: IProps) {
             }
         }
     }
-    function openChangeDesign() {
-        
-    }
 
     useEffect(()=>{
         event = Dimensions.addEventListener('change', setNewScaleCard);
@@ -52,7 +50,7 @@ export default React.memo(function CardCredential(props: IProps) {
         return(<IconButton
             {...hProps}
             icon={'pencil-ruler'}
-            onPress={(!disable)? openChangeDesign: undefined}
+            onPress={(!disable)? props.openChangeDesign: undefined}
             iconColor={(disable)? Color(Theme.colors.tertiary).alpha(0.5).rgb().string(): Theme.colors.secondary}
         />);
     }

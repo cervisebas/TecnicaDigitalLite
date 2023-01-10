@@ -14,6 +14,7 @@ type IProps = {
     onRequestClose?: ()=>any;
     animationInTiming?: number;
     animationOutTiming?: number;
+    backdropTransitionOutTiming?: number;
     transparent?: boolean;
     useBackdrop?: boolean;
     style?: StyleProp<ViewStyle>;
@@ -68,6 +69,7 @@ export default class CustomModal extends Component<IProps, IState> {
             animationOut={(this.props.removeAnimationOut)? { from: { opacity: 0 }, to: { opacity: 0 } }: (this.props.animationOut)? this.props.animationOut: 'fadeOutDown'}
             animationOutTiming={(this.props.removeAnimationOut)? 0: (!this.props.animationOutTiming)? 250: this.props.animationOutTiming}
             // Others parameters
+            backdropTransitionOutTiming={this.props.backdropTransitionOutTiming} 
             backdropOpacity={(this.props.transparent)? 0: undefined}
             onBackButtonPress={this.onRequestClose}
             onBackdropPress={this.onRequestClose}
@@ -77,10 +79,10 @@ export default class CustomModal extends Component<IProps, IState> {
             deviceHeight={this.state.height}
             hasBackdrop={this.props.useBackdrop}
             coverScreen={false}
-
+            supportedOrientations={['portrait', 'landscape']}
             useNativeDriver={true}
+            useNativeDriverForBackdrop={true}
             hideModalContentWhileAnimating={true}
-
             //backdropColor={(isDark)? 'gray': 'black'}
             style={[this.props.style, styles.modal]}>
             {this.props.children}

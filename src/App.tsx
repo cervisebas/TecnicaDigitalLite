@@ -11,6 +11,7 @@ import { Family, urlBase } from "./Scripts/ApiTecnica";
 import { StudentsData } from "./Scripts/ApiTecnica/types";
 import { waitTo } from "./Scripts/Utils";
 import { decode } from "base-64";
+import ChangeCardDesign from "./Screens/ChangeCardDesign";
 
 type IProps = {};
 type IState = {
@@ -28,6 +29,7 @@ export default class App extends PureComponent<IProps, IState> {
         this._onIndexChange = this._onIndexChange.bind(this);
         this._renderScene = this._renderScene.bind(this);
         this.init = this.init.bind(this);
+        this._openChangeCardDesign = this._openChangeCardDesign.bind(this);
     }
     private routes = [
         { key: 'home', title: 'Inicio', focusedIcon: 'home', unfocusedIcon: 'home-outline' },
@@ -36,6 +38,7 @@ export default class App extends PureComponent<IProps, IState> {
     private defaultDatas = { id: '-', name: '-', dni: '-', curse: '-', tel: '-', email: '-', date: '-', picture: '-' };
     private refSession = createRef<Session>();
     private refScreenLoading = createRef<ScreenLoadingRef>();
+    private refChangeCardDesign = createRef<ChangeCardDesign>();
 
     componentDidMount(): void {
         /*RNSplashScreen.hide();
@@ -70,6 +73,9 @@ export default class App extends PureComponent<IProps, IState> {
             this.refScreenLoading.current?.setText(true, error.cause);
         }
     }
+    _openChangeCardDesign() {
+        this.refChangeCardDesign.current?.open();
+    }
     
     // Navigation
     _onIndexChange(index: number) {
@@ -78,7 +84,7 @@ export default class App extends PureComponent<IProps, IState> {
     _renderScene(props: { route: Route; jumpTo: (key: string) => void; }) {
         switch (props.route.key) {
             case 'home':
-                return <Home datas={this.state.datas} />;
+                return <Home datas={this.state.datas} openChangeDesign={this._openChangeCardDesign} />;
             case 'details':
                 return <Account />;
         }
@@ -109,6 +115,7 @@ export default class App extends PureComponent<IProps, IState> {
                 <Session ref={this.refSession} initNow={this.init} />
                 <ScreenLoading ref={this.refScreenLoading} />
                 <SplashScreen initNow={this.init} />
+                <ChangeCardDesign ref={this.refChangeCardDesign} />
             </PaperProvider>
         </View>);
     }

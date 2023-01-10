@@ -9,6 +9,7 @@ import CardCredential from "./Home/CardCredential";
 
 type IProps = {
     datas: StudentsData;
+    openChangeDesign: ()=>void;
 };
 type IState = {};
 
@@ -31,16 +32,12 @@ export default class Home extends PureComponent<IProps, IState> {
                     id={this.props.datas.id}
                     openDetailsAssit={()=>undefined}
                 />
-                {/*<CardComponent
-                    ref={this.refCardComponent}
-                    name={'TGF1dGFybyBTZWLhc3RpYW4gQ2VydmnxbyBHYXJj7WE='}
-                    designID={-1}
-                />*/}
                 <CardCredential
                     dni={this.props.datas.dni}
                     name={this.props.datas.name}
                     curse={this.props.datas.curse}
                     image={this.props.datas.picture}
+                    openChangeDesign={this.props.openChangeDesign}
                 />
             </View>
         </View>);
