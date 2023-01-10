@@ -1,16 +1,20 @@
-import React, { createRef, useEffect } from "react";
-import { Card, IconButton } from "react-native-paper";
+import React, { createRef, useEffect, useState } from "react";
+import { Button, Card, IconButton } from "react-native-paper";
 import CardComponent, { CardComponentRef } from "../../Components/CardComponent";
 import { Dimensions, EmitterSubscription, ScaledSize, StyleSheet, View } from "react-native";
 import { Theme } from "../../Scripts/Theme";
+import { safeDecode } from "../../Scripts/Utils";
+import Color from "color";
 
 type IProps = {
     dni: string;
     name: string;
+    curse: string;
     image: string;
 };
 
 export default React.memo(function CardCredential(props: IProps) {
+    const [disable, setDisable] = useState(false);
     const refCardComponent = createRef<CardComponentRef>();
     var event: EmitterSubscription | undefined = undefined;
 
@@ -27,6 +31,9 @@ export default React.memo(function CardCredential(props: IProps) {
             }
         }
     }
+    function openChangeDesign() {
+        
+    }
 
     useEffect(()=>{
         event = Dimensions.addEventListener('change', setNewScaleCard);
@@ -36,14 +43,17 @@ export default React.memo(function CardCredential(props: IProps) {
             event?.remove();
         };
     }, []);
+    useEffect(()=>{
+        let curse = safeDecode(props.curse).toLowerCase();
+        setDisable(curse.indexOf('docente') !== -1);
+    }, [props.curse]);
 
     function rightButtonTitle(hProps: { size: number; }) {
         return(<IconButton
             {...hProps}
             icon={'pencil-ruler'}
-            //disabled={this.props.isLoading}
-            //onPress={(!this.state.isLoading)? this.loadData: undefined}
-            iconColor={Theme.colors.secondary}
+            onPress={(!disable)? openChangeDesign: undefined}
+            iconColor={(disable)? Color(Theme.colors.tertiary).alpha(0.5).rgb().string(): Theme.colors.secondary}
         />);
     }
 
@@ -65,6 +75,10 @@ export default React.memo(function CardCredential(props: IProps) {
                 />
             </View>
         </Card.Content>
+        <Card.Actions style={styles.cardActions}>
+            <Button icon={'cloud-download-outline'}>Descargar</Button>
+            <Button icon={'share-variant-outline'}>Compartir</Button>
+        </Card.Actions>
     </Card>);
 });
 
@@ -72,7 +86,7 @@ const styles = StyleSheet.create({
     content: {
         marginLeft: 12,
         marginRight: 12,
-        marginTop: 12,
+        marginTop: 10,
         overflow: 'hidden'
     },
     title: {
@@ -84,5 +98,8 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#000000',
         borderRadius: 12
+    },
+    cardActions: {
+        justifyContent: 'flex-end'
     }
 });

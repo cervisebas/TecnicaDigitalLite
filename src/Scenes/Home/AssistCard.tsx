@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     content: {
         marginLeft: 12,
         marginRight: 12,
-        marginTop: 12,
+        marginTop: 10,
         overflow: 'hidden'
     },
     contentError: {

@@ -1,11 +1,10 @@
-import React, { PureComponent, createRef } from "react";
+import React, { PureComponent } from "react";
 import { StyleSheet, View } from "react-native";
 import { Appbar } from "react-native-paper";
 import WelcomeCard from "./Home/WelcomeCard";
 import AssistCard from "./Home/AssistCard";
 import { StudentsData } from "../Scripts/ApiTecnica/types";
 import { safeDecode } from "../Scripts/Utils";
-import CardComponent, { CardComponentRef } from "../Components/CardComponent";
 import CardCredential from "./Home/CardCredential";
 
 type IProps = {
@@ -17,10 +16,8 @@ export default class Home extends PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
     }
-    private refCardComponent = createRef<CardComponentRef>();
 
     componentDidMount(): void {
-        this.refCardComponent.current?.setScale(0.32);
     }
 
     render(): React.ReactNode {
@@ -42,6 +39,7 @@ export default class Home extends PureComponent<IProps, IState> {
                 <CardCredential
                     dni={this.props.datas.dni}
                     name={this.props.datas.name}
+                    curse={this.props.datas.curse}
                     image={this.props.datas.picture}
                 />
             </View>
