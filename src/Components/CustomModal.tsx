@@ -15,6 +15,7 @@ type IProps = {
     animationInTiming?: number;
     animationOutTiming?: number;
     backdropTransitionOutTiming?: number;
+    backdropTransitionInTiming?: number;
     transparent?: boolean;
     useBackdrop?: boolean;
     style?: StyleProp<ViewStyle>;
@@ -69,7 +70,8 @@ export default class CustomModal extends Component<IProps, IState> {
             animationOut={(this.props.removeAnimationOut)? { from: { opacity: 0 }, to: { opacity: 0 } }: (this.props.animationOut)? this.props.animationOut: 'fadeOutDown'}
             animationOutTiming={(this.props.removeAnimationOut)? 0: (!this.props.animationOutTiming)? 250: this.props.animationOutTiming}
             // Others parameters
-            backdropTransitionOutTiming={this.props.backdropTransitionOutTiming} 
+            backdropTransitionOutTiming={this.props.backdropTransitionOutTiming}
+            backdropTransitionInTiming={this.props.backdropTransitionInTiming}
             backdropOpacity={(this.props.transparent)? 0: undefined}
             onBackButtonPress={this.onRequestClose}
             onBackdropPress={this.onRequestClose}

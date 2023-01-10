@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import CustomModal from "../Components/CustomModal";
-import { Dimensions, EmitterSubscription, FlatList, Image, ListRenderItemInfo, Pressable, ScaledSize, StyleSheet, View } from "react-native";
+import { Dimensions, EmitterSubscription, FlatList, Image, ListRenderItemInfo, ScaledSize, StyleSheet, View } from "react-native";
 import { Theme } from "../Scripts/Theme";
 import { Appbar, TouchableRipple } from "react-native-paper";
 import ExampleCards from "../Scripts/ExampleCards";
@@ -80,7 +80,7 @@ export default class ChangeCardDesign extends PureComponent<IProps, IState> {
         this.setState({ visible: false });
     }
     render(): React.ReactNode {
-        return(<CustomModal visible={this.state.visible} onRequestClose={this.close} animationIn={'fadeInRight'} animationOut={'fadeOutLeft'} backdropTransitionOutTiming={0} useBackdrop={false}>
+        return(<CustomModal visible={this.state.visible} onRequestClose={this.close} animationIn={'fadeInRight'} animationInTiming={200} animationOut={'fadeOutLeft'} animationOutTiming={200} backdropTransitionInTiming={0} backdropTransitionOutTiming={0} useBackdrop={false}>
             <View style={styles.content}>
                 <Appbar.Header>
                     <Appbar.BackAction onPress={this.close} />
