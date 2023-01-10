@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from "react";
+import React, { createRef, forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { Button, Card, IconButton } from "react-native-paper";
 import CardComponent, { CardComponentRef } from "../../Components/CardComponent";
 import { Dimensions, EmitterSubscription, ScaledSize, StyleSheet, View } from "react-native";
@@ -13,9 +13,13 @@ type IProps = {
     image: string;
     openChangeDesign: ()=>void;
 };
+export type CardCredentialRef = {
+    setDesign: (id: number)=>void
+};
 
-export default React.memo(function CardCredential(props: IProps) {
+export default React.memo(forwardRef(function CardCredential(props: IProps, ref: React.Ref<CardCredentialRef>) {
     const [disable, setDisable] = useState(false);
+    const [design, setDesign] = useState(0);
     const refCardComponent = createRef<CardComponentRef>();
     var event: EmitterSubscription | undefined = undefined;
 
@@ -54,6 +58,7 @@ export default React.memo(function CardCredential(props: IProps) {
             iconColor={(disable)? Color(Theme.colors.tertiary).alpha(0.5).rgb().string(): Theme.colors.secondary}
         />);
     }
+    useImperativeHandle(ref, ()=>({ setDesign }));
 
     return(<Card style={styles.content}>
         <Card.Title
@@ -69,7 +74,7 @@ export default React.memo(function CardCredential(props: IProps) {
                     dni={props.dni}
                     name={props.name}
                     image={props.image}
-                    designID={0}
+                    designID={design}
                 />
             </View>
         </Card.Content>
@@ -78,7 +83,7 @@ export default React.memo(function CardCredential(props: IProps) {
             <Button icon={'share-variant-outline'}>Compartir</Button>
         </Card.Actions>
     </Card>);
-});
+}));
 
 const styles = StyleSheet.create({
     content: {

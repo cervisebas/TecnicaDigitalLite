@@ -30,12 +30,14 @@ export default class App extends PureComponent<IProps, IState> {
         this._renderScene = this._renderScene.bind(this);
         this.init = this.init.bind(this);
         this._openChangeCardDesign = this._openChangeCardDesign.bind(this);
+        this._changeNowCardDesign = this._changeNowCardDesign.bind(this);
     }
     private routes = [
         { key: 'home', title: 'Inicio', focusedIcon: 'home', unfocusedIcon: 'home-outline' },
         { key: 'details', title: 'Mi cuenta', focusedIcon: 'account', unfocusedIcon: 'account-outline' }
     ];
     private defaultDatas = { id: '-', name: '-', dni: '-', curse: '-', tel: '-', email: '-', date: '-', picture: '-' };
+    private refHome = createRef<Home>();
     private refSession = createRef<Session>();
     private refScreenLoading = createRef<ScreenLoadingRef>();
     private refChangeCardDesign = createRef<ChangeCardDesign>();
@@ -76,6 +78,9 @@ export default class App extends PureComponent<IProps, IState> {
     _openChangeCardDesign() {
         this.refChangeCardDesign.current?.open();
     }
+    _changeNowCardDesign(id: number) {
+        this.refHome.current?.refCardCredential.current?.setDesign(id);
+    }
     
     // Navigation
     _onIndexChange(index: number) {
@@ -84,7 +89,11 @@ export default class App extends PureComponent<IProps, IState> {
     _renderScene(props: { route: Route; jumpTo: (key: string) => void; }) {
         switch (props.route.key) {
             case 'home':
-                return <Home datas={this.state.datas} openChangeDesign={this._openChangeCardDesign} />;
+                return(<Home
+                    ref={this.refHome}
+                    datas={this.state.datas}
+                    openChangeDesign={this._openChangeCardDesign}
+                />);
             case 'details':
                 return <Account />;
         }
@@ -115,7 +124,7 @@ export default class App extends PureComponent<IProps, IState> {
                 <Session ref={this.refSession} initNow={this.init} />
                 <ScreenLoading ref={this.refScreenLoading} />
                 <SplashScreen initNow={this.init} />
-                <ChangeCardDesign ref={this.refChangeCardDesign} />
+                <ChangeCardDesign ref={this.refChangeCardDesign} changeDesign={this._changeNowCardDesign} />
             </PaperProvider>
         </View>);
     }

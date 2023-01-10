@@ -6,7 +6,9 @@ import { Appbar, TouchableRipple } from "react-native-paper";
 import ExampleCards from "../Scripts/ExampleCards";
 import { getForScale } from "../Scripts/Utils";
 
-type IProps = {};
+type IProps = {
+    changeDesign: (id: number)=>void;
+};
 type IState = {
     visible: boolean;
     scale: number;
@@ -16,12 +18,13 @@ export default class ChangeCardDesign extends PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            visible: true,
+            visible: false,
             scale: 0
         };
         this.close = this.close.bind(this);
         this.changeScale = this.changeScale.bind(this);
         this._renderItem = this._renderItem.bind(this);
+        this._getItemLayout = this._getItemLayout.bind(this);
     }
     private event: EmitterSubscription | undefined = undefined;
 
@@ -46,13 +49,30 @@ export default class ChangeCardDesign extends PureComponent<IProps, IState> {
             }
         }
     }
+    // ##### FlatList #####
     _renderItem({ item }: ListRenderItemInfo<{ id: number; image: any; }>) {
         return(<ItemImage
+            key={`card-design-${item.id}`}
             id={item.id}
             image={item.image}
             scale={this.state.scale}
+            close={this.close}
+            onPress={this.props.changeDesign}
         />);
     }
+    _keyExtractor(item: { id: number; image: any; }, _index: number) {
+        return `card-design-${item.id}`;
+    }
+    _getItemLayout(_data: { id: number; image: any; }[] | null | undefined, index: number) {
+        const ITEM_HEIGHT = getForScale(this.state.scale, 779) + 8;
+        return {
+            length: ITEM_HEIGHT,
+            offset: ITEM_HEIGHT * index,
+            index
+        };
+    }
+    // ####################
+
     open() {
         this.setState({ visible: true });
     }
@@ -68,7 +88,10 @@ export default class ChangeCardDesign extends PureComponent<IProps, IState> {
                 </Appbar.Header>
                 <View style={{ flex: 1 }}>
                     <FlatList
+                        key={`list-desings-layout-${this.state.scale}`}
                         data={ExampleCards}
+                        keyExtractor={this._keyExtractor}
+                        getItemLayout={this._getItemLayout}
                         renderItem={this._renderItem}
                     />
                 </View>
@@ -81,13 +104,17 @@ type IProps2 = {
     id: number;
     image: any;
     scale: number;
+    close: ()=>void;
     onPress?: (id: number)=>void;
 };
 const ItemImage = React.memo(function (props: IProps2) {
     function onPress() {
-        if (props.onPress) props.onPress(props.id);
+        if (props.onPress) {
+            props.onPress(props.id);
+            props.close();
+        }
     }
-    return(<TouchableRipple style={[styles.itemTouch, { width: getForScale(props.scale, 1200), height: getForScale(props.scale, 779) }]} onPress={onPress}>
+    return(<TouchableRipple borderless={true} style={[styles.itemTouch, { width: getForScale(props.scale, 1200), height: getForScale(props.scale, 779) }]} onPress={onPress}>
         <Image
             source={props.image}
             style={styles.itemImage}
