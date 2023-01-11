@@ -1,5 +1,5 @@
 import React, { PureComponent, createRef } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, Text } from "react-native";
 import { Appbar } from "react-native-paper";
 import WelcomeCard from "./Home/WelcomeCard";
 import AssistCard from "./Home/AssistCard";
@@ -20,6 +20,7 @@ export default class Home extends PureComponent<IProps, IState> {
     public refCardCredential = createRef<CardCredentialRef>();
 
     componentDidMount(): void {
+
     }
 
     render(): React.ReactNode {

@@ -11,7 +11,7 @@ type IProps = {
     image: string;
     dni: string;
     designID: number;
-    refShot?: React.RefObject<ViewShot>;
+    refShot: React.RefObject<ViewShot>;
     onPress?: ()=>void;
 };
 export type CardComponentRef = {

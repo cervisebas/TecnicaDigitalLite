@@ -1,10 +1,11 @@
-import React, { createRef, forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import React, { PureComponent, createRef, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { Button, Card, IconButton } from "react-native-paper";
 import CardComponent, { CardComponentRef } from "../../Components/CardComponent";
 import { Dimensions, EmitterSubscription, ScaledSize, StyleSheet, View } from "react-native";
 import { Theme } from "../../Scripts/Theme";
 import { safeDecode } from "../../Scripts/Utils";
 import Color from "color";
+import ViewShot, { captureRef, releaseCapture } from "react-native-view-shot";
 
 type IProps = {
     dni: string;
@@ -21,6 +22,7 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
     const [disable, setDisable] = useState(false);
     const [design, setDesign] = useState(0);
     const refCardComponent = createRef<CardComponentRef>();
+    const refViewShot = createRef<ViewShot>();
     var event: EmitterSubscription | undefined = undefined;
 
     function setNewScaleCard({ window }: { window: ScaledSize; }) {
@@ -60,6 +62,18 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
     }
     useImperativeHandle(ref, ()=>({ setDesign }));
 
+    function getImageViewShot() {
+        try {
+            if (!refViewShot.current?.capture) return console.log('No define');
+            console.log('Shooting');
+            captureRef(refViewShot, { quality: 1, width: 227, height: 142, format: 'png', result: 'tmpfile', handleGLSurfaceViewOnAndroid: true, snapshotContentContainer: true })
+                .then((capture)=>console.log(capture), (capture)=>console.log(capture))
+                .catch((capture)=>console.log(capture));
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return(<Card style={styles.content}>
         <Card.Title
             title={'Tarjeta de ingreso:'}
@@ -71,6 +85,7 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
             <View style={styles.contentCard}>
                 <CardComponent
                     ref={refCardComponent}
+                    refShot={refViewShot}
                     dni={props.dni}
                     name={props.name}
                     image={props.image}
@@ -79,7 +94,7 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
             </View>
         </Card.Content>
         <Card.Actions style={styles.cardActions}>
-            <Button icon={'cloud-download-outline'}>Descargar</Button>
+            <Button icon={'cloud-download-outline'} onPress={getImageViewShot}>Descargar</Button>
             <Button icon={'share-variant-outline'}>Compartir</Button>
         </Card.Actions>
     </Card>);
