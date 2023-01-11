@@ -5,7 +5,6 @@ import { Dimensions, EmitterSubscription, ScaledSize, StyleSheet, View } from "r
 import { Theme } from "../../Scripts/Theme";
 import { safeDecode } from "../../Scripts/Utils";
 import Color from "color";
-import ViewShot, { captureRef, releaseCapture } from "react-native-view-shot";
 
 type IProps = {
     dni: string;
@@ -22,7 +21,6 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
     const [disable, setDisable] = useState(false);
     const [design, setDesign] = useState(0);
     const refCardComponent = createRef<CardComponentRef>();
-    const refViewShot = createRef<ViewShot>();
     var event: EmitterSubscription | undefined = undefined;
 
     function setNewScaleCard({ window }: { window: ScaledSize; }) {
@@ -63,15 +61,7 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
     useImperativeHandle(ref, ()=>({ setDesign }));
 
     function getImageViewShot() {
-        try {
-            if (!refViewShot.current?.capture) return console.log('No define');
-            console.log('Shooting');
-            captureRef(refViewShot, { quality: 1, width: 227, height: 142, format: 'png', result: 'tmpfile', handleGLSurfaceViewOnAndroid: true, snapshotContentContainer: true })
-                .then((capture)=>console.log(capture), (capture)=>console.log(capture))
-                .catch((capture)=>console.log(capture));
-        } catch (err) {
-            console.log(err);
-        }
+        
     }
 
     return(<Card style={styles.content}>
@@ -85,7 +75,6 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
             <View style={styles.contentCard}>
                 <CardComponent
                     ref={refCardComponent}
-                    refShot={refViewShot}
                     dni={props.dni}
                     name={props.name}
                     image={props.image}

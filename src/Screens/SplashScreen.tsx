@@ -96,7 +96,7 @@ export default React.memo(function SplashScreen(props: IProps) {
                 shadowColor={'green'}
                 textStyle={styles.textGlitch}
                 style={[styles.contentGlitch, { opacity: glitchOP }]}
-                glitchDuration={500}
+                glitchDuration={2000}
                 glitchAmplitude={10}
                 repeatDelay={0}
             />

@@ -1,6 +1,5 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
-import { Pressable, PressableAndroidRippleConfig, StyleSheet } from "react-native";
-import ViewShot, { CaptureOptions } from "react-native-view-shot";
+import { Pressable, PressableAndroidRippleConfig, View } from "react-native";
 import DesingsCards from "../Scripts/DesingsCards";
 import CardEstructure from "./CardEstructure";
 import { DesingsCardsType } from "../Scripts/DesingsCardsType";
@@ -11,7 +10,6 @@ type IProps = {
     image: string;
     dni: string;
     designID: number;
-    refShot: React.RefObject<ViewShot>;
     onPress?: ()=>void;
 };
 export type CardComponentRef = {
@@ -19,7 +17,6 @@ export type CardComponentRef = {
 };
 
 const pressableRipple: PressableAndroidRippleConfig = { color: 'rgba(0, 0, 0, 0.5)', foreground: true };
-const viewShotOptions: CaptureOptions = { width: 227, height: 142, format: 'png', quality: 1 };
 
 export default React.memo(forwardRef(function CardComponent(props: IProps, ref: React.Ref<CardComponentRef>) {
     const [scale, setScale] = useState(0.3);
@@ -33,7 +30,7 @@ export default React.memo(forwardRef(function CardComponent(props: IProps, ref: 
     }
 
     return(<Pressable onPress={props.onPress} disabled={!props.onPress} android_ripple={pressableRipple}>
-        <ViewShot ref={props.refShot} style={{ position: 'relative', width: getForScale(scale, 1200), height: getForScale(scale, 779), overflow: 'hidden' }} options={viewShotOptions}>
+        <View style={{ position: 'relative', width: getForScale(scale, 1200), height: getForScale(scale, 779), overflow: 'hidden' }}>
             <CardEstructure
                 scale={scale}
                 dni={props.dni}
@@ -41,6 +38,6 @@ export default React.memo(forwardRef(function CardComponent(props: IProps, ref: 
                 image={props.image}
                 designEstructure={getDesignForID(props.designID)}
             />
-        </ViewShot>
+        </View>
     </Pressable>);
 }));
