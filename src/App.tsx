@@ -34,6 +34,7 @@ export default class App extends PureComponent<IProps, IState> {
     }
     private routes = [
         { key: 'home', title: 'Inicio', focusedIcon: 'home', unfocusedIcon: 'home-outline' },
+        { key: 'schedule', title: 'Mi horario', focusedIcon: 'calendar-text', unfocusedIcon: 'calendar-text-outline' },
         { key: 'details', title: 'Mi cuenta', focusedIcon: 'account', unfocusedIcon: 'account-outline' }
     ];
     private defaultDatas = { id: '-', name: '-', dni: '-', curse: '-', tel: '-', email: '-', date: '-', picture: '-' };
