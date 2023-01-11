@@ -37,17 +37,9 @@ export default class ChangeCardDesign extends PureComponent<IProps, IState> {
         this.event?.remove();
     }
     changeScale({ window }: { window: ScaledSize; }) {
-        let width = window.width - 16;
-        let finding = true;
-        let scaleImage = 1;
-        while (finding) {
-            if ((1200 * scaleImage) < width) {
-                this.setState({ scale: scaleImage });
-                finding = false;
-            } else {
-                scaleImage -= 0.001;
-            }
-        }
+        const width = window.width - 16;
+        const scale = (width/1200);
+        this.setState({ scale });
     }
     // ##### FlatList #####
     _renderItem({ item }: ListRenderItemInfo<{ id: number; image: any; }>) {

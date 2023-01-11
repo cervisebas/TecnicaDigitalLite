@@ -2,7 +2,7 @@ import React, { PureComponent, createRef } from "react";
 import CustomModal from "../Components/CustomModal";
 import { Dimensions, Keyboard, PixelRatio, StatusBar, StyleProp, StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
 import { Theme } from "../Scripts/Theme";
-import { LinearGradient } from "../Components/LinearGradient";
+import LinearGradient from "react-native-linear-gradient";
 import ParticleBackground from "../Components/ParticleBackground";
 import { Text, MD2Colors, TextInput, Button, Provider, HelperText, Portal } from "react-native-paper";
 import SystemNavigationBar from "react-native-system-navigation-bar";

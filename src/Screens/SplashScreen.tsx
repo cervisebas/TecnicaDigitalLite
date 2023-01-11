@@ -8,6 +8,7 @@ import { waitTo } from "../Scripts/Utils";
 import GlitchText from "../Components/GlitchText";
 import TextAnimationShake from "../Components/TextAnimationShake";
 import RNSplashScreen from "react-native-splash-screen";
+import Color from "color";
 
 type IProps = {
     initNow: ()=>void;
@@ -65,7 +66,7 @@ export default React.memo(function SplashScreen(props: IProps) {
             await waitTo(1500);
             Animated.parallel([
                 Animated.timing(viewSizeY, { toValue: 1, duration: 500, useNativeDriver: true, easing }),
-                Animated.timing(glitchOP, { toValue: 0, duration: 256, delay: 128, useNativeDriver: true, easing })
+                Animated.timing(glitchOP, { toValue: 0, duration: 256, delay: 64, useNativeDriver: true, easing })
                 //Animated.timing(viewBorder, { toValue: 0, duration: 500, useNativeDriver: false })
             ]).start(function () {
                 refTextAnimationShake.current?.start();
@@ -93,11 +94,11 @@ export default React.memo(function SplashScreen(props: IProps) {
             />
             <GlitchText
                 text={'Project 2022'}
-                shadowColor={'green'}
+                shadowColor={Color('#FF3232').darken(0.3).rgb().string()}
                 textStyle={styles.textGlitch}
                 style={[styles.contentGlitch, { opacity: glitchOP }]}
                 glitchDuration={2000}
-                glitchAmplitude={10}
+                //glitchAmplitude={5}
                 repeatDelay={0}
             />
             <Animated.Image

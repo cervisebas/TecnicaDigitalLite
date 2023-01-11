@@ -25,16 +25,7 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
 
     function setNewScaleCard({ window }: { window: ScaledSize; }) {
         let width = window.width - 58;
-        let finding = true;
-        let scaleImage = 1;
-        while (finding) {
-            if ((1200 * scaleImage) < width) {
-                refCardComponent.current?.setScale(scaleImage);
-                finding = false;
-            } else {
-                scaleImage -= 0.001;
-            }
-        }
+        refCardComponent.current?.setScale(Math.fround(width/1200));
     }
 
     useEffect(()=>{

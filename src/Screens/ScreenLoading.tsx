@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import CustomModal from "../Components/CustomModal";
 import { StyleSheet, View, Animated, StatusBar, Easing } from "react-native";
-import { LinearGradient } from "../Components/LinearGradient";
+import LinearGradient from "react-native-linear-gradient";
 import { Theme } from "../Scripts/Theme";
 import Logo from "../Assets/logo.webp";
 import { ActivityIndicator, ProgressBar, Text } from "react-native-paper";
