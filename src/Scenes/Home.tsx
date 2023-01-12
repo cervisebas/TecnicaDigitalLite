@@ -1,5 +1,5 @@
 import React, { PureComponent, createRef } from "react";
-import { ScrollView, StyleSheet, View, Text } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { Appbar } from "react-native-paper";
 import WelcomeCard from "./Home/WelcomeCard";
 import AssistCard from "./Home/AssistCard";
@@ -10,6 +10,8 @@ import CardCredential, { CardCredentialRef } from "./Home/CardCredential";
 type IProps = {
     datas: StudentsData;
     openChangeDesign: ()=>void;
+    openImageViewer: (source: string)=>void;
+    controllerAlert: (visible: boolean, title?: string, message?: string)=>void;
 };
 type IState = {};
 
@@ -41,6 +43,8 @@ export default class Home extends PureComponent<IProps, IState> {
                     curse={this.props.datas.curse}
                     image={this.props.datas.picture}
                     openChangeDesign={this.props.openChangeDesign}
+                    openImageViewer={this.props.openImageViewer}
+                    controllerAlert={this.props.controllerAlert}
                 />
             </ScrollView>
         </View>);

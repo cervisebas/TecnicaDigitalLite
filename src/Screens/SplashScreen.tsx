@@ -55,7 +55,7 @@ export default React.memo(function SplashScreen(props: IProps) {
             //Animated.timing(viewBorder, { toValue: 100, duration: 0, useNativeDriver: false })
         ]).start();
         // Animation
-        await waitTo(500);
+        await waitTo(1000);
         Animated.parallel([
             Animated.spring(imageTY, { toValue: -50, useNativeDriver: true }),
             Animated.spring(imageTY, { toValue: 20, delay: 350, useNativeDriver: true }),

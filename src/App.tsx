@@ -1,6 +1,6 @@
 import React, { PureComponent, createRef } from "react";
 import { Route, StyleSheet, View } from "react-native";
-import { BottomNavigation, Provider as PaperProvider, Text } from "react-native-paper";
+import { BottomNavigation, Provider as PaperProvider, Portal, Text } from "react-native-paper";
 import Home from "./Scenes/Home";
 import Account from "./Scenes/Account";
 import { Theme } from "./Scripts/Theme";
@@ -12,6 +12,8 @@ import { StudentsData } from "./Scripts/ApiTecnica/types";
 import { waitTo } from "./Scripts/Utils";
 import { decode } from "base-64";
 import ChangeCardDesign from "./Screens/ChangeCardDesign";
+import AlertComponent from "./Components/AlertComponent";
+import ImageViewer from "./Screens/ImageViewer";
 
 type IProps = {};
 type IState = {
@@ -31,6 +33,8 @@ export default class App extends PureComponent<IProps, IState> {
         this.init = this.init.bind(this);
         this._openChangeCardDesign = this._openChangeCardDesign.bind(this);
         this._changeNowCardDesign = this._changeNowCardDesign.bind(this);
+        this._controllerAlert = this._controllerAlert.bind(this);
+        this._openImageViewer = this._openImageViewer.bind(this);
     }
     private routes = [
         { key: 'home', title: 'Inicio', focusedIcon: 'home', unfocusedIcon: 'home-outline' },
@@ -42,6 +46,8 @@ export default class App extends PureComponent<IProps, IState> {
     private refSession = createRef<Session>();
     private refScreenLoading = createRef<ScreenLoadingRef>();
     private refChangeCardDesign = createRef<ChangeCardDesign>();
+    private refAlertComponent = createRef<AlertComponent>();
+    private refImageViewer = createRef<ImageViewer>();
 
     componentDidMount(): void {
         /*RNSplashScreen.hide();
@@ -82,6 +88,13 @@ export default class App extends PureComponent<IProps, IState> {
     _changeNowCardDesign(id: number) {
         this.refHome.current?.refCardCredential.current?.setDesign(id);
     }
+    _controllerAlert(visible: boolean, title?: string, message?: string) {
+        if (!visible) return this.refAlertComponent.current?.close();
+        this.refAlertComponent.current?.open(title!, message!);
+    }
+    _openImageViewer(source: string) {
+        this.refImageViewer.current?.open(source);
+    }
     
     // Navigation
     _onIndexChange(index: number) {
@@ -94,6 +107,8 @@ export default class App extends PureComponent<IProps, IState> {
                     ref={this.refHome}
                     datas={this.state.datas}
                     openChangeDesign={this._openChangeCardDesign}
+                    openImageViewer={this._openImageViewer}
+                    controllerAlert={this._controllerAlert}
                 />);
             case 'details':
                 return <Account />;
@@ -125,7 +140,11 @@ export default class App extends PureComponent<IProps, IState> {
                 <Session ref={this.refSession} initNow={this.init} />
                 <ScreenLoading ref={this.refScreenLoading} />
                 <SplashScreen initNow={this.init} />
+                <ImageViewer ref={this.refImageViewer} />
                 <ChangeCardDesign ref={this.refChangeCardDesign} changeDesign={this._changeNowCardDesign} />
+                <Portal>
+                    <AlertComponent ref={this.refAlertComponent} />
+                </Portal>
             </PaperProvider>
         </View>);
     }

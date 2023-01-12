@@ -13,3 +13,8 @@ export function safeDecode(str: string) {
 export function getForScale(scale: number, size: number) {
     return ((scale * size) / 1);
 }
+export function getRandomInt(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
+}
