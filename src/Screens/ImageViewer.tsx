@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
-import ImageView from "react-native-image-viewing";
+//import ImageView from "react-native-image-viewing";
+import ImageView from "../Components/ImageViewing";
 
 type IProps = {};
 type IState = {

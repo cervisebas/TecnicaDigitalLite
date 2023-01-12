@@ -30,10 +30,18 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
     const refCardComponent = createRef<CardComponentRef>();
     const refViewShot = createRef<ViewShot>();
     var event: EmitterSubscription | undefined = undefined;
+    var actualSize = 0;
 
     function setNewScaleCard({ window }: { window: ScaledSize; }) {
         let width = window.width - 58;
-        refCardComponent.current?.setScale(Math.fround(width/1200));
+        let calc = Math.fround(width/1200);
+        actualSize = calc;
+        refCardComponent.current?.setScale(calc);
+    }
+    function checkScale() {
+        const window = Dimensions.get('window');
+        let calc = Math.fround((window.width - 58)/1200);
+        if (calc !== actualSize) setNewScaleCard({ window });
     }
 
     useEffect(()=>{
@@ -143,7 +151,7 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
             titleVariant={'titleMedium'}
             right={rightButtonTitle}
         />
-        <Card.Content>
+        <Card.Content onLayout={checkScale}>
             <TouchableRipple borderless={true} disabled={loading} onPress={viewingNow} style={styles.buttonCard}>
                 <View style={styles.contentCard}>
                     <CardComponent
