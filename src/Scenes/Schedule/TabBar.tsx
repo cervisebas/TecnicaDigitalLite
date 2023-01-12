@@ -73,6 +73,12 @@ const ItemTabBar = React.memo(function (props: IProps2) {
         });
         if (!isFocused && !event.defaultPrevented) props.navigation.navigate({ name: props.route.name, merge: true } as any);
     }
+    function onLongPress() {
+        props.navigation.emit({
+          type: 'tabLongPress',
+          target: props.route.key,
+        });
+    }
 
     useEffect(()=>changeState(isFocused), [props.state]);
 
@@ -80,7 +86,8 @@ const ItemTabBar = React.memo(function (props: IProps2) {
         <TouchableRipple
             borderless={true}
             style={styles.item}
-            onPress={onPress}>
+            onPress={onPress}
+            onLongPress={onLongPress}>
             <>
                 <Animated.View style={[styles.itemActive, { opacity, transform: [{ scale }] }]} />
                 <Text style={styles.itemText}>{label as string}</Text>
