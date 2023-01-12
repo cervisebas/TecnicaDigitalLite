@@ -1,5 +1,5 @@
 import React, { createRef, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { Dimensions, EmitterSubscription, ScaledSize, StyleSheet, View, Animated, Easing } from "react-native";
+import { Dimensions, EmitterSubscription, ScaledSize, StyleSheet, View, Animated, Easing, PermissionsAndroid } from "react-native";
 import CardComponent, { CardComponentRef } from "../../Components/CardComponent";
 import ViewShot, { captureRef, releaseCapture } from "react-native-view-shot";
 import { getRandomInt, safeDecode, waitTo } from "../../Scripts/Utils";
@@ -30,9 +30,6 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
     const refCardComponent = createRef<CardComponentRef>();
     const refViewShot = createRef<ViewShot>();
     var event: EmitterSubscription | undefined = undefined;
-
-    /*const opacity = useSharedValue<number>(0);
-    const loadingStyle = useAnimatedStyle(()=>({ opacity: withTiming(opacity.value, { duration: 300, easing: Easing.linear }) }), [opacity]);*/
 
     function setNewScaleCard({ window }: { window: ScaledSize; }) {
         let width = window.width - 58;
@@ -73,6 +70,13 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
 
     async function downloadNow() {
         try {
+            const permission = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, {
+                title: "Atención",
+                message: "Para guardar la imagen se necesita acceder al almacenamiento de su dispositivo, por favor acepte los permisos que se requieren.",
+                buttonNegative: "Cancelar",
+                buttonPositive: "Aceptar"
+            });
+            if (permission == PermissionsAndroid.RESULTS.DENIED) return props.controllerAlert(true, 'Se denegó el acceso al almacenamiento', 'Para guardar la imagen se necesita acceder al almacenamiento de su dispositivo, por favor acepte los permisos que se requieren.');
             if (!refViewShot.current?.capture) return;
             setOpacity(1);
             setLoading(true);
