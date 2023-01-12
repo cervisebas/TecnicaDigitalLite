@@ -1,11 +1,10 @@
-import React, { createRef, forwardRef, useEffect, useImperativeHandle, useState } from "react";
-import { Dimensions, EmitterSubscription, ScaledSize, StyleSheet, View } from "react-native";
+import React, { createRef, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { Dimensions, EmitterSubscription, ScaledSize, StyleSheet, View, Animated, Easing } from "react-native";
 import CardComponent, { CardComponentRef } from "../../Components/CardComponent";
 import ViewShot, { captureRef, releaseCapture } from "react-native-view-shot";
 import { getRandomInt, safeDecode, waitTo } from "../../Scripts/Utils";
 import { ActivityIndicator, Button, Card, IconButton, TouchableRipple } from "react-native-paper";
 import { Theme } from "../../Scripts/Theme";
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import Share from "react-native-share";
 import RNFS from "react-native-fs";
 import Color from "color";
@@ -27,12 +26,13 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
     const [disable, setDisable] = useState(false);
     const [design, setDesign] = useState(0);
     const [loading, setLoading] = useState(false);
+    const opacity = useRef(new Animated.Value(0)).current;
     const refCardComponent = createRef<CardComponentRef>();
     const refViewShot = createRef<ViewShot>();
     var event: EmitterSubscription | undefined = undefined;
 
-    const opacity = useSharedValue<number>(0);
-    const loadingStyle = useAnimatedStyle(()=>({ opacity: withTiming(opacity.value, { duration: 300, easing: Easing.linear }) }), [opacity]);
+    /*const opacity = useSharedValue<number>(0);
+    const loadingStyle = useAnimatedStyle(()=>({ opacity: withTiming(opacity.value, { duration: 300, easing: Easing.linear }) }), [opacity]);*/
 
     function setNewScaleCard({ window }: { window: ScaledSize; }) {
         let width = window.width - 58;
@@ -61,22 +61,31 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
         />);
     }
     useImperativeHandle(ref, ()=>({ setDesign }));
+    
+    function setOpacity(value: number) {
+        Animated.timing(opacity, {
+            toValue: value,
+            duration: 300,
+            useNativeDriver: true,
+            easing: Easing.linear
+        }).start();
+    }
 
     async function downloadNow() {
         try {
             if (!refViewShot.current?.capture) return;
-            opacity.value = 1;
+            setOpacity(1);
             setLoading(true);
             const capture = await captureRef(refViewShot, { width: 1200, height: 779, format: 'png', quality: 1 });
             const newUri = `${RNFS.DownloadDirectoryPath}/credential-${getRandomInt(111111, 999999)}.png`;
             await RNFS.copyFile(capture, newUri);
             releaseCapture(capture);
             await waitTo(1000);
-            opacity.value = 0;
+            setOpacity(0);
             setLoading(false);
             props.controllerAlert(true, 'Descarga completa', 'La imagen se guardo dentro de la carpeta de descargas del almacenamiento del dispositivo.');
         } catch (error) {
-            opacity.value = 0;
+            setOpacity(0);
             setLoading(false);
             console.log(error);
         }
@@ -84,15 +93,15 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
     async function viewingNow() {
         try {
             if (!refViewShot.current?.capture) return;
-            opacity.value = 1;
+            setOpacity(1);
             setLoading(true);
             const capture = await captureRef(refViewShot, { width: 1200, height: 779, format: 'png', quality: 1 });
             await waitTo(500);
-            opacity.value = 0;
+            setOpacity(0);
             setLoading(false);
             props.openImageViewer(capture);
         } catch (error) {
-            opacity.value = 0;
+            setOpacity(0);
             setLoading(false);
             console.log(error);
         }
@@ -100,12 +109,12 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
     async function shareNow() {
         try {
             if (!refViewShot.current?.capture) return;
-            opacity.value = 1;
+            setOpacity(1);
             setLoading(true);
             const capture = await captureRef(refViewShot, { width: 1200, height: 779, format: 'png', result: 'base64', quality: 1 });
             const newName = `credential-${getRandomInt(111111, 999999)}.png`;
             await waitTo(1000);
-            opacity.value = 0;
+            setOpacity(0);
             setLoading(false);
             await Share.open({
                 url: `data:image/png;base64,${capture}`,
@@ -115,7 +124,7 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
                 isNewTask: true
             });
         } catch (error) {
-            opacity.value = 0;
+            setOpacity(0);
             setLoading(false);
             console.log(error);
         }
@@ -139,7 +148,7 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
                         image={props.image}
                         designID={design}
                     />
-                    <Animated.View style={[styles.loadingContent, loadingStyle]}>
+                    <Animated.View style={[styles.loadingContent, { opacity }]}>
                         <ActivityIndicator animating={true} size={'large'} />
                     </Animated.View>
                 </View>
