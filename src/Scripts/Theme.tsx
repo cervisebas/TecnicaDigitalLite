@@ -1,5 +1,6 @@
 import Color from "color";
 import { MD3LightTheme, MD3Theme } from "react-native-paper";
+import { DefaultTheme, Theme as NavTheme } from "@react-navigation/native";
 import rgbaToRgb from "rgba-to-rgb";
 import tokens from "./tokens.json";
 
@@ -72,5 +73,16 @@ export const Theme: MD3Theme = {
             level4: rgbaToRgb(backgroundRGB, primaryRGB.alpha(0.12).string()), // palette.primary40, alpha 0.12
             level5: rgbaToRgb(backgroundRGB, primaryRGB.alpha(0.14).string()), // palette.primary40, alpha 0.14
         }
+    }
+};
+
+export const ThemeNavigation: NavTheme = {
+    ...DefaultTheme,
+    colors: {
+        ...DefaultTheme.colors,
+        background: Theme.colors.background,
+        card: Theme.colors.elevation.level2,
+        primary: Theme.colors.secondaryContainer,
+        text: '#000000'
     }
 };

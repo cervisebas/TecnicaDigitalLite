@@ -14,6 +14,7 @@ import { decode } from "base-64";
 import ChangeCardDesign from "./Screens/ChangeCardDesign";
 import AlertComponent from "./Components/AlertComponent";
 import ImageViewer from "./Screens/ImageViewer";
+import Schedule from "./Scenes/Schedule";
 
 type IProps = {};
 type IState = {
@@ -110,6 +111,8 @@ export default class App extends PureComponent<IProps, IState> {
                     openImageViewer={this._openImageViewer}
                     controllerAlert={this._controllerAlert}
                 />);
+            case 'schedule':
+                return <Schedule />;
             case 'details':
                 return <Account />;
         }
