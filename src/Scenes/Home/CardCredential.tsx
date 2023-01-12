@@ -70,6 +70,12 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
 
     async function downloadNow() {
         try {
+            if (!refViewShot.current?.capture) return;
+            setOpacity(1);
+            setLoading(true);
+            const capture = await captureRef(refViewShot, { width: 1200, height: 779, format: 'png', quality: 1 });
+            const newUri = `${RNFS.DownloadDirectoryPath}/credential-${getRandomInt(111111, 999999)}.png`;
+            // ##### Permission #####
             const permission = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, {
                 title: "Atención",
                 message: "Para guardar la imagen se necesita acceder al almacenamiento de su dispositivo, por favor acepte los permisos que se requieren.",
@@ -77,11 +83,7 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
                 buttonPositive: "Aceptar"
             });
             if (permission == PermissionsAndroid.RESULTS.DENIED) return props.controllerAlert(true, 'Se denegó el acceso al almacenamiento', 'Para guardar la imagen se necesita acceder al almacenamiento de su dispositivo, por favor acepte los permisos que se requieren.');
-            if (!refViewShot.current?.capture) return;
-            setOpacity(1);
-            setLoading(true);
-            const capture = await captureRef(refViewShot, { width: 1200, height: 779, format: 'png', quality: 1 });
-            const newUri = `${RNFS.DownloadDirectoryPath}/credential-${getRandomInt(111111, 999999)}.png`;
+            // ######################
             await RNFS.copyFile(capture, newUri);
             releaseCapture(capture);
             await waitTo(1000);
