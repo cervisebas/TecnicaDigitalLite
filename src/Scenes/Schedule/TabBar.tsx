@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useRef } from "react";
+import React, { createRef, useEffect, useRef, useState } from "react";
 import { MaterialTopTabBarProps } from "@react-navigation/material-top-tabs";
 import { Animated, Easing, FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import { Text, TouchableRipple } from "react-native-paper";
@@ -49,14 +49,17 @@ type IProps2 = {
 const ItemTabBar = React.memo(function (props: IProps2) {
     const { options } = props.descriptors[props.route.key];
     const label = (options.tabBarLabel !== undefined)? options.tabBarLabel: (options.title !== undefined)? options.title: props.route.name;
-    const isFocused = props.state.index === props.index;
+    const [isFocused, setIsFocused] = useState(false);
     // Animated
     const opacity = useRef(new Animated.Value(0)).current;
     const scale = useRef(new Animated.Value(0)).current;
     const duration = 300;
     const easing = Easing.linear;
+    let actualState = false;
 
     function changeState(value: boolean) {
+        if (actualState == value) return;
+        actualState= value;
         let op = (value)? 1: 0;
         let sc = (value)? 1: 0.5;
         Animated.parallel([
@@ -80,7 +83,11 @@ const ItemTabBar = React.memo(function (props: IProps2) {
         });
     }
 
-    useEffect(()=>changeState(isFocused), [props.state]);
+    useEffect(()=>{
+        let isFocus = props.state.index === props.index;
+        setIsFocused(isFocus);
+        changeState(isFocus);
+    }, [props.state]);
 
     return(<View style={styles.itemContain}>
         <TouchableRipple

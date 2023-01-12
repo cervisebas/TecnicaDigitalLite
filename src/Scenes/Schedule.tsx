@@ -1,4 +1,4 @@
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { MaterialTopTabBarProps, createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer, NavigationContainerRef } from "@react-navigation/native";
 import React, { PureComponent, createRef } from "react";
 import { StyleSheet, View } from "react-native";
@@ -39,6 +39,9 @@ export default class Schedule extends PureComponent<IProps, IState> {
             console.log(error);
         }
     }
+    _tabBar(props: MaterialTopTabBarProps) {
+        return(<TabBar {...props} />);
+    }
     render(): React.ReactNode {
         return(<View style={styles.content}>
             <Appbar.Header>
@@ -46,7 +49,7 @@ export default class Schedule extends PureComponent<IProps, IState> {
             </Appbar.Header>
             <View style={styles.content}>
                 <NavigationContainer ref={this.refNavigationContainer} theme={ThemeNavigation}>
-                    <Tab.Navigator tabBarPosition={'bottom'} screenOptions={{ tabBarScrollEnabled: true }} tabBar={(props)=><TabBar {...props} />}>
+                    <Tab.Navigator tabBarPosition={'bottom'} tabBar={this._tabBar}>
                         <Tab.Screen name={'Lunes'} children={()=><></>} />
                         <Tab.Screen name={'Martes'} children={()=><></>} />
                         <Tab.Screen name={'Miercoles'} children={()=><></>} />
