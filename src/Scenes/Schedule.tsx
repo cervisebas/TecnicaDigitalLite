@@ -76,7 +76,6 @@ export default class Schedule extends PureComponent<IProps, IState> {
         try {
             if (this.props.datas.id == '-') return;
             this.actualId = this.props.datas.id;
-            console.log('Load');
             await this.setStateSync({ isLoading: true, isError: false } as any);
             await this.setLoading(true);
             const getData = await Family.getSchedule(this.props.datas.curse);
@@ -84,9 +83,9 @@ export default class Schedule extends PureComponent<IProps, IState> {
             await this.setLoading(false);
             await this.setStateSync({ datas, isLoading: false } as any);
         } catch (error) {
-            console.log(error);
+            let messageError = ((error as any).cause !== undefined)? (error as any).cause: 'Ocurrió un error inesperado.';
             await this.setLoading(false);
-            this.setState({ isLoading: false, isError: true, messageError: (error as any).cause });
+            this.setState({ isLoading: false, isError: true, messageError });
         }
     }
     async goToDay() {
