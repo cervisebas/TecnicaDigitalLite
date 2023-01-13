@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Schedule } from "../../Scripts/ApiTecnica/types";
 import { DayData } from "./ScheduleProcess";
-import { FlatList, ListRenderItemInfo, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { Divider, List, Text } from "react-native-paper";
 import { safeDecode } from "../../Scripts/Utils";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
