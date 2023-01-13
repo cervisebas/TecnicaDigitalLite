@@ -112,7 +112,9 @@ export default class App extends PureComponent<IProps, IState> {
                     controllerAlert={this._controllerAlert}
                 />);
             case 'schedule':
-                return <Schedule />;
+                return <Schedule
+                    datas={this.state.datas}
+                />;
             case 'details':
                 return <Account />;
         }

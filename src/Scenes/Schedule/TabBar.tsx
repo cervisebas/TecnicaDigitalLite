@@ -55,11 +55,9 @@ const ItemTabBar = React.memo(function (props: IProps2) {
     const scale = useRef(new Animated.Value(0)).current;
     const duration = 300;
     const easing = Easing.linear;
-    let actualState = false;
+    let actualState = true;
 
     function changeState(value: boolean) {
-        if (actualState == value) return;
-        actualState= value;
         let op = (value)? 1: 0;
         let sc = (value)? 1: 0.5;
         Animated.parallel([
