@@ -81,7 +81,8 @@ export default class ImageLazyLoad extends PureComponent<IProps, IState> {
 const styles = StyleSheet.create({
     view: {
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        backgroundColor: Theme.colors.elevation.level3
     },
     circle: {
         //shadowColor: "#000000",

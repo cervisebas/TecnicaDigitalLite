@@ -29,7 +29,7 @@ export default React.memo(function SchedulePage(props: IProps) {
         let showDivider = (array.length - 1) !== index;
         return(<>
             <List.Item
-                key={`${item.day}-${item.hour}-${(item.matter !== 'none')? item.matter.id: index}`}
+                key={`${item.day}-${item.hour.replace(':', '_')}-${item.group}-${(item.matter !== 'none')? item.matter.id: index}`}
                 title={title}
                 description={(item.matter == 'none')? undefined: safeDecode(item.matter.teacher.name)}
                 left={(props)=><Icon {...props} name={'calendar-today'} size={32} color={(item.matter == 'none')? '#FF0000': props.color } />}

@@ -13,7 +13,6 @@ import RNScreenshotPrevent from 'react-native-screenshot-prevent';
 import RNFS from "react-native-fs";
 import moment from "moment";
 import ProfilePicture from "../../Assets/profile.webp";
-//import ProfilePicture from "../Assets/";
 
 type IProps = {
     openImageViewer: (source: string)=>void;
