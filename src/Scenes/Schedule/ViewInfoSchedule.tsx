@@ -1,6 +1,6 @@
 import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
 import CustomModal from "../../Components/CustomModal";
-import { Pressable, StyleSheet, View, Image } from "react-native";
+import { Pressable, StyleSheet, View, Image, ScrollView } from "react-native";
 import { Appbar, List } from "react-native-paper";
 import { Theme } from "../../Scripts/Theme";
 import { Matter, Schedule } from "../../Scripts/ApiTecnica/types";
@@ -63,7 +63,7 @@ export default React.memo(forwardRef(function ViewInfoSchedule(props: IProps, re
                 <Appbar.BackAction onPress={close} />
                 <Appbar.Content title={'Ver más detalles'} />
             </Appbar.Header>
-            {(schedule)&&<View style={{ flex: 1 }}>
+            {(schedule)&&<ScrollView style={{ flex: 1 }}>
                 <List.Section title={'Información'}>
                     <List.Item title={'Nombre de la materia'} description={safeDecode((schedule.matter as Matter).name)} descriptionStyle={{ marginLeft: 4 }} left={_left} />
                     {(schedule.group !== 'none')&&<List.Item title={'Grupo asignado'} description={`Grupo ${schedule.group}`} descriptionStyle={{ marginLeft: 4 }} left={_left} />}
@@ -84,7 +84,7 @@ export default React.memo(forwardRef(function ViewInfoSchedule(props: IProps, re
                         style={styles.item}
                     />
                 </List.Section>
-            </View>}
+            </ScrollView>}
         </View>
     </CustomModal>);
 }));
