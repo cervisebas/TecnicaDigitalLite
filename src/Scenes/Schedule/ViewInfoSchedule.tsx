@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, View, Image } from "react-native";
 import { Appbar, List } from "react-native-paper";
 import { Theme } from "../../Scripts/Theme";
 import { Matter, Schedule } from "../../Scripts/ApiTecnica/types";
-import { safeDecode } from "../../Scripts/Utils";
+import { calcYears, safeDecode } from "../../Scripts/Utils";
 import ImageLazyLoad from "../../Components/ImageLazyLoad";
 import { decode } from "base-64";
 import { urlBase } from "../../Scripts/ApiTecnica";
@@ -80,9 +80,9 @@ export default React.memo(forwardRef(function ViewInfoSchedule(props: IProps, re
                                 source={{ uri: `${urlBase}/image/${decode((schedule.matter as Matter).teacher.picture)}` }}
                             />
                         </Pressable>}
-                        title={safeDecode((schedule.matter as Matter).teacher.name)}
+                        title={`${safeDecode((schedule.matter as Matter).teacher.name)} (${calcYears(safeDecode((schedule.matter as Matter).teacher.date))} años)`}
                         description={safeDecode((schedule.matter as Matter).teacher.curse)}
-                        style={{ height: 68.5, paddingLeft: 12 }}
+                        style={styles.item}
                     />
                 </List.Section>
             </View>}
@@ -94,5 +94,9 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         backgroundColor: Theme.colors.background
+    },
+    item: {
+        height: 68.5,
+        paddingLeft: 12
     }
 });
