@@ -15,6 +15,7 @@ type IProps = {
     size?: number;
     resizeMode?: ImageResizeMode | undefined; 
     loadSize?: number | "small" | "large";
+    noShadow?: boolean;
     onLoad?: ()=>any;
 };
 type IState = {
@@ -60,7 +61,14 @@ export default class ImageLazyLoad extends PureComponent<IProps, IState> {
         }).catch(()=>(this._isMount)&&this.setState({ source: ProfilePicture, isLoading: false }));
     }
     render(): React.ReactNode {
-        return(<View style={[styles.view, { width: this.props.size, height: this.props.size }, this.props.style, (this.props.circle)? styles.circle: undefined, (this.props.circle)? { shadowColor: '#000000' }: undefined]}>
+        return(<View style={[
+                styles.view,
+                { width: this.props.size, height: this.props.size },
+                this.props.style,
+                (this.props.circle)? styles.circle: undefined,
+                (this.props.circle)? { shadowColor: '#000000' }: undefined,
+                (this.props.noShadow)? { shadowColor: 'rgba(0, 0, 0, 0)', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0, shadowRadius: 0 }: undefined
+            ]}>
             {(this.state.isLoading)? <View style={styles.loading}>
                 <ActivityIndicator
                     animating={true}
