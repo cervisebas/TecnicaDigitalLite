@@ -14,6 +14,7 @@ type IProps = {
     circle?: boolean;
     size?: number;
     resizeMode?: ImageResizeMode | undefined; 
+    loadSize?: number | "small" | "large";
     onLoad?: ()=>any;
 };
 type IState = {
@@ -63,7 +64,7 @@ export default class ImageLazyLoad extends PureComponent<IProps, IState> {
             {(this.state.isLoading)? <View style={styles.loading}>
                 <ActivityIndicator
                     animating={true}
-                    size={'large'}
+                    size={(this.props.loadSize)? this.props.loadSize: 'large'}
                 />
             </View>:
             <Image

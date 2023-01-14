@@ -9,13 +9,14 @@ import TabBar from "./Schedule/TabBar";
 import moment from "moment";
 import "moment/locale/es";
 import { waitTo } from "../Scripts/Utils";
-import { StudentsData } from "../Scripts/ApiTecnica/types";
+import { Matter, StudentsData, Schedule as ScheduleType } from "../Scripts/ApiTecnica/types";
 import scheduleProcess, { DayData } from "./Schedule/ScheduleProcess";
 import { Family } from "../Scripts/ApiTecnica";
 import SchedulePage from "./Schedule/SchedulePage";
 
 type IProps = {
     datas: StudentsData;
+    openViewInfoSchedule: (matter: ScheduleType)=>void;
 };
 type IState = {
     isLoading: boolean;
@@ -107,11 +108,11 @@ export default class Schedule extends PureComponent<IProps, IState> {
     }
 
     // Days
-    _monday() { return(<SchedulePage datas={this.state.datas![0]} />); }
-    _tuesday() { return(<SchedulePage datas={this.state.datas![1]} />); }
-    _wednesday() { return(<SchedulePage datas={this.state.datas![2]} />); }
-    _thursday() { return(<SchedulePage datas={this.state.datas![3]} />); }
-    _friday() { return(<SchedulePage datas={this.state.datas![4]} />); }
+    _monday() { return(<SchedulePage datas={this.state.datas![0]} openViewInfoSchedule={this.props.openViewInfoSchedule} />); }
+    _tuesday() { return(<SchedulePage datas={this.state.datas![1]} openViewInfoSchedule={this.props.openViewInfoSchedule} />); }
+    _wednesday() { return(<SchedulePage datas={this.state.datas![2]} openViewInfoSchedule={this.props.openViewInfoSchedule} />); }
+    _thursday() { return(<SchedulePage datas={this.state.datas![3]} openViewInfoSchedule={this.props.openViewInfoSchedule} />); }
+    _friday() { return(<SchedulePage datas={this.state.datas![4]} openViewInfoSchedule={this.props.openViewInfoSchedule} />); }
 
     render(): React.ReactNode {
         return(<View style={styles.content}>

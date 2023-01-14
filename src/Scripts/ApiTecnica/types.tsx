@@ -56,6 +56,7 @@ export type {
     DataSchedule,
     FamilyDataAssist,
     StudentsData,
+    Matter,
     Schedule,
     TypicalRes
 };

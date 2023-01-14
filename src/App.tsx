@@ -8,13 +8,14 @@ import Session from "./Screens/Session";
 import ScreenLoading, { ScreenLoadingRef } from "./Screens/ScreenLoading";
 import SplashScreen from "./Screens/SplashScreen";
 import { Family, urlBase } from "./Scripts/ApiTecnica";
-import { StudentsData } from "./Scripts/ApiTecnica/types";
+import { Matter, StudentsData, Schedule as ScheduleType } from "./Scripts/ApiTecnica/types";
 import { waitTo } from "./Scripts/Utils";
 import { decode } from "base-64";
 import ChangeCardDesign from "./Screens/ChangeCardDesign";
 import AlertComponent from "./Components/AlertComponent";
 import ImageViewer from "./Screens/ImageViewer";
 import Schedule from "./Scenes/Schedule";
+import ViewInfoSchedule, { ViewInfoScheduleRef } from "./Scenes/Schedule/ViewInfoSchedule";
 
 type IProps = {};
 type IState = {
@@ -36,6 +37,7 @@ export default class App extends PureComponent<IProps, IState> {
         this._changeNowCardDesign = this._changeNowCardDesign.bind(this);
         this._controllerAlert = this._controllerAlert.bind(this);
         this._openImageViewer = this._openImageViewer.bind(this);
+        this._openViewInfoSchedule = this._openViewInfoSchedule.bind(this);
     }
     private routes = [
         { key: 'home', title: 'Inicio', focusedIcon: 'home', unfocusedIcon: 'home-outline' },
@@ -49,6 +51,7 @@ export default class App extends PureComponent<IProps, IState> {
     private refChangeCardDesign = createRef<ChangeCardDesign>();
     private refAlertComponent = createRef<AlertComponent>();
     private refImageViewer = createRef<ImageViewer>();
+    private refViewInfoSchedule = createRef<ViewInfoScheduleRef>();
 
     componentDidMount(): void {
         /*RNSplashScreen.hide();
@@ -96,6 +99,9 @@ export default class App extends PureComponent<IProps, IState> {
     _openImageViewer(source: string) {
         this.refImageViewer.current?.open(source);
     }
+    _openViewInfoSchedule(matter: ScheduleType) {
+        this.refViewInfoSchedule.current?.open(matter);
+    }
     
     // Navigation
     _onIndexChange(index: number) {
@@ -114,6 +120,7 @@ export default class App extends PureComponent<IProps, IState> {
             case 'schedule':
                 return <Schedule
                     datas={this.state.datas}
+                    openViewInfoSchedule={this._openViewInfoSchedule}
                 />;
             case 'details':
                 return <Account />;
@@ -147,6 +154,7 @@ export default class App extends PureComponent<IProps, IState> {
                 <SplashScreen initNow={this.init} />
                 <ImageViewer ref={this.refImageViewer} />
                 <ChangeCardDesign ref={this.refChangeCardDesign} changeDesign={this._changeNowCardDesign} />
+                <ViewInfoSchedule ref={this.refViewInfoSchedule} />
                 <Portal>
                     <AlertComponent ref={this.refAlertComponent} />
                 </Portal>

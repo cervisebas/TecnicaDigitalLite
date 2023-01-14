@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Schedule } from "../../Scripts/ApiTecnica/types";
+import { Matter, Schedule } from "../../Scripts/ApiTecnica/types";
 import { DayData } from "./ScheduleProcess";
 import { ScrollView, StyleSheet } from "react-native";
 import { Divider, List, Text } from "react-native-paper";
@@ -9,6 +9,7 @@ import { Theme } from "../../Scripts/Theme";
 
 type IProps = {
     datas: DayData;
+    openViewInfoSchedule: (matter: Schedule)=>void;
 };
 
 export default React.memo(function SchedulePage(props: IProps) {
@@ -28,12 +29,13 @@ export default React.memo(function SchedulePage(props: IProps) {
         let showDivider = (array.length - 1) !== index;
         return(<>
             <List.Item
-                key={`${item.day}-${item.hour}-${index}`}
+                key={`${item.day}-${item.hour}-${(item.matter !== 'none')? item.matter.id: index}`}
                 title={title}
                 description={(item.matter == 'none')? undefined: safeDecode(item.matter.teacher.name)}
                 left={(props)=><Icon {...props} name={'calendar-today'} size={32} color={(item.matter == 'none')? '#FF0000': props.color } />}
                 right={(props)=><Text {...props}>{item.hour}</Text>}
                 style={{ height: (item.matter == 'none')? 61: 68.5 }}
+                onPress={()=>(item.matter !== 'none')&&props.openViewInfoSchedule(item)}
             />
             {(showDivider)&&<Divider />}
         </>);
