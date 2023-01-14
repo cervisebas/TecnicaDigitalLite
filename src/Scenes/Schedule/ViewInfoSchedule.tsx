@@ -1,6 +1,6 @@
 import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
 import CustomModal from "../../Components/CustomModal";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View, Image } from "react-native";
 import { Appbar, List } from "react-native-paper";
 import { Theme } from "../../Scripts/Theme";
 import { Matter, Schedule } from "../../Scripts/ApiTecnica/types";
@@ -10,12 +10,19 @@ import { decode } from "base-64";
 import { urlBase } from "../../Scripts/ApiTecnica";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import RNScreenshotPrevent from 'react-native-screenshot-prevent';
+import RNFS from "react-native-fs";
 import moment from "moment";
+import ProfilePicture from "../../Assets/profile.webp";
+//import ProfilePicture from "../Assets/";
 
-type IProps = {};
+type IProps = {
+    openImageViewer: (source: string)=>void;
+};
 export type ViewInfoScheduleRef = {
     open: (schedule: Schedule)=>void;
 };
+
+const CacheDir = RNFS.CachesDirectoryPath;
 
 export default React.memo(forwardRef(function ViewInfoSchedule(props: IProps, ref: React.Ref<ViewInfoScheduleRef>) {
     const [visible, setVisible] = useState(false);
@@ -36,6 +43,16 @@ export default React.memo(forwardRef(function ViewInfoSchedule(props: IProps, re
             size={32}
         />);
     }
+    function openImageViewer() {
+        const uri = `${urlBase}/image/${decode((schedule!.matter as Matter).teacher.picture)}`;
+        const fileName = uri.split('/').pop();
+        RNFS.exists(`${CacheDir}/${fileName}`).then((val)=>{
+            if (val) return props.openImageViewer(`file://${CacheDir}/${fileName}`);
+            RNFS.downloadFile({ fromUrl: uri, toFile: `${CacheDir}/${fileName}` }).promise
+                .then(()=>props.openImageViewer(`file://${CacheDir}/${fileName}`))
+                .catch(()=>props.openImageViewer(Image.resolveAssetSource(ProfilePicture).uri));
+        }).catch(()=>props.openImageViewer(Image.resolveAssetSource(ProfilePicture).uri));
+    }
 
     useEffect(()=>{RNScreenshotPrevent.enabled(visible);}, [visible]);
 
@@ -55,12 +72,14 @@ export default React.memo(forwardRef(function ViewInfoSchedule(props: IProps, re
                 </List.Section>
                 <List.Section title={'Docente'}>
                     <List.Item
-                        left={()=><ImageLazyLoad
-                            circle={true}
-                            size={56}
-                            loadSize={'small'}
-                            source={{ uri: `${urlBase}/image/${decode((schedule.matter as Matter).teacher.picture)}` }}
-                        />}
+                        left={()=><Pressable onPress={openImageViewer}>
+                            <ImageLazyLoad
+                                circle={true}
+                                size={56}
+                                loadSize={'small'}
+                                source={{ uri: `${urlBase}/image/${decode((schedule.matter as Matter).teacher.picture)}` }}
+                            />
+                        </Pressable>}
                         title={safeDecode((schedule.matter as Matter).teacher.name)}
                         description={safeDecode((schedule.matter as Matter).teacher.curse)}
                         style={{ height: 68.5, paddingLeft: 12 }}

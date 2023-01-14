@@ -154,7 +154,7 @@ export default class App extends PureComponent<IProps, IState> {
                 <SplashScreen initNow={this.init} />
                 <ImageViewer ref={this.refImageViewer} />
                 <ChangeCardDesign ref={this.refChangeCardDesign} changeDesign={this._changeNowCardDesign} />
-                <ViewInfoSchedule ref={this.refViewInfoSchedule} />
+                <ViewInfoSchedule ref={this.refViewInfoSchedule} openImageViewer={this._openImageViewer} />
                 <Portal>
                     <AlertComponent ref={this.refAlertComponent} />
                 </Portal>
