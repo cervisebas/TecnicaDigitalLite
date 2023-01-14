@@ -9,6 +9,7 @@ import ImageLazyLoad from "../../Components/ImageLazyLoad";
 import { decode } from "base-64";
 import { urlBase } from "../../Scripts/ApiTecnica";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import moment from "moment";
 
 type IProps = {};
 export type ViewInfoScheduleRef = {
@@ -47,6 +48,7 @@ export default React.memo(forwardRef(function ViewInfoSchedule(props: IProps, re
                 <List.Section title={'Información'}>
                     <List.Item title={'Nombre de la materia'} description={safeDecode((schedule.matter as Matter).name)} descriptionStyle={{ marginLeft: 4 }} left={_left} />
                     {(schedule.group !== 'none')&&<List.Item title={'Grupo asignado'} description={`Grupo ${schedule.group}`} descriptionStyle={{ marginLeft: 4 }} left={_left} />}
+                    <List.Item title={'Horario asignado'} description={`${schedule.hour} ~ ${moment(schedule.hour, 'HH:mm').add(1, 'hour').format('HH:mm')}`} descriptionStyle={{ marginLeft: 4 }} left={_left} />
                 </List.Section>
                 <List.Section title={'Docente'}>
                     <List.Item
