@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Matter, Schedule } from "../../Scripts/ApiTecnica/types";
+import { Schedule } from "../../Scripts/ApiTecnica/types";
 import { DayData } from "./ScheduleProcess";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { Divider, List, Text } from "react-native-paper";
 import { safeDecode } from "../../Scripts/Utils";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -27,9 +27,9 @@ export default React.memo(function SchedulePage(props: IProps) {
         let pTitle = (item.matter == 'none')? 'Libre': safeDecode(item.matter.name);
         let title = <>{(item.group == 'none')? pTitle: <><Text style={styles.textGroup}>{`(Grupo ${item.group})`}</Text> {pTitle}</>}</>;
         let showDivider = (array.length - 1) !== index;
-        return(<>
+        let key = `${item.day}-${item.hour.replace(':', '')}-${item.group}`;
+        return(<View style={styles.itemContent} key={key}>
             <List.Item
-                key={`${item.day}-${item.hour.replace(':', '_')}-${item.group}-${(item.matter !== 'none')? item.matter.id: index}`}
                 title={title}
                 description={(item.matter == 'none')? undefined: safeDecode(item.matter.teacher.name)}
                 left={(props)=><Icon {...props} name={'calendar-today'} size={32} color={(item.matter == 'none')? '#FF0000': props.color } />}
@@ -38,7 +38,7 @@ export default React.memo(function SchedulePage(props: IProps) {
                 onPress={()=>(item.matter !== 'none')&&props.openViewInfoSchedule(item)}
             />
             {(showDivider)&&<Divider />}
-        </>);
+        </View>);
     }
 
     return(<ScrollView style={styles.content}>
@@ -58,5 +58,9 @@ const styles = StyleSheet.create({
     textGroup: {
         fontWeight: '700',
         color: Theme.colors.secondary
+    },
+    itemContent: {
+        flexDirection: 'column',
+        width: '100%'
     }
 });

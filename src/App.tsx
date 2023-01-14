@@ -16,6 +16,9 @@ import AlertComponent from "./Components/AlertComponent";
 import ImageViewer from "./Screens/ImageViewer";
 import Schedule from "./Scenes/Schedule";
 import ViewInfoSchedule, { ViewInfoScheduleRef } from "./Scenes/Schedule/ViewInfoSchedule";
+import LoadingComponent, { LoadingComponentRef } from "./Components/LoadingComponent";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AlertCloseSession, { AlertCloseSessionRef } from "./Components/AlertCloseSession";
 
 type IProps = {};
 type IState = {
@@ -38,6 +41,9 @@ export default class App extends PureComponent<IProps, IState> {
         this._controllerAlert = this._controllerAlert.bind(this);
         this._openImageViewer = this._openImageViewer.bind(this);
         this._openViewInfoSchedule = this._openViewInfoSchedule.bind(this);
+        this._controllerLoading = this._controllerLoading.bind(this);
+        this._showAlertLogout = this._showAlertLogout.bind(this);
+        this._logOutNow = this._logOutNow.bind(this);
     }
     private routes = [
         { key: 'home', title: 'Inicio', focusedIcon: 'home', unfocusedIcon: 'home-outline' },
@@ -52,6 +58,8 @@ export default class App extends PureComponent<IProps, IState> {
     private refAlertComponent = createRef<AlertComponent>();
     private refImageViewer = createRef<ImageViewer>();
     private refViewInfoSchedule = createRef<ViewInfoScheduleRef>();
+    private refLoadingComponent = createRef<LoadingComponentRef>();
+    private refAlertCloseSession = createRef<AlertCloseSessionRef>();
 
     componentDidMount(): void {
         /*RNSplashScreen.hide();
@@ -102,6 +110,20 @@ export default class App extends PureComponent<IProps, IState> {
     _openViewInfoSchedule(matter: ScheduleType) {
         this.refViewInfoSchedule.current?.open(matter);
     }
+    _controllerLoading(visible: boolean, message?: string) {
+        if (!visible) return this.refLoadingComponent.current?.close();
+        this.refLoadingComponent.current?.open(message!);
+    }
+    _showAlertLogout() {
+        this.refAlertCloseSession.current?.open();
+    }
+    async _logOutNow() {
+        this._controllerLoading(true, 'Cerrando sesión, espere...');
+        await AsyncStorage.multiRemove(['FamilyOptionSuscribe', 'FamilySession', 'FamilySaveCard']);
+        await waitTo(1000);
+        this._controllerLoading(false);
+        this.init();
+    }
     
     // Navigation
     _onIndexChange(index: number) {
@@ -126,6 +148,8 @@ export default class App extends PureComponent<IProps, IState> {
                 return <Account
                     datas={this.state.datas}
                     openImageViewer={this._openImageViewer}
+                    controllerLoading={this._controllerLoading}
+                    logOutAction={this._showAlertLogout}
                 />;
         }
     }
@@ -160,6 +184,8 @@ export default class App extends PureComponent<IProps, IState> {
                 <ViewInfoSchedule ref={this.refViewInfoSchedule} openImageViewer={this._openImageViewer} />
                 <Portal>
                     <AlertComponent ref={this.refAlertComponent} />
+                    <LoadingComponent ref={this.refLoadingComponent} />
+                    <AlertCloseSession ref={this.refAlertCloseSession} loadOutNow={this._logOutNow} />
                 </Portal>
             </PaperProvider>
         </View>);

@@ -99,12 +99,12 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
         if (!show) {
             animationCogs.stop();
             Animated.parallel([
-                Animated.timing(rotate, { toValue: 0, duration: 100, useNativeDriver: true, easing: Easing.linear }),
-                Animated.timing(cog1X, { toValue: -150, duration, useNativeDriver: true, easing: Easing.linear }),
-                Animated.timing(cog2X, { toValue: 300, duration, useNativeDriver: true, easing: Easing.linear }),
-                Animated.timing(cog2Y, { toValue: 300, duration, useNativeDriver: true, easing: Easing.linear }),
-                Animated.timing(cog3X, { toValue: -190, duration, useNativeDriver: true, easing: Easing.linear }),
-                Animated.timing(cog3Y, { toValue: -220, duration, useNativeDriver: true, easing: Easing.linear })
+                Animated.timing(rotate, { toValue: 0, duration: 0, useNativeDriver: true, easing: Easing.linear }),
+                Animated.timing(cog1X, { toValue: -150, duration: 0, useNativeDriver: true, easing: Easing.linear }),
+                Animated.timing(cog2X, { toValue: 300, duration: 0, useNativeDriver: true, easing: Easing.linear }),
+                Animated.timing(cog2Y, { toValue: 300, duration: 0, useNativeDriver: true, easing: Easing.linear }),
+                Animated.timing(cog3X, { toValue: -190, duration: 0, useNativeDriver: true, easing: Easing.linear }),
+                Animated.timing(cog3Y, { toValue: -220, duration: 0, useNativeDriver: true, easing: Easing.linear })
             ]).start();
             return;
         }
@@ -119,13 +119,13 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
     }
     function setStateLoading(show: boolean) {
         Animated.parallel([
-            Animated.timing(loadView1Op, { toValue: (show)? 0: 1, duration, useNativeDriver: true, easing: Easing.linear }),
-            Animated.timing(loadView1Ty, { toValue: (show)? 20: 0, duration, useNativeDriver: true, easing: Easing.linear }),
-            Animated.timing(loadView2Op, { toValue: (show)? 1: 0, duration, useNativeDriver: true, easing: Easing.linear }),
-            Animated.timing(loadView2Ty, { toValue: (show)? 0: 20, duration, useNativeDriver: true, easing: Easing.linear }),
-            Animated.timing(opacityImage1, { toValue: (show)? 0: 1, duration, useNativeDriver: true, easing: Easing.linear }),
-            Animated.timing(opacityImage2, { toValue: (show)? 1: 0, duration, useNativeDriver: true, easing: Easing.linear }),
-            Animated.timing(opacityText2, { toValue: (show)? 1: 0, duration, delay: 1000, useNativeDriver: true, easing: Easing.linear })
+            Animated.timing(loadView1Op, { toValue: (show)? 0: 1, duration: (show)? duration: 0, useNativeDriver: true, easing: Easing.linear }),
+            Animated.timing(loadView1Ty, { toValue: (show)? 20: 0, duration: (show)? duration: 0, useNativeDriver: true, easing: Easing.linear }),
+            Animated.timing(loadView2Op, { toValue: (show)? 1: 0, duration: (show)? duration: 0, useNativeDriver: true, easing: Easing.linear }),
+            Animated.timing(loadView2Ty, { toValue: (show)? 0: 20, duration: (show)? duration: 0, useNativeDriver: true, easing: Easing.linear }),
+            Animated.timing(opacityImage1, { toValue: (show)? 0: 1, duration: (show)? duration: 0, useNativeDriver: true, easing: Easing.linear }),
+            Animated.timing(opacityImage2, { toValue: (show)? 1: 0, duration: (show)? duration: 0, useNativeDriver: true, easing: Easing.linear }),
+            Animated.timing(opacityText2, { toValue: (show)? 1: 0, duration: (show)? duration: 0, delay: 1000, useNativeDriver: true, easing: Easing.linear })
         ]).start();
     }
     // ##############
@@ -141,13 +141,16 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
             SystemNavigationBar.setNavigationColor("rgba(0, 163, 255, 1)", 'dark');
             StatusBar.setBackgroundColor('rgba(0, 163, 255, 0.001)');
             StatusBar.setBarStyle('dark-content');
-        } else if (endHere) {
-            setTimeout(() => {
-                SystemNavigationBar.setNavigationColor(Theme.colors.elevation.level2, 'dark');
-                StatusBar.setBackgroundColor('#FFFFFF');
-                StatusBar.setBarStyle('dark-content');
-            }, 300);
-            setEndHere2(false);
+        } else {
+            setTimeout(endAnimation, 499);
+            if (endHere) {
+                setTimeout(() => {
+                    SystemNavigationBar.setNavigationColor(Theme.colors.elevation.level2, 'dark');
+                    StatusBar.setBackgroundColor('#FFFFFF');
+                    StatusBar.setBarStyle('dark-content');
+                }, 300);
+                setEndHere2(false);
+            }
         }
     }, [visible]);
 

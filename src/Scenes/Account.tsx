@@ -13,6 +13,8 @@ import Cog from "../Assets/Cog.svg";
 type IProps = {
     datas: StudentsData;
     openImageViewer: (source: string)=>void;
+    controllerLoading: (visible: boolean, message?: string)=>void;
+    logOutAction: ()=>void;
 };
 type IState = {
     idStudent: string;
@@ -111,7 +113,7 @@ export default class Account extends PureComponent<IProps, IState> {
                     />
                 </>}
                 <View style={styles.buttonLogOutContent}>
-                    <Button mode={'contained'} style={styles.buttonLogOut}>Cerrar sesión</Button>
+                    <Button mode={'contained'} style={styles.buttonLogOut} onPress={this.props.logOutAction}>Cerrar sesión</Button>
                 </View>
             </ScrollView>
         </View>);
