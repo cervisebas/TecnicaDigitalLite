@@ -3,7 +3,6 @@ import { NavigationContainer, NavigationContainerRef } from "@react-navigation/n
 import React, { PureComponent, createRef } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 import { ActivityIndicator, Appbar, Button, Text } from "react-native-paper";
-//import RNScreenshotPrevent from 'react-native-screenshot-prevent';
 import { ThemeNavigation } from "../Scripts/Theme";
 import TabBar from "./Schedule/TabBar";
 import moment from "moment";

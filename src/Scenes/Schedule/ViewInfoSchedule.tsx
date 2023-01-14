@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
 import CustomModal from "../../Components/CustomModal";
 import { StyleSheet, View } from "react-native";
 import { Appbar, List } from "react-native-paper";
@@ -9,6 +9,7 @@ import ImageLazyLoad from "../../Components/ImageLazyLoad";
 import { decode } from "base-64";
 import { urlBase } from "../../Scripts/ApiTecnica";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import RNScreenshotPrevent from 'react-native-screenshot-prevent';
 import moment from "moment";
 
 type IProps = {};
@@ -35,6 +36,8 @@ export default React.memo(forwardRef(function ViewInfoSchedule(props: IProps, re
             size={32}
         />);
     }
+
+    useEffect(()=>{RNScreenshotPrevent.enabled(visible);}, [visible]);
 
     useImperativeHandle(ref, ()=>({ open }));
 
