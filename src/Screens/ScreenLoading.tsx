@@ -283,6 +283,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         minWidth: 300,
         textAlign: 'center',
-        marginTop: 12
+        marginTop: 12,
+        color: '#000000'
     }
 });

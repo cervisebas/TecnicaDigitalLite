@@ -123,7 +123,10 @@ export default class App extends PureComponent<IProps, IState> {
                     openViewInfoSchedule={this._openViewInfoSchedule}
                 />;
             case 'details':
-                return <Account />;
+                return <Account
+                    datas={this.state.datas}
+                    openImageViewer={this._openImageViewer}
+                />;
         }
     }
     _renderLabel(props: { route: Route; focused: boolean; color: string; }) {
