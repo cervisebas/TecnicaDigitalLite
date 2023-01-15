@@ -8,8 +8,8 @@ import Session from "./Screens/Session";
 import ScreenLoading, { ScreenLoadingRef } from "./Screens/ScreenLoading";
 import SplashScreen from "./Screens/SplashScreen";
 import { Family, urlBase } from "./Scripts/ApiTecnica";
-import { Matter, StudentsData, Schedule as ScheduleType, FamilyDataAssist } from "./Scripts/ApiTecnica/types";
-import { waitTo } from "./Scripts/Utils";
+import { StudentsData, Schedule as ScheduleType, FamilyDataAssist } from "./Scripts/ApiTecnica/types";
+import { safeDecode, waitTo } from "./Scripts/Utils";
 import { decode } from "base-64";
 import ChangeCardDesign from "./Screens/ChangeCardDesign";
 import AlertComponent from "./Components/AlertComponent";
@@ -25,6 +25,7 @@ type IProps = {};
 type IState = {
     index: number;
     datas: StudentsData;
+    routes: any[];
 };
 
 export default class App extends PureComponent<IProps, IState> {
@@ -32,7 +33,8 @@ export default class App extends PureComponent<IProps, IState> {
         super(props);
         this.state = {
             index: 0,
-            datas: this.defaultDatas
+            datas: this.defaultDatas,
+            routes: this.routes
         };
         this._onIndexChange = this._onIndexChange.bind(this);
         this._renderScene = this._renderScene.bind(this);
@@ -50,6 +52,10 @@ export default class App extends PureComponent<IProps, IState> {
     private routes = [
         { key: 'home', title: 'Inicio', focusedIcon: 'home', unfocusedIcon: 'home-outline' },
         { key: 'schedule', title: 'Mi horario', focusedIcon: 'calendar-text', unfocusedIcon: 'calendar-text-outline' },
+        { key: 'details', title: 'Mi cuenta', focusedIcon: 'account', unfocusedIcon: 'account-outline' }
+    ];
+    private routesTeacher = [
+        { key: 'home', title: 'Inicio', focusedIcon: 'home', unfocusedIcon: 'home-outline' },
         { key: 'details', title: 'Mi cuenta', focusedIcon: 'account', unfocusedIcon: 'account-outline' }
     ];
     private defaultDatas = { id: '-', name: '-', dni: '-', curse: '-', tel: '-', email: '-', date: '-', picture: '-' };
@@ -84,7 +90,9 @@ export default class App extends PureComponent<IProps, IState> {
             await waitTo(1024);
             this.refScreenLoading.current?.setText(true, 'Obteniendo información...');
             const studentData = await Family.getDataStudent();
-            this.setState({ datas: studentData });
+            let curse = safeDecode(studentData.curse).toLowerCase();
+            let isTeacher = curse.indexOf('docente') !== -1;
+            this.setState({ datas: studentData, routes: (isTeacher)? this.routesTeacher: this.routes });
             await waitTo(1000);
             this.refScreenLoading.current?.close();
         } catch (error: any) {
@@ -177,7 +185,7 @@ export default class App extends PureComponent<IProps, IState> {
                 <BottomNavigation
                     navigationState={{
                         index: this.state.index,
-                        routes: this.routes
+                        routes: this.state.routes
                     }}
                     sceneAnimationEnabled={true}
                     sceneAnimationType={'shifting'}

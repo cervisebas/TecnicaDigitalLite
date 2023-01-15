@@ -1,5 +1,5 @@
 import React, { createRef, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { Dimensions, EmitterSubscription, ScaledSize, StyleSheet, View, Animated, Easing, PermissionsAndroid } from "react-native";
+import { Dimensions, EmitterSubscription, ScaledSize, StyleSheet, View, Animated, Easing, PermissionsAndroid, ToastAndroid } from "react-native";
 import CardComponent, { CardComponentRef } from "../../Components/CardComponent";
 import ViewShot, { captureRef, releaseCapture } from "react-native-view-shot";
 import { getRandomInt, safeDecode, waitTo } from "../../Scripts/Utils";
@@ -9,6 +9,7 @@ import Share from "react-native-share";
 import RNFS from "react-native-fs";
 import Color from "color";
 import CredentialTouchable from "./CredentialTouchable";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type IProps = {
     dni: string;
@@ -25,7 +26,7 @@ export type CardCredentialRef = {
 
 export default React.memo(forwardRef(function CardCredential(props: IProps, ref: React.Ref<CardCredentialRef>) {
     const [disable, setDisable] = useState(false);
-    const [design, setDesign] = useState(0);
+    const [design, setDesignID] = useState(0);
     const [loading, setLoading] = useState(false);
     const opacity = useRef(new Animated.Value(0)).current;
     const refCardComponent = createRef<CardComponentRef>();
@@ -59,7 +60,7 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
         let curse = safeDecode(props.curse).toLowerCase();
         let isTeacher = curse.indexOf('docente') !== -1;
         setDisable(isTeacher);
-        if (isTeacher) setDesign(-1); else setDesign(0);
+        if (isTeacher) setDesignID(-1); else loadDesign();
     }, [props.curse]);
 
     function notChangeDesign() {
@@ -76,6 +77,20 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
             />
         </Tooltip>);
     }
+
+    function setDesign(id: number) {
+        setDesignID(id);
+        AsyncStorage.setItem('FamilySaveCard', id.toString());
+    }
+    async function loadDesign() {
+        try {
+            const designID = await AsyncStorage.getItem('FamilySaveCard');
+            if (designID !== null) setDesignID(parseInt(designID)); else setDesignID(0);
+        } catch {
+            ToastAndroid.show('No se pudo cargar el diseño guardado.', ToastAndroid.SHORT);
+        }
+    }
+
     useImperativeHandle(ref, ()=>({ setDesign }));
     
     function setOpacity(value: number) {
