@@ -12,6 +12,7 @@ type IProps = {
     id: string;
     // Functions
     openDetailsAssit: (data: FamilyDataAssist[])=>any;
+    controllerAlert: (visible: boolean, title?: string, message?: string)=>void;
 };
 type IState = {
     // Controller
@@ -39,6 +40,7 @@ export default class AssistCard extends PureComponent<IProps, IState> {
         };
         this.loadData = this.loadData.bind(this);
         this.openDetailsAssit = this.openDetailsAssit.bind(this);
+        this.showNotData = this.showNotData.bind(this);
     }
     private assistData: FamilyDataAssist[] = [];
 
@@ -76,6 +78,9 @@ export default class AssistCard extends PureComponent<IProps, IState> {
     openDetailsAssit() {
         this.props.openDetailsAssit(this.assistData);
     }
+    showNotData() {
+        this.props.controllerAlert(true, 'No se encontraron datos', 'En este momento no se encuentran datos de asistencia, si crees que en realidad debe de haber, recarga los datos o espere a que un preceptor se encargue más tarde de cargarlos.');
+    }
 
     render(): React.ReactNode {
         return(<Card style={styles.content}>
@@ -104,7 +109,7 @@ export default class AssistCard extends PureComponent<IProps, IState> {
                     <Button
                         icon={'account-details'}
                         //disabled={this.props.isLoading || this.props.isDisableDetailAssist}
-                        onPress={(this.state.isLoading || this.state.isDisableDetailAssist)? undefined: this.openDetailsAssit}
+                        onPress={(this.state.isLoading || this.state.isDisableDetailAssist)? this.showNotData: this.openDetailsAssit}
                         mode={'text'}
                         //buttonColor={(this.props.isLoading)? Color(Theme.colors.tertiary).alpha(0.5).rgb().string(): undefined}
                         textColor={(this.state.isLoading || this.state.isDisableDetailAssist)? Color(Theme.colors.tertiary).alpha(0.5).rgb().string(): undefined}

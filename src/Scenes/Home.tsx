@@ -33,6 +33,7 @@ export default class Home extends PureComponent<IProps, IState> {
                     <AssistCard
                         id={this.props.datas.id}
                         openDetailsAssit={this.props.openViewDetailsAssist}
+                        controllerAlert={this.props.controllerAlert}
                     />
                     <CardCredential
                         ref={this.refCardCredential}

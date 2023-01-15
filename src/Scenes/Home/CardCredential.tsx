@@ -1,9 +1,9 @@
 import React, { createRef, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { Dimensions, EmitterSubscription, ScaledSize, StyleSheet, View, Animated, Easing, PermissionsAndroid, Platform } from "react-native";
+import { Dimensions, EmitterSubscription, ScaledSize, StyleSheet, View, Animated, Easing, PermissionsAndroid } from "react-native";
 import CardComponent, { CardComponentRef } from "../../Components/CardComponent";
 import ViewShot, { captureRef, releaseCapture } from "react-native-view-shot";
 import { getRandomInt, safeDecode, waitTo } from "../../Scripts/Utils";
-import { ActivityIndicator, Button, Card, IconButton, Tooltip, TouchableRipple } from "react-native-paper";
+import { ActivityIndicator, Button, Card, IconButton, Tooltip } from "react-native-paper";
 import { Theme } from "../../Scripts/Theme";
 import Share from "react-native-share";
 import RNFS from "react-native-fs";
@@ -57,15 +57,21 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
     }, []);
     useEffect(()=>{
         let curse = safeDecode(props.curse).toLowerCase();
-        setDisable(curse.indexOf('docente') !== -1);
+        let isTeacher = curse.indexOf('docente') !== -1;
+        setDisable(isTeacher);
+        if (isTeacher) setDesign(-1); else setDesign(0);
     }, [props.curse]);
+
+    function notChangeDesign() {
+        props.controllerAlert(true, 'Acción no permitida', 'Los docentes no tienen permitido cambiar el diseño de su tarjeta de ingreso.');
+    }
 
     function rightButtonTitle(hProps: { size: number; }) {
         return(<Tooltip title={'Cambiar diseño'}>
             <IconButton
                 {...hProps}
                 icon={'pencil-ruler'}
-                onPress={(!disable)? props.openChangeDesign: undefined}
+                onPress={(!disable)? props.openChangeDesign: notChangeDesign}
                 iconColor={(disable)? Color(Theme.colors.tertiary).alpha(0.5).rgb().string(): Theme.colors.secondary}
             />
         </Tooltip>);

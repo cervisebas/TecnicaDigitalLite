@@ -71,7 +71,7 @@ export default class App extends PureComponent<IProps, IState> {
         StatusBar.setBarStyle('dark-content');*/
     }
     async init() {
-        this.setState({ datas: this.defaultDatas });
+        this.setState({ datas: this.defaultDatas, index: 0 });
         this.refScreenLoading.current?.open();
         this.refScreenLoading.current?.setText(true, 'Iniciando sesión...');
         try {
