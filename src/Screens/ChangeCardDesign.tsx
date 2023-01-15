@@ -37,8 +37,9 @@ export default class ChangeCardDesign extends PureComponent<IProps, IState> {
         this.event?.remove();
     }
     changeScale({ window }: { window: ScaledSize; }) {
-        const width = window.width - 16;
-        const scale = (width/1200);
+        let width = window.width;
+        if (width > 600) width = 600;
+        const scale = ((width - 16)/1200);
         this.setState({ scale });
     }
     // ##### FlatList #####
@@ -78,9 +79,11 @@ export default class ChangeCardDesign extends PureComponent<IProps, IState> {
                     <Appbar.BackAction onPress={this.close} />
                     <Appbar.Content title={'Lista de diseños'} />
                 </Appbar.Header>
-                <View style={{ flex: 1 }}>
+                <View style={styles.subContent}>
                     <FlatList
                         key={`list-desings-layout-${this.state.scale}`}
+                        style={styles.flatlist}
+                        contentContainerStyle={styles.flatlistContent}
                         data={ExampleCards}
                         keyExtractor={this._keyExtractor}
                         getItemLayout={this._getItemLayout}
@@ -124,6 +127,10 @@ const styles = StyleSheet.create({
         height: '100%',
         backgroundColor: Theme.colors.background
     },
+    subContent: {
+        flex: 1,
+        alignItems: 'center'
+    },
     itemTouch: {
         overflow: 'hidden',
         borderRadius: 12,
@@ -137,5 +144,11 @@ const styles = StyleSheet.create({
     itemImage: {
         width: '100%',
         height: '100%'
+    },
+    flatlist: {
+        width: '100%'
+    },
+    flatlistContent: {
+        alignItems: 'center'
     }
 });

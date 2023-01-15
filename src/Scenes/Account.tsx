@@ -59,61 +59,63 @@ export default class Account extends PureComponent<IProps, IState> {
             <Appbar.Header>
                 <Appbar.Content title={'Mi cuenta'} />
             </Appbar.Header>
-            <ScrollView style={styles.content}>
-                <View style={styles.imageContent}>
-                    <Pressable style={styles.imagePressable} onPress={this.openImage}>
-                        <ImageLazyLoad
-                            source={{ uri: `${urlBase}/image/${safeDecode(this.props.datas.picture)}` }}
-                            circle={true}
-                            size={160}
-                            noShadow={true}
-                            style={{ zIndex: 2 }}
-                        />
-                        <Animated.View style={[styles.cogProfile, { transform: [{ rotate: cogRotation }] }]}>
-                            <Cog width={240} height={240} />
-                        </Animated.View>
-                    </Pressable>
-                    <Text style={styles.textName}>{safeDecode(this.props.datas.name)}</Text>
-                </View>
-                <List.Item
-                    title={'ID Estudiante'}
-                    description={this.state.idStudent}
-                    left={(props)=><Icon {...props} size={32} name={'pound'} />}
-                />
-                <Divider />
-                <List.Item
-                    title={'Curso'}
-                    description={safeDecode(this.props.datas.curse)}
-                    left={(props)=><Icon {...props} size={32} name={'google-classroom'} />}
-                />
-                <Divider />
-                <List.Item
-                    title={'Número de documento'}
-                    description={safeDecode(this.props.datas.dni)}
-                    left={(props)=><Icon {...props} size={32} name={'card-account-details-outline'} />}
-                />
-                <Divider />
-                <List.Item
-                    title={'Fecha de nacimiento'}
-                    description={safeDecode(this.props.datas.date)}
-                    left={(props)=><Icon {...props} size={32} name={'cake-variant-outline'} />}
-                />
-                <Divider />
-                <List.Item
-                    title={'Número de teléfono'}
-                    description={safeDecode(this.props.datas.tel)}
-                    left={(props)=><Icon {...props} size={32} name={'card-account-phone-outline'} />}
-                />
-                {(this.props.datas.email)&&<>
+            <ScrollView style={styles.content} contentContainerStyle={styles.scrollView}>
+                <View style={styles.subContent}>
+                    <View style={styles.imageContent}>
+                        <Pressable style={styles.imagePressable} onPress={this.openImage}>
+                            <ImageLazyLoad
+                                source={{ uri: `${urlBase}/image/${safeDecode(this.props.datas.picture)}` }}
+                                circle={true}
+                                size={160}
+                                noShadow={true}
+                                style={{ zIndex: 2 }}
+                            />
+                            <Animated.View style={[styles.cogProfile, { transform: [{ rotate: cogRotation }] }]}>
+                                <Cog width={240} height={240} />
+                            </Animated.View>
+                        </Pressable>
+                        <Text style={styles.textName}>{safeDecode(this.props.datas.name)}</Text>
+                    </View>
+                    <List.Item
+                        title={'ID Estudiante'}
+                        description={this.state.idStudent}
+                        left={(props)=><Icon {...props} size={32} name={'pound'} />}
+                    />
                     <Divider />
                     <List.Item
-                        title={'Correo electronico'}
-                        description={safeDecode(this.props.datas.email)}
-                        left={(props)=><Icon {...props} size={32} name={'at'} />}
+                        title={'Curso'}
+                        description={safeDecode(this.props.datas.curse)}
+                        left={(props)=><Icon {...props} size={32} name={'google-classroom'} />}
                     />
-                </>}
-                <View style={styles.buttonLogOutContent}>
-                    <Button mode={'contained'} style={styles.buttonLogOut} onPress={this.props.logOutAction}>Cerrar sesión</Button>
+                    <Divider />
+                    <List.Item
+                        title={'Número de documento'}
+                        description={safeDecode(this.props.datas.dni)}
+                        left={(props)=><Icon {...props} size={32} name={'card-account-details-outline'} />}
+                    />
+                    <Divider />
+                    <List.Item
+                        title={'Fecha de nacimiento'}
+                        description={safeDecode(this.props.datas.date)}
+                        left={(props)=><Icon {...props} size={32} name={'cake-variant-outline'} />}
+                    />
+                    <Divider />
+                    <List.Item
+                        title={'Número de teléfono'}
+                        description={safeDecode(this.props.datas.tel)}
+                        left={(props)=><Icon {...props} size={32} name={'card-account-phone-outline'} />}
+                    />
+                    {(this.props.datas.email)&&<>
+                        <Divider />
+                        <List.Item
+                            title={'Correo electronico'}
+                            description={safeDecode(this.props.datas.email)}
+                            left={(props)=><Icon {...props} size={32} name={'at'} />}
+                        />
+                    </>}
+                    <View style={styles.buttonLogOutContent}>
+                        <Button mode={'contained'} style={styles.buttonLogOut} onPress={this.props.logOutAction}>Cerrar sesión</Button>
+                    </View>
                 </View>
             </ScrollView>
         </View>);
@@ -123,6 +125,13 @@ export default class Account extends PureComponent<IProps, IState> {
 const styles = StyleSheet.create({
     content: {
         flex: 1
+    },
+    subContent: {
+        width: '100%',
+        maxWidth: 600
+    },
+    scrollView: {
+        alignItems: 'center'
     },
     imageContent: {
         width: '100%',

@@ -33,14 +33,16 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
     var actualSize = 0;
 
     function setNewScaleCard({ window }: { window: ScaledSize; }) {
-        let width = window.width - 58;
-        let calc = Math.fround(width/1200);
+        let width = window.width;
+        if (width > 600) width = 600;
+        let calc = Math.fround((width-58)/1200);
         actualSize = calc;
         refCardComponent.current?.setScale(calc);
     }
     function checkScale() {
-        const window = Dimensions.get('window');
-        let calc = Math.fround((window.width - 58)/1200);
+        let window = Dimensions.get('window');
+        let subWidth = (window.width > 600)? 600: window.width;
+        let calc = Math.fround((subWidth - 58)/1200);
         if (calc !== actualSize) setNewScaleCard({ window });
     }
 

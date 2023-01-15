@@ -41,6 +41,7 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
     const cog2Y = useRef(new Animated.Value(300)).current, cog2X = useRef(new Animated.Value(300)).current;
     const cog3Y = useRef(new Animated.Value(-220)).current, cog3X = useRef(new Animated.Value(-190)).current;
     const animationCogs =  Animated.loop(Animated.timing(rotate, { toValue: 360, duration: 2500, useNativeDriver: true, easing: Easing.linear }), { iterations: -1 });
+    var isAnimationCogs = false;
     // Animation 
     const loadView1Op = useRef(new Animated.Value(1)).current, loadView1Ty = useRef(new Animated.Value(0)).current;
     const loadView2Op = useRef(new Animated.Value(0)).current, loadView2Ty = useRef(new Animated.Value(20)).current;
@@ -104,14 +105,17 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
     // Animations Cog
     function setStateCogs(show: boolean) {
         if (!show) {
-            animationCogs.stop();
+            if (isAnimationCogs !== false) {
+                animationCogs.stop();
+                isAnimationCogs = false;
+            }
             Animated.parallel([
                 Animated.timing(rotate, { toValue: 0, duration: 0, useNativeDriver: true, easing: Easing.linear }),
-                Animated.timing(cog1X, { toValue: -150, duration: 0, useNativeDriver: true, easing: Easing.linear }),
-                Animated.timing(cog2X, { toValue: 300, duration: 0, useNativeDriver: true, easing: Easing.linear }),
-                Animated.timing(cog2Y, { toValue: 300, duration: 0, useNativeDriver: true, easing: Easing.linear }),
-                Animated.timing(cog3X, { toValue: -190, duration: 0, useNativeDriver: true, easing: Easing.linear }),
-                Animated.timing(cog3Y, { toValue: -220, duration: 0, useNativeDriver: true, easing: Easing.linear })
+                Animated.timing(cog1X, { toValue: -(getForScale(scale, 336)), duration: 0, useNativeDriver: true, easing: Easing.linear }),
+                Animated.timing(cog2X, { toValue: -(getForScale(scale, 600)), duration: 0, useNativeDriver: true, easing: Easing.linear }),
+                Animated.timing(cog2Y, { toValue: -(getForScale(scale, 700)), duration: 0, useNativeDriver: true, easing: Easing.linear }),
+                Animated.timing(cog3X, { toValue: -(getForScale(scale, 400)), duration: 0, useNativeDriver: true, easing: Easing.linear }),
+                Animated.timing(cog3Y, { toValue: -(getForScale(scale, 500)), duration: 0, useNativeDriver: true, easing: Easing.linear })
             ]).start();
             return;
         }
@@ -122,7 +126,10 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
             Animated.timing(cog3X, { toValue: 0, duration, useNativeDriver: true, easing: Easing.linear }),
             Animated.timing(cog3Y, { toValue: 0, duration, useNativeDriver: true, easing: Easing.linear })
         ]).start();
-        setTimeout(animationCogs.start, duration);
+        if (isAnimationCogs !== true) {
+            setTimeout(animationCogs.start, duration);
+            isAnimationCogs = true;
+        }
     }
     function setStateLoading(show: boolean) {
         Animated.parallel([
@@ -140,6 +147,7 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
     function setNewSizes({ window }: { window: ScaledSize; screen: ScaledSize; }) {
         setScale(window.width/1080);
         setSizeCogs([getForScale(scale, 600), getForScale(scale, 1200), getForScale(scale, 800)]);
+        setStateCogs(isAnimating);
     }
 
     useEffect(()=>{
@@ -173,21 +181,21 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
             <View style={styles.contentCogs}>
                 <Animated.Image
                     source={CogImage}
-                    style={[styles.cog1, { width: sizeCogs[0], height: sizeCogs[0], transform: [{ rotate: rotateCog }, { translateX: cog1X }] }]}
+                    style={[styles.cog1, { width: sizeCogs[0], height: sizeCogs[0], top: getForScale(scale, 214), left: -(getForScale(scale, 264.15)), transform: [{ rotate: rotateCog }, { translateX: cog1X }] }]}
                     blurRadius={12}
                     resizeMethod={'scale'}
                     resizeMode={'contain'}
                 />
                 <Animated.Image
                     source={CogImage}
-                    style={[styles.cog2, { width: sizeCogs[1], height: sizeCogs[1], transform: [{ rotate: rotateCog }, { translateY: cog2Y }, { translateX: cog2X }] }]}
+                    style={[styles.cog2, { width: sizeCogs[1], height: sizeCogs[1], bottom: -(getForScale(scale, 500)), left: -(getForScale(scale, 600)), transform: [{ rotate: rotateCog }, { translateY: cog2Y }, { translateX: cog2X }] }]}
                     blurRadius={8}
                     resizeMethod={'scale'}
                     resizeMode={'contain'}
                 />
                 <Animated.Image
                     source={CogImage}
-                    style={[styles.cog3, { width: sizeCogs[2], height: sizeCogs[2], transform: [{ rotate: rotateCog }, { translateY: cog3Y }, { translateX: cog3X }] }]}
+                    style={[styles.cog3, { width: sizeCogs[2], height: sizeCogs[2], top: -(getForScale(scale, 300)), right: -(getForScale(scale, 400)), transform: [{ rotate: rotateCog }, { translateY: cog3Y }, { translateX: cog3X }] }]}
                     blurRadius={10}
                     resizeMethod={'scale'}
                     resizeMode={'contain'}

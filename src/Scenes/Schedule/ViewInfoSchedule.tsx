@@ -63,27 +63,30 @@ export default React.memo(forwardRef(function ViewInfoSchedule(props: IProps, re
                 <Appbar.BackAction onPress={close} />
                 <Appbar.Content title={'Ver más detalles'} />
             </Appbar.Header>
-            {(schedule)&&<ScrollView style={{ flex: 1 }}>
-                <List.Section title={'Información'}>
-                    <List.Item title={'Nombre de la materia'} description={safeDecode((schedule.matter as Matter).name)} descriptionStyle={{ marginLeft: 4 }} left={_left} />
-                    {(schedule.group !== 'none')&&<List.Item title={'Grupo asignado'} description={`Grupo ${schedule.group}`} descriptionStyle={{ marginLeft: 4 }} left={_left} />}
-                    <List.Item title={'Horario asignado'} description={`${schedule.hour} ~ ${moment(schedule.hour, 'HH:mm').add(1, 'hour').format('HH:mm')}`} descriptionStyle={{ marginLeft: 4 }} left={_left} />
-                </List.Section>
-                <List.Section title={'Docente'}>
-                    <List.Item
-                        left={()=><Pressable onPress={openImageViewer}>
-                            <ImageLazyLoad
-                                circle={true}
-                                size={56}
-                                loadSize={'small'}
-                                source={{ uri: `${urlBase}/image/${decode((schedule.matter as Matter).teacher.picture)}` }}
-                            />
-                        </Pressable>}
-                        title={`${safeDecode((schedule.matter as Matter).teacher.name)} (${calcYears(safeDecode((schedule.matter as Matter).teacher.date))} años)`}
-                        description={safeDecode((schedule.matter as Matter).teacher.curse)}
-                        style={styles.item}
-                    />
-                </List.Section>
+            {(schedule)&&<ScrollView style={{ flex: 1 }} contentContainerStyle={styles.scrollView}>
+                <View style={styles.subContent}>
+                    <List.Section title={'Información'}>
+                        <List.Item title={'Nombre de la materia'} description={safeDecode((schedule.matter as Matter).name)} descriptionStyle={{ marginLeft: 4 }} left={_left} />
+                        {(schedule.group !== 'none')&&<List.Item title={'Grupo asignado'} description={`Grupo ${schedule.group}`} descriptionStyle={{ marginLeft: 4 }} left={_left} />}
+                        <List.Item title={'Horario asignado'} description={`${schedule.hour} ~ ${moment(schedule.hour, 'HH:mm').add(1, 'hour').format('HH:mm')}`} descriptionStyle={{ marginLeft: 4 }} left={_left} />
+                    </List.Section>
+                    <List.Section title={'Docente'}>
+                        <List.Item
+                            left={()=><Pressable onPress={openImageViewer}>
+                                <ImageLazyLoad
+                                    circle={true}
+                                    size={56}
+                                    loadSize={'small'}
+                                    source={{ uri: `${urlBase}/image/${decode((schedule.matter as Matter).teacher.picture)}` }}
+                                />
+                            </Pressable>}
+                            title={`${safeDecode((schedule.matter as Matter).teacher.name)}`}
+                            //title={`${safeDecode((schedule.matter as Matter).teacher.name)} (${calcYears(safeDecode((schedule.matter as Matter).teacher.date))} años)`}
+                            description={safeDecode((schedule.matter as Matter).teacher.curse)}
+                            style={styles.item}
+                        />
+                    </List.Section>
+                </View>
             </ScrollView>}
         </View>
     </CustomModal>);
@@ -93,6 +96,13 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         backgroundColor: Theme.colors.background
+    },
+    scrollView: {
+        alignItems: 'center'
+    },
+    subContent: {
+        width: '100%',
+        maxWidth: 600
     },
     item: {
         height: 68.5,

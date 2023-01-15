@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useRef, useState } from "react";
 import { MaterialTopTabBarProps } from "@react-navigation/material-top-tabs";
-import { Animated, Easing, FlatList, ListRenderItemInfo, Platform, StyleSheet, View } from "react-native";
+import { Animated, Easing, FlatList, ListRenderItemInfo, Platform, StyleSheet, View, Pressable, PressableAndroidRippleConfig } from "react-native";
 import { Text, TouchableRipple } from "react-native-paper";
 import { NavigationHelpers, ParamListBase, TabNavigationState } from "@react-navigation/native";
 import { MaterialTopTabDescriptorMap, MaterialTopTabNavigationEventMap } from "@react-navigation/material-top-tabs/lib/typescript/src/types";
@@ -38,6 +38,8 @@ export default React.memo(function TabBar(props: MaterialTopTabBarProps) {
         />
     </View>);
 });
+
+const pressableRipple: PressableAndroidRippleConfig = { color: 'rgba(0, 0, 0, 0.5)', foreground: true }
 
 type IProps2 = {
     route: MaterialTopTabBarProps['state']['routes'][0];
@@ -87,9 +89,8 @@ const ItemTabBar = React.memo(function (props: IProps2) {
     }, [props.state]);
 
     return(<View style={styles.itemContain}>
-        <TouchableRipple
-            //borderless={true}
-            borderless={Platform.Version > 25}
+        {(Platform.Version > 25)? <TouchableRipple
+            borderless={true}
             style={styles.item}
             onPress={onPress}
             onLongPress={onLongPress}>
@@ -97,7 +98,16 @@ const ItemTabBar = React.memo(function (props: IProps2) {
                 <Animated.View style={[styles.itemActive, { opacity, transform: [{ scale }] }]} />
                 <Text style={styles.itemText}>{label as string}</Text>
             </>
-        </TouchableRipple>
+        </TouchableRipple>: <Pressable
+            style={styles.item}
+            onPress={onPress}
+            onLongPress={onLongPress}
+            android_ripple={pressableRipple}>
+            <>
+                <Animated.View style={[styles.itemActive, { opacity, transform: [{ scale }] }]} />
+                <Text style={styles.itemText}>{label as string}</Text>
+            </>
+        </Pressable>}
     </View>);
 });
 

@@ -28,21 +28,23 @@ export default class Home extends PureComponent<IProps, IState> {
                 <Appbar.Content title={'TecnicaDigital'} />
             </Appbar.Header>
             <ScrollView style={styles.content} contentContainerStyle={styles.scrollView}>
-                <WelcomeCard namestudent={safeDecode(this.props.datas.name)} />
-                <AssistCard
-                    id={this.props.datas.id}
-                    openDetailsAssit={this.props.openViewDetailsAssist}
-                />
-                <CardCredential
-                    ref={this.refCardCredential}
-                    dni={this.props.datas.dni}
-                    name={this.props.datas.name}
-                    curse={this.props.datas.curse}
-                    image={this.props.datas.picture}
-                    openChangeDesign={this.props.openChangeDesign}
-                    openImageViewer={this.props.openImageViewer}
-                    controllerAlert={this.props.controllerAlert}
-                />
+                <View style={styles.subContent}>
+                    <WelcomeCard namestudent={safeDecode(this.props.datas.name)} />
+                    <AssistCard
+                        id={this.props.datas.id}
+                        openDetailsAssit={this.props.openViewDetailsAssist}
+                    />
+                    <CardCredential
+                        ref={this.refCardCredential}
+                        dni={this.props.datas.dni}
+                        name={this.props.datas.name}
+                        curse={this.props.datas.curse}
+                        image={this.props.datas.picture}
+                        openChangeDesign={this.props.openChangeDesign}
+                        openImageViewer={this.props.openImageViewer}
+                        controllerAlert={this.props.controllerAlert}
+                    />
+                </View>
             </ScrollView>
         </View>);
     }
@@ -53,7 +55,12 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column'
     },
+    subContent: {
+        flex: 1,
+        maxWidth: 600
+    },
     scrollView: {
-        paddingBottom: 12
+        paddingBottom: 12,
+        alignItems: 'center'
     }
 });

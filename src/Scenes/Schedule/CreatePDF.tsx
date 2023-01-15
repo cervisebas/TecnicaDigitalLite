@@ -111,14 +111,17 @@ export default async function CreatePDF(curse: string, datas: Schedule[]): Promi
                 await RNFS.copyFile(uriDocument, newUri);
                 ToastAndroid.show('El archivo se copio correctamente en la carpeta de descargas', ToastAndroid.SHORT);
                 return newUri;
-            } catch {
+            } catch (error) {
+                console.log(error);
                 ToastAndroid.show('Ocurrió un error al copiar el archivo a la carpeta de descargas', ToastAndroid.SHORT);
                 return uriDocument;
             }
-        } catch {
+        } catch (error) {
+            console.log(error);
             throw "Ocurrió un error durante la conversión del archivo.";
         }
-    } catch {
+    } catch (error) {
+        console.log(error);
         throw "Ocurrió un error durante el proceso de los datos.";
     }
 }
