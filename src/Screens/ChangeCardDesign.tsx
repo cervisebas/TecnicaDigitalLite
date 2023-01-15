@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import CustomModal from "../Components/CustomModal";
-import { Dimensions, EmitterSubscription, FlatList, Image, ListRenderItemInfo, ScaledSize, StyleSheet, View } from "react-native";
+import { Dimensions, EmitterSubscription, FlatList, Image, ListRenderItemInfo, Platform, ScaledSize, StyleSheet, View } from "react-native";
 import { Theme } from "../Scripts/Theme";
 import { Appbar, TouchableRipple } from "react-native-paper";
 import ExampleCards from "../Scripts/ExampleCards";
@@ -106,7 +106,7 @@ const ItemImage = React.memo(function (props: IProps2) {
             props.close();
         }
     }
-    return(<TouchableRipple borderless={true} style={[styles.itemTouch, { width: getForScale(props.scale, 1200), height: getForScale(props.scale, 779) }]} onPress={onPress}>
+    return(<TouchableRipple borderless={Platform.Version > 25} style={[styles.itemTouch, { width: getForScale(props.scale, 1200), height: getForScale(props.scale, 779) }]} onPress={onPress}>
         <Image
             source={props.image}
             style={styles.itemImage}

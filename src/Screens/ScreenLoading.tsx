@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import CustomModal from "../Components/CustomModal";
-import { StyleSheet, View, Animated, StatusBar, Easing, Dimensions, LayoutChangeEvent, EmitterSubscription, ScaledSize } from "react-native";
+import { StyleSheet, View, Animated, StatusBar, Easing, Dimensions, EmitterSubscription, ScaledSize } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { Theme } from "../Scripts/Theme";
 import Logo from "../Assets/logo.webp";
@@ -158,9 +158,9 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
         } else {
             setTimeout(endAnimation, 499);
             if (endHere) {
-                setTimeout(() => {
+                setTimeout(()=>{
                     SystemNavigationBar.setNavigationColor(Theme.colors.elevation.level2, 'dark');
-                    StatusBar.setBackgroundColor('#FFFFFF');
+                    StatusBar.setBackgroundColor(Theme.colors.background);
                     StatusBar.setBarStyle('dark-content');
                 }, 300);
                 setEndHere2(false);

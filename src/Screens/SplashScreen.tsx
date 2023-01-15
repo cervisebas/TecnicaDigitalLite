@@ -32,13 +32,7 @@ export default React.memo(function SplashScreen(props: IProps) {
             SystemNavigationBar.setNavigationColor('#FF3232', 'light');
             StatusBar.setBackgroundColor('#FF3232');
             StatusBar.setBarStyle('light-content');
-        } /*else {
-            setTimeout(() => {
-                SystemNavigationBar.setNavigationColor(Theme.colors.elevation.level2, 'dark');
-                StatusBar.setBackgroundColor('#FFFFFF');
-                StatusBar.setBarStyle('dark-content');
-            }, 500);
-        }*/
+        }
     }, [visible]);
 
     async function startAnimation() {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Schedule } from "../../Scripts/ApiTecnica/types";
 import { DayData } from "./ScheduleProcess";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import { Divider, List, Text } from "react-native-paper";
 import { safeDecode } from "../../Scripts/Utils";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -36,6 +36,7 @@ export default React.memo(function SchedulePage(props: IProps) {
                 right={(props)=><Text {...props}>{item.hour}</Text>}
                 style={{ height: (item.matter == 'none')? 61: 68.5 }}
                 onPress={()=>(item.matter !== 'none')&&props.openViewInfoSchedule(item)}
+                borderless={Platform.Version > 25}
             />
             {(showDivider)&&<Divider />}
         </View>);
