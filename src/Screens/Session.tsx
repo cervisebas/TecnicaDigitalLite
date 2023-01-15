@@ -1,9 +1,8 @@
 import React, { PureComponent, createRef } from "react";
 import CustomModal from "../Components/CustomModal";
-import { Dimensions, Keyboard, PixelRatio, StatusBar, StyleProp, StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
+import { Keyboard, StatusBar, StyleProp, StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
 import { Theme } from "../Scripts/Theme";
 import LinearGradient from "react-native-linear-gradient";
-import ParticleBackground from "../Components/ParticleBackground";
 import { Text, MD2Colors, TextInput, Button, Provider, HelperText, Portal } from "react-native-paper";
 import SystemNavigationBar from "react-native-system-navigation-bar";
 import { Family } from "../Scripts/ApiTecnica";
@@ -26,7 +25,7 @@ export default class Session extends PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            visible: false,
+            visible: true,
             formDNI: '',
             errorFormDNI: false,
             errorStringFormDNI: '',
@@ -36,8 +35,8 @@ export default class Session extends PureComponent<IProps, IState> {
         this.close = this.close.bind(this);
         this.initSession = this.initSession.bind(this);
     }
-    private particleSize = PixelRatio.getPixelSizeForLayoutSize(8);
-    private particleNumber = Math.floor(Dimensions.get('window').width / this.particleSize);
+    /*private particleSize = PixelRatio.getPixelSizeForLayoutSize(8);
+    private particleNumber = Math.floor(Dimensions.get('window').width / this.particleSize);*/
     private refAlertComponent = createRef<AlertComponent>();
 
     _onChangeText(text: string) {
@@ -95,14 +94,14 @@ export default class Session extends PureComponent<IProps, IState> {
             <Provider theme={Theme}>
                 <TouchableWithoutFeedback style={styles.content} onPress={Keyboard.dismiss}>
                     <View style={styles.content}>
-                        {(/*!this.state.visible*/ false !== false)&&<ParticleBackground
+                        {/*(this.state.visible)&&<ParticleBackground
                             containerStyle={styles.backgroundParticles}
                             particleNumber={this.particleNumber}
                             particleSize={this.particleSize}
                             particleDispersion={32}
                             particleColor={"rgba(0, 163, 255, 1)"}
                             backgroundColor={"transparent"}
-                        />}
+                        />*/}
                         <LinearGradient colors={['rgba(0, 0, 0, 0)', 'rgba(0, 163, 255, 1)']} style={styles.gradient} />
                         <View style={styles.content0}>
                             <View style={styles.contentPrimary}>
