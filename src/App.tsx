@@ -150,6 +150,8 @@ export default class App extends PureComponent<IProps, IState> {
                 return <Schedule
                     datas={this.state.datas}
                     openViewInfoSchedule={this._openViewInfoSchedule}
+                    controllerAlert={this._controllerAlert}
+                    controllerLoading={this._controllerLoading}
                 />;
             case 'details':
                 return <Account

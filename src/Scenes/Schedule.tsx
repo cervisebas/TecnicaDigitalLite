@@ -2,20 +2,24 @@ import { MaterialTopTabBarProps, createMaterialTopTabNavigator } from "@react-na
 import { NavigationContainer, NavigationContainerRef } from "@react-navigation/native";
 import React, { PureComponent, createRef } from "react";
 import { Animated, StyleSheet, View } from "react-native";
-import { ActivityIndicator, Appbar, Button, Text } from "react-native-paper";
+import { ActivityIndicator, Appbar, Button, Text, Tooltip } from "react-native-paper";
 import { ThemeNavigation } from "../Scripts/Theme";
 import TabBar from "./Schedule/TabBar";
 import moment from "moment";
 import "moment/locale/es";
 import { waitTo } from "../Scripts/Utils";
-import { Matter, StudentsData, Schedule as ScheduleType } from "../Scripts/ApiTecnica/types";
+import { StudentsData, Schedule as ScheduleType } from "../Scripts/ApiTecnica/types";
 import scheduleProcess, { DayData } from "./Schedule/ScheduleProcess";
 import { Family } from "../Scripts/ApiTecnica";
 import SchedulePage from "./Schedule/SchedulePage";
+import CreatePDF from "./Schedule/CreatePDF";
+import FileViewer from "react-native-file-viewer";
 
 type IProps = {
     datas: StudentsData;
     openViewInfoSchedule: (matter: ScheduleType)=>void;
+    controllerAlert: (visible: boolean, title?: string, message?: string)=>void;
+    controllerLoading: (visible: boolean, message?: string)=>void;
 };
 type IState = {
     isLoading: boolean;
@@ -47,9 +51,11 @@ export default class Schedule extends PureComponent<IProps, IState> {
         this._wednesday = this._wednesday.bind(this);
         this._thursday = this._thursday.bind(this);
         this._friday = this._friday.bind(this);
+        this._convertToPDF = this._convertToPDF.bind(this);
     }
     private refNavigationContainer = createRef<NavigationContainerRef<ReactNavigation.RootParamList>>();
     private actualId = '-1';
+    private datas: ScheduleType[] = [];
     componentDidMount(): void {
         this.goLoading();
     }
@@ -79,6 +85,7 @@ export default class Schedule extends PureComponent<IProps, IState> {
             await this.setStateSync({ isLoading: true, isError: false } as any);
             await this.setLoading(true);
             const getData = await Family.getSchedule(this.props.datas.curse);
+            this.datas = getData.data;
             const datas = await scheduleProcess(getData.data);
             await this.setLoading(false);
             await this.setStateSync({ datas, isLoading: false } as any);
@@ -105,6 +112,18 @@ export default class Schedule extends PureComponent<IProps, IState> {
     _tabBar(props: MaterialTopTabBarProps) {
         return(<TabBar {...props} />);
     }
+    async _convertToPDF() {
+        try {
+            this.props.controllerLoading(true, 'Creando documento...');
+            const uri = await CreatePDF(this.props.datas.curse, this.datas);
+            this.props.controllerLoading(false);
+            FileViewer.open(uri, { showOpenWithDialog: true, showAppsSuggestions: true })
+                .catch(()=>this.props.controllerAlert(true, 'Error', 'Ocurrió un problema al abrir el archivo generado.'));
+        } catch (error) {
+            this.props.controllerLoading(false);
+            this.props.controllerAlert(true, 'Error', error as string);
+        }
+    }
 
     // Days
     _monday() { return(<SchedulePage datas={this.state.datas![0]} openViewInfoSchedule={this.props.openViewInfoSchedule} />); }
@@ -117,6 +136,9 @@ export default class Schedule extends PureComponent<IProps, IState> {
         return(<View style={styles.content}>
             <Appbar.Header>
                 <Appbar.Content title={'Mi horario'} />
+                <Tooltip title={'Crear PDF'}>
+                    <Appbar.Action disabled={this.state.isLoading || this.state.isError} icon={'file-document-outline'} onPress={this._convertToPDF} />
+                </Tooltip>
             </Appbar.Header>
             <View style={styles.content}>
                 {(this.state.isLoading)? <Animated.View style={[styles.contentLoading, { opacity: this.state.opacity, transform: [{ translateY: this.state.transformY }] }]}>

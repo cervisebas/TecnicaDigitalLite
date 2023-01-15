@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Button, Card, IconButton, ProgressBar, Text } from "react-native-paper";
+import { Button, Card, IconButton, ProgressBar, Text, Tooltip } from "react-native-paper";
 import { Theme } from "../../Scripts/Theme";
 import PointItemText from "../../Components/PointItemText";
 import { StyleSheet, View } from "react-native";
@@ -85,13 +85,15 @@ export default class AssistCard extends PureComponent<IProps, IState> {
                     title={'Asistencia:'}
                     titleStyle={styles.title}
                     titleVariant={'titleMedium'}
-                    right={(props)=><IconButton
-                        {...props}
-                        icon={'reload'}
-                        //disabled={this.props.isLoading}
-                        onPress={(!this.state.isLoading)? this.loadData: undefined}
-                        iconColor={(this.state.isLoading)? Color(Theme.colors.tertiary).alpha(0.5).rgb().string(): Theme.colors.secondary}
-                    />}
+                    right={(props)=><Tooltip title={'Recargar'}>
+                        <IconButton
+                            {...props}
+                            icon={'reload'}
+                            //disabled={this.props.isLoading}
+                            onPress={(!this.state.isLoading)? this.loadData: undefined}
+                            iconColor={(this.state.isLoading)? Color(Theme.colors.tertiary).alpha(0.5).rgb().string(): Theme.colors.secondary}
+                        />
+                    </Tooltip>}
                 />
                 <Card.Content>
                     <PointItemText title="Presentes" text={this.state.assist} />

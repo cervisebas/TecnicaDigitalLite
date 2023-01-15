@@ -21,11 +21,7 @@ export default class Home extends PureComponent<IProps, IState> {
         super(props);
     }
     public refCardCredential = createRef<CardCredentialRef>();
-
-    componentDidMount(): void {
-
-    }
-
+    
     render(): React.ReactNode {
         return(<View style={styles.content}>
             <Appbar.Header>

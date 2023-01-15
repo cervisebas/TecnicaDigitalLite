@@ -3,7 +3,7 @@ import { Dimensions, EmitterSubscription, ScaledSize, StyleSheet, View, Animated
 import CardComponent, { CardComponentRef } from "../../Components/CardComponent";
 import ViewShot, { captureRef, releaseCapture } from "react-native-view-shot";
 import { getRandomInt, safeDecode, waitTo } from "../../Scripts/Utils";
-import { ActivityIndicator, Button, Card, IconButton, TouchableRipple } from "react-native-paper";
+import { ActivityIndicator, Button, Card, IconButton, Tooltip, TouchableRipple } from "react-native-paper";
 import { Theme } from "../../Scripts/Theme";
 import Share from "react-native-share";
 import RNFS from "react-native-fs";
@@ -58,12 +58,14 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
     }, [props.curse]);
 
     function rightButtonTitle(hProps: { size: number; }) {
-        return(<IconButton
-            {...hProps}
-            icon={'pencil-ruler'}
-            onPress={(!disable)? props.openChangeDesign: undefined}
-            iconColor={(disable)? Color(Theme.colors.tertiary).alpha(0.5).rgb().string(): Theme.colors.secondary}
-        />);
+        return(<Tooltip title={'Cambiar diseño'}>
+            <IconButton
+                {...hProps}
+                icon={'pencil-ruler'}
+                onPress={(!disable)? props.openChangeDesign: undefined}
+                iconColor={(disable)? Color(Theme.colors.tertiary).alpha(0.5).rgb().string(): Theme.colors.secondary}
+            />
+        </Tooltip>);
     }
     useImperativeHandle(ref, ()=>({ setDesign }));
     
