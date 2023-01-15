@@ -38,7 +38,6 @@ export default class Session extends PureComponent<IProps, IState> {
     }
     private particleSize = PixelRatio.getPixelSizeForLayoutSize(8);
     private particleNumber = Math.floor(Dimensions.get('window').width / this.particleSize);
-    private isColored = false;
     private refAlertComponent = createRef<AlertComponent>();
 
     _onChangeText(text: string) {
@@ -57,7 +56,6 @@ export default class Session extends PureComponent<IProps, IState> {
     }
 
     testInput(): boolean {
-        console.log(this.state.formDNI.length);
         if (this.state.formDNI.length < 8) {
             this.setState({ errorFormDNI: true, errorStringFormDNI: 'Por favor revise el DNI ingresado.' });
             return true;
