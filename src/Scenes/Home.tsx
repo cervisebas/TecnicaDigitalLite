@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { Appbar } from "react-native-paper";
 import WelcomeCard from "./Home/WelcomeCard";
 import AssistCard from "./Home/AssistCard";
-import { StudentsData } from "../Scripts/ApiTecnica/types";
+import { FamilyDataAssist, StudentsData } from "../Scripts/ApiTecnica/types";
 import { safeDecode } from "../Scripts/Utils";
 import CardCredential, { CardCredentialRef } from "./Home/CardCredential";
 
@@ -12,6 +12,7 @@ type IProps = {
     openChangeDesign: ()=>void;
     openImageViewer: (source: string)=>void;
     controllerAlert: (visible: boolean, title?: string, message?: string)=>void;
+    openViewDetailsAssist: (datas: FamilyDataAssist[])=>void;
 };
 type IState = {};
 
@@ -34,7 +35,7 @@ export default class Home extends PureComponent<IProps, IState> {
                 <WelcomeCard namestudent={safeDecode(this.props.datas.name)} />
                 <AssistCard
                     id={this.props.datas.id}
-                    openDetailsAssit={()=>undefined}
+                    openDetailsAssit={this.props.openViewDetailsAssist}
                 />
                 <CardCredential
                     ref={this.refCardCredential}

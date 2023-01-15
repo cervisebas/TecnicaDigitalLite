@@ -4,6 +4,7 @@ import { DesingsCardsType } from "../Scripts/DesingsCardsType";
 import { urlBase } from "../Scripts/ApiTecnica";
 import { getForScale, safeDecode } from "../Scripts/Utils";
 import Barcode from "@kichiyaki/react-native-barcode-generator";
+import ImageLazyLoad from "./ImageLazyLoad";
 
 type IProps = {
     scale: number;
@@ -32,10 +33,25 @@ export default React.memo(function CardEstructure(props: IProps) {
             resizeMethod={'auto'}
             resizeMode={'cover'}
         />
-        {(props.designEstructure.image)&&<Image
+        {/*(props.designEstructure.image)&&<Image
             source={{ uri: `${urlBase}/image/${safeDecode(props.image)}` }}
             resizeMethod={'auto'}
             resizeMode={'cover'}
+            style={{
+                position: 'absolute',
+                top: getForScale(props.scale, props.designEstructure.image.y),
+                left: getForScale(props.scale, props.designEstructure.image.x),
+                width: getForScale(props.scale, props.designEstructure.image.width),
+                height: getForScale(props.scale, props.designEstructure.image.height),
+                borderWidth: (props.designEstructure.image.borderWidth)? getForScale(props.scale, props.designEstructure.image.borderWidth): undefined,
+                borderColor: props.designEstructure.image.borderColor,
+                borderRadius: getForScale(props.scale, props.designEstructure.image.borderRadius)
+            }}
+        />*/}
+        {(props.designEstructure.image)&&<ImageLazyLoad
+            source={{ uri: `${urlBase}/image/${safeDecode(props.image)}` }}
+            resizeMode={'cover'}
+            loadSize={'small'}
             style={{
                 position: 'absolute',
                 top: getForScale(props.scale, props.designEstructure.image.y),

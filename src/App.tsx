@@ -8,7 +8,7 @@ import Session from "./Screens/Session";
 import ScreenLoading, { ScreenLoadingRef } from "./Screens/ScreenLoading";
 import SplashScreen from "./Screens/SplashScreen";
 import { Family, urlBase } from "./Scripts/ApiTecnica";
-import { Matter, StudentsData, Schedule as ScheduleType } from "./Scripts/ApiTecnica/types";
+import { Matter, StudentsData, Schedule as ScheduleType, FamilyDataAssist } from "./Scripts/ApiTecnica/types";
 import { waitTo } from "./Scripts/Utils";
 import { decode } from "base-64";
 import ChangeCardDesign from "./Screens/ChangeCardDesign";
@@ -19,6 +19,7 @@ import ViewInfoSchedule, { ViewInfoScheduleRef } from "./Scenes/Schedule/ViewInf
 import LoadingComponent, { LoadingComponentRef } from "./Components/LoadingComponent";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AlertCloseSession, { AlertCloseSessionRef } from "./Components/AlertCloseSession";
+import ViewDetailsAssist from "./Screens/ViewDetailsAssist";
 
 type IProps = {};
 type IState = {
@@ -44,6 +45,7 @@ export default class App extends PureComponent<IProps, IState> {
         this._controllerLoading = this._controllerLoading.bind(this);
         this._showAlertLogout = this._showAlertLogout.bind(this);
         this._logOutNow = this._logOutNow.bind(this);
+        this._openViewDetailsAssist = this._openViewDetailsAssist.bind(this);
     }
     private routes = [
         { key: 'home', title: 'Inicio', focusedIcon: 'home', unfocusedIcon: 'home-outline' },
@@ -60,6 +62,7 @@ export default class App extends PureComponent<IProps, IState> {
     private refViewInfoSchedule = createRef<ViewInfoScheduleRef>();
     private refLoadingComponent = createRef<LoadingComponentRef>();
     private refAlertCloseSession = createRef<AlertCloseSessionRef>();
+    private refViewDetailsAssist = createRef<ViewDetailsAssist>();
 
     componentDidMount(): void {
         /*RNSplashScreen.hide();
@@ -124,6 +127,9 @@ export default class App extends PureComponent<IProps, IState> {
         this._controllerLoading(false);
         this.init();
     }
+    _openViewDetailsAssist(datas: FamilyDataAssist[]) {
+        this.refViewDetailsAssist.current?.open(datas);
+    }
     
     // Navigation
     _onIndexChange(index: number) {
@@ -138,6 +144,7 @@ export default class App extends PureComponent<IProps, IState> {
                     openChangeDesign={this._openChangeCardDesign}
                     openImageViewer={this._openImageViewer}
                     controllerAlert={this._controllerAlert}
+                    openViewDetailsAssist={this._openViewDetailsAssist}
                 />);
             case 'schedule':
                 return <Schedule
@@ -182,6 +189,7 @@ export default class App extends PureComponent<IProps, IState> {
                 <ImageViewer ref={this.refImageViewer} />
                 <ChangeCardDesign ref={this.refChangeCardDesign} changeDesign={this._changeNowCardDesign} />
                 <ViewInfoSchedule ref={this.refViewInfoSchedule} openImageViewer={this._openImageViewer} />
+                <ViewDetailsAssist ref={this.refViewDetailsAssist} />
                 <Portal>
                     <AlertComponent ref={this.refAlertComponent} />
                     <LoadingComponent ref={this.refLoadingComponent} />
