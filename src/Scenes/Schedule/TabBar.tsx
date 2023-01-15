@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useRef, useState } from "react";
 import { MaterialTopTabBarProps } from "@react-navigation/material-top-tabs";
-import { Animated, Easing, FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
+import { Animated, Easing, FlatList, ListRenderItemInfo, Platform, StyleSheet, View } from "react-native";
 import { Text, TouchableRipple } from "react-native-paper";
 import { NavigationHelpers, ParamListBase, TabNavigationState } from "@react-navigation/native";
 import { MaterialTopTabDescriptorMap, MaterialTopTabNavigationEventMap } from "@react-navigation/material-top-tabs/lib/typescript/src/types";
@@ -55,7 +55,6 @@ const ItemTabBar = React.memo(function (props: IProps2) {
     const scale = useRef(new Animated.Value(0)).current;
     const duration = 300;
     const easing = Easing.linear;
-    let actualState = true;
 
     function changeState(value: boolean) {
         let op = (value)? 1: 0;
@@ -89,7 +88,8 @@ const ItemTabBar = React.memo(function (props: IProps2) {
 
     return(<View style={styles.itemContain}>
         <TouchableRipple
-            borderless={true}
+            //borderless={true}
+            borderless={Platform.Version > 25}
             style={styles.item}
             onPress={onPress}
             onLongPress={onLongPress}>

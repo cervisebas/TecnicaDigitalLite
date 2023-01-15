@@ -1,5 +1,5 @@
 import React, { createRef, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { Dimensions, EmitterSubscription, ScaledSize, StyleSheet, View, Animated, Easing, PermissionsAndroid } from "react-native";
+import { Dimensions, EmitterSubscription, ScaledSize, StyleSheet, View, Animated, Easing, PermissionsAndroid, Platform } from "react-native";
 import CardComponent, { CardComponentRef } from "../../Components/CardComponent";
 import ViewShot, { captureRef, releaseCapture } from "react-native-view-shot";
 import { getRandomInt, safeDecode, waitTo } from "../../Scripts/Utils";
@@ -154,7 +154,7 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
             right={rightButtonTitle}
         />
         <Card.Content onLayout={checkScale}>
-            <TouchableRipple borderless={true} disabled={loading} onPress={viewingNow} style={styles.buttonCard}>
+            <TouchableRipple borderless={Platform.Version > 25} disabled={loading} onPress={viewingNow} style={styles.buttonCard}>
                 <View style={styles.contentCard}>
                     <CardComponent
                         ref={refCardComponent}

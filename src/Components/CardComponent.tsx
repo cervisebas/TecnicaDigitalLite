@@ -1,5 +1,4 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
-import { Pressable, PressableAndroidRippleConfig } from "react-native";
 import DesingsCards from "../Scripts/DesingsCards";
 import CardEstructure from "./CardEstructure";
 import { DesingsCardsType } from "../Scripts/DesingsCardsType";
@@ -16,8 +15,6 @@ type IProps = {
 export type CardComponentRef = {
     setScale: (s: number)=>void;
 };
-
-const pressableRipple: PressableAndroidRippleConfig = { color: 'rgba(0, 0, 0, 0.5)', foreground: true };
 
 export default React.memo(forwardRef(function CardComponent(props: IProps, ref: React.Ref<CardComponentRef>) {
     const [scale, setScale] = useState(0.3);

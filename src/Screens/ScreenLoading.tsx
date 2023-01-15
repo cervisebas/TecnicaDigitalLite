@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import CustomModal from "../Components/CustomModal";
-import { StyleSheet, View, Animated, StatusBar, Easing } from "react-native";
+import { StyleSheet, View, Animated, StatusBar, Easing, Dimensions, LayoutChangeEvent, EmitterSubscription, ScaledSize } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { Theme } from "../Scripts/Theme";
 import Logo from "../Assets/logo.webp";
@@ -8,7 +8,7 @@ import { ActivityIndicator, ProgressBar, Text } from "react-native-paper";
 import SystemNavigationBar from "react-native-system-navigation-bar";
 import CogImage from "../Assets/Cog.webp";
 import ImageLazyLoad from "../Components/ImageLazyLoad";
-import { waitTo } from "../Scripts/Utils";
+import { getForScale, waitTo } from "../Scripts/Utils";
 
 type IProps = {};
 export type ScreenLoadingRef = {
@@ -46,6 +46,13 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
     const loadView2Op = useRef(new Animated.Value(0)).current, loadView2Ty = useRef(new Animated.Value(20)).current;
     const opacityImage1 = useRef(new Animated.Value(1)).current, opacityImage2 = useRef(new Animated.Value(0)).current;
     const opacityText2 = useRef(new Animated.Value(0)).current;
+    const [scale, setScale] = useState(Math.fround(Dimensions.get('window').width/1080));
+    var event: EmitterSubscription | undefined = undefined;
+    const [sizeCogs, setSizeCogs] = useState([
+        getForScale(scale, 600),
+        getForScale(scale, 1200),
+        getForScale(scale, 800)
+    ]);
 
     const open = ()=>setVisible(true);
     const setShowLoading = (visible: boolean)=>setViewLoading(visible);
@@ -130,12 +137,19 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
     }
     // ##############
 
-    /*useEffect(()=>{
-        setTimeout(startAnimation, 3000);
+    function setNewSizes({ window }: { window: ScaledSize; screen: ScaledSize; }) {
+        setScale(window.width/1080);
+        setSizeCogs([getForScale(scale, 600), getForScale(scale, 1200), getForScale(scale, 800)]);
+    }
+
+    useEffect(()=>{
+        event = Dimensions.addEventListener('change', setNewSizes);
+        //setTimeout(startAnimation, 1000);
         return ()=>{
-            endAnimation();
+            //endAnimation();
+            event?.remove();
         }
-    }, []);*/
+    }, []);
     useEffect(()=>{
         if (visible) {
             SystemNavigationBar.setNavigationColor("rgba(0, 163, 255, 1)", 'dark');
@@ -159,21 +173,21 @@ export default React.memo(forwardRef(function ScreenLoading(_props: IProps, ref:
             <View style={styles.contentCogs}>
                 <Animated.Image
                     source={CogImage}
-                    style={[styles.cog1, { transform: [{ rotate: rotateCog }, { translateX: cog1X }] }]}
+                    style={[styles.cog1, { width: sizeCogs[0], height: sizeCogs[0], transform: [{ rotate: rotateCog }, { translateX: cog1X }] }]}
                     blurRadius={12}
                     resizeMethod={'scale'}
                     resizeMode={'contain'}
                 />
                 <Animated.Image
                     source={CogImage}
-                    style={[styles.cog2, { transform: [{ rotate: rotateCog }, { translateY: cog2Y }, { translateX: cog2X }] }]}
+                    style={[styles.cog2, { width: sizeCogs[1], height: sizeCogs[1], transform: [{ rotate: rotateCog }, { translateY: cog2Y }, { translateX: cog2X }] }]}
                     blurRadius={8}
                     resizeMethod={'scale'}
                     resizeMode={'contain'}
                 />
                 <Animated.Image
                     source={CogImage}
-                    style={[styles.cog3, { transform: [{ rotate: rotateCog }, { translateY: cog3Y }, { translateX: cog3X }] }]}
+                    style={[styles.cog3, { width: sizeCogs[2], height: sizeCogs[2], transform: [{ rotate: rotateCog }, { translateY: cog3Y }, { translateX: cog3X }] }]}
                     blurRadius={10}
                     resizeMethod={'scale'}
                     resizeMode={'contain'}
