@@ -207,6 +207,7 @@ const styles = StyleSheet.create({
         height: '100%'
     },
     contentPrimary: {
+        maxWidth: 600,
         width: '100%',
         alignItems: 'center'
     },

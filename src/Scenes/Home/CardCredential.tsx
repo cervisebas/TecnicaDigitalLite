@@ -8,6 +8,7 @@ import { Theme } from "../../Scripts/Theme";
 import Share from "react-native-share";
 import RNFS from "react-native-fs";
 import Color from "color";
+import CredentialTouchable from "./CredentialTouchable";
 
 type IProps = {
     dni: string;
@@ -156,7 +157,7 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
             right={rightButtonTitle}
         />
         <Card.Content onLayout={checkScale}>
-            <TouchableRipple borderless={Platform.Version > 25} disabled={loading} onPress={viewingNow} style={styles.buttonCard}>
+            <CredentialTouchable disabled={loading} onPress={viewingNow} style={styles.buttonCard}>
                 <View style={styles.contentCard}>
                     <CardComponent
                         ref={refCardComponent}
@@ -170,7 +171,7 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
                         <ActivityIndicator animating={true} size={'large'} />
                     </Animated.View>
                 </View>
-            </TouchableRipple>
+            </CredentialTouchable>
         </Card.Content>
         <Card.Actions style={styles.cardActions}>
             <Button
@@ -188,6 +189,8 @@ export default React.memo(forwardRef(function CardCredential(props: IProps, ref:
     </Card>);
 }));
 
+
+
 const styles = StyleSheet.create({
     content: {
         marginLeft: 12,
@@ -200,7 +203,8 @@ const styles = StyleSheet.create({
         fontSize: 20
     },
     buttonCard: {
-        borderRadius: 12
+        borderRadius: 12,
+        overflow: 'hidden'
     },
     contentCard: {
         position: 'relative',

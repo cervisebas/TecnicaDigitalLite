@@ -5,6 +5,7 @@ import { Theme } from "../Scripts/Theme";
 import { Appbar, TouchableRipple } from "react-native-paper";
 import ExampleCards from "../Scripts/ExampleCards";
 import { getForScale } from "../Scripts/Utils";
+import CredentialTouchable from "../Scenes/Home/CredentialTouchable";
 
 type IProps = {
     changeDesign: (id: number)=>void;
@@ -109,14 +110,14 @@ const ItemImage = React.memo(function (props: IProps2) {
             props.close();
         }
     }
-    return(<TouchableRipple borderless={Platform.Version > 25} style={[styles.itemTouch, { width: getForScale(props.scale, 1200), height: getForScale(props.scale, 779) }]} onPress={onPress}>
+    return(<CredentialTouchable style={[styles.itemTouch, { width: getForScale(props.scale, 1200), height: getForScale(props.scale, 779) }]} onPress={onPress}>
         <Image
             source={props.image}
             style={styles.itemImage}
             resizeMethod={'auto'}
             resizeMode={'cover'}
         />
-    </TouchableRipple>);
+    </CredentialTouchable>);
 });
 
 const styles = StyleSheet.create({

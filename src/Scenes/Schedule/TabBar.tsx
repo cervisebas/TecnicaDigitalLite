@@ -39,7 +39,7 @@ export default React.memo(function TabBar(props: MaterialTopTabBarProps) {
     </View>);
 });
 
-const pressableRipple: PressableAndroidRippleConfig = { color: 'rgba(0, 0, 0, 0.5)', foreground: true }
+const pressableRipple: PressableAndroidRippleConfig = { color: 'rgba(0, 0, 0, 0.3)', foreground: true }
 
 type IProps2 = {
     route: MaterialTopTabBarProps['state']['routes'][0];

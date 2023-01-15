@@ -48,10 +48,3 @@
 
 # @react-native-async-storage/async-storage
 -keep class com.reactnativecommunity.asyncstorage.** { *; }
-
-# @shopify/react-native-skia
--keep class com.shopify.reactnative.skia.** { *; }
-
-# react-native-reanimated
--keep class com.swmansion.reanimated.** { *; }
--keep class com.facebook.react.turbomodule.** { *; }
