@@ -1,6 +1,6 @@
 import { decode } from "base-64";
 import { Matter, Schedule } from "../../Scripts/ApiTecnica/types";
-import { ToastAndroid } from "react-native";
+import { PermissionsAndroid, ToastAndroid } from "react-native";
 import RNHTMLtoPDF from "react-native-html-to-pdf";
 import RNFS from "react-native-fs";
 import { safeDecode } from "../../Scripts/Utils";
@@ -107,7 +107,17 @@ export default async function CreatePDF(curse: string, datas: Schedule[]): Promi
         try {
             const uriDocument = await createDocument(safeDecode(curse), _rows1, _rows2);
             try {
-                const newUri = `${RNFS.DownloadDirectoryPath}/horarios-${safeDecode(curse).replace('°', '-')}.pdf`
+                const permission = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, {
+                    title: "Atención",
+                    message: "Para guardar el archivo se necesita acceder al almacenamiento de su dispositivo, por favor acepte los permisos que se requieren.",
+                    buttonNegative: "Cancelar",
+                    buttonPositive: "Aceptar"
+                });
+                if (permission == PermissionsAndroid.RESULTS.DENIED) {
+                    ToastAndroid.show('Se denegó el acceso al almacenamiento del dispositivo', ToastAndroid.SHORT);
+                    return uriDocument;
+                }
+                const newUri = `${RNFS.DownloadDirectoryPath}/horarios-${safeDecode(curse).replace('°', '-')}.pdf`;
                 await RNFS.copyFile(uriDocument, newUri);
                 ToastAndroid.show('El archivo se copio correctamente en la carpeta de descargas', ToastAndroid.SHORT);
                 return newUri;

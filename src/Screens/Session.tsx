@@ -25,7 +25,7 @@ export default class Session extends PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            visible: true,
+            visible: false,
             formDNI: '',
             errorFormDNI: false,
             errorStringFormDNI: '',
