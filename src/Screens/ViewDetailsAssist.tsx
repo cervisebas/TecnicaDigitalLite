@@ -35,21 +35,25 @@ export default class ViewDetailsAssist extends PureComponent<IProps, IState> {
         };
         this.close = this.close.bind(this);
     }
+    private after: FamilyDataAssist[] = [];
+    
     open(assist: FamilyDataAssist[]) {
-        const datas: DataAssist[] = [];
-        assist.forEach((value)=>{
-            const tDate = moment(decode(value.date), 'DD/MM/YYYY').format('MMMM (YYYY)');
-            const findIndex = datas.findIndex((v)=>v.label == tDate);
-            if (findIndex !== -1) return datas[findIndex].data.push(value);
-            const dateInt = moment(decode(value.date), 'DD/MM/YYYY').toDate().getTime();
-            datas.push({
-                label: tDate,
-                key: tDate.replace(/\ /gi, '-').toLowerCase(),
-                dateInt,
-                data: [value]
+        let datas: DataAssist[] = [];
+        if (this.after !== assist) {
+            assist.forEach((value)=>{
+                const tDate = moment(decode(value.date), 'DD/MM/YYYY').format('MMMM (YYYY)');
+                const findIndex = datas.findIndex((v)=>v.label == tDate);
+                if (findIndex !== -1) return datas[findIndex].data.push(value);
+                const dateInt = moment(decode(value.date), 'DD/MM/YYYY').toDate().getTime();
+                datas.push({
+                    label: tDate,
+                    key: tDate.replace(/\ /gi, '-').toLowerCase(),
+                    dateInt,
+                    data: [value]
+                });
             });
-        });
-        console.log(datas);
+            this.after = assist;
+        } else datas = this.state.datas;
         this.setState({ visible: true, datas });
     }
     close() {
