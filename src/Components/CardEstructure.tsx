@@ -33,21 +33,6 @@ export default React.memo(function CardEstructure(props: IProps) {
             resizeMethod={'auto'}
             resizeMode={'cover'}
         />
-        {/*(props.designEstructure.image)&&<Image
-            source={{ uri: `${urlBase}/image/${safeDecode(props.image)}` }}
-            resizeMethod={'auto'}
-            resizeMode={'cover'}
-            style={{
-                position: 'absolute',
-                top: getForScale(props.scale, props.designEstructure.image.y),
-                left: getForScale(props.scale, props.designEstructure.image.x),
-                width: getForScale(props.scale, props.designEstructure.image.width),
-                height: getForScale(props.scale, props.designEstructure.image.height),
-                borderWidth: (props.designEstructure.image.borderWidth)? getForScale(props.scale, props.designEstructure.image.borderWidth): undefined,
-                borderColor: props.designEstructure.image.borderColor,
-                borderRadius: getForScale(props.scale, props.designEstructure.image.borderRadius)
-            }}
-        />*/}
         {(props.designEstructure.image)&&<ImageLazyLoad
             source={{ uri: `${urlBase}/image/${safeDecode(props.image)}` }}
             resizeMode={'cover'}
@@ -64,6 +49,7 @@ export default React.memo(function CardEstructure(props: IProps) {
             }}
         />}
         <Text
+            allowFontScaling={false}
             style={{
                 position: 'absolute',
                 top: (props.designEstructure.name.maxNumberLines as number > 1)? getForScale(props.scale, getTopMoreLines()): getForScale(props.scale, props.designEstructure.name.y),

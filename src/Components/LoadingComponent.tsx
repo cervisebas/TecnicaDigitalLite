@@ -1,6 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { ActivityIndicator, Dialog, Modal, Text } from "react-native-paper";
+import { ActivityIndicator, Modal, Text } from "react-native-paper";
 import { Theme } from "../Scripts/Theme";
 
 type IProps = {};

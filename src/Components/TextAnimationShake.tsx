@@ -30,6 +30,7 @@ export default class TextAnimationShake extends PureComponent<IProps, IState> {
             this.animation = new Animated.Value(0);
             view[i] = (
                 <Animated.Text
+                    allowFontScaling={false}
                     style={[this.props.styleText, {
                         transform: [{ scale: this.animation }],
                         opacity: this.animation
@@ -49,10 +50,8 @@ export default class TextAnimationShake extends PureComponent<IProps, IState> {
     }
 
     render() {
-        return (
-            <Animated.View style={[this.props.style, { flexDirection: 'row', flexWrap: 'wrap' }]}>
-                {this.state.view}
-            </Animated.View>
-        );
+        return (<Animated.View style={[this.props.style, { flexDirection: 'row', flexWrap: 'wrap' }]}>
+            {this.state.view}
+        </Animated.View>);
     }
 }

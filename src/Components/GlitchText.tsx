@@ -129,6 +129,7 @@ const GlitchText = forwardRef(({
   const renderText = (isCover = false) => {
     return (
       <Text
+        allowFontScaling={false}
         style={[
           styles.text,
           {fontSize: glitchHeight! / 2.5},
